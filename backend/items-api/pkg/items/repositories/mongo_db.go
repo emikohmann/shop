@@ -54,6 +54,10 @@ func (repo itemsMongoDB) GetItem(ctx context.Context, id int64) (items.Item, api
 
 // SaveItem inserts an item into MongoDB
 func (repo itemsMongoDB) SaveItem(ctx context.Context, item items.Item) apierrors.APIError {
+	result := repo.database.Collection(repo.collection).FindOne(ctx, bson.M{"id": item.ID})
+	if result.Err() == nil {
+		return apierrors.NewNotFoundError(fmt.Sprintf("item with id %d already exists in MongoDB", item.ID))
+	}
 	_, err := repo.database.Collection(repo.collection).InsertOne(ctx, item)
 	if err != nil {
 		return apierrors.NewInternalServerError(fmt.Sprintf("error saving item in MongoDB: %s", err.Error()))

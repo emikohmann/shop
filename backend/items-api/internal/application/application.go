@@ -147,7 +147,7 @@ func buildServices(logger *logrus.Logger, repositories repositories) (services, 
 	}, nil
 }
 
-// buildServices creates the instances for the handlers
+// buildHandlers creates the instances for the handlers
 func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 	getItemHandler := transportHTTP.GetItemHandler(services.itemsService, logger)
 	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService, logger)

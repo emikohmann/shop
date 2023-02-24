@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"golang.org/x/exp/slices"
 )
 
 type itemsMongoDB struct {
@@ -23,19 +24,27 @@ func NewItemsMongoDB(host string, port int, database string, collection string, 
 	ctx := context.Background()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%d", host, port)))
 	if err != nil {
-		return itemsMongoDB{}, nil
+		logger.Errorf("Error connecting to MongoDB: %s", err.Error())
+		return itemsMongoDB{}, err
 	}
 
 	names, err := client.ListDatabaseNames(ctx, bson.M{})
-	logger.Infof("Current MongoDB available databases: %v", names)
 	if err != nil {
-		return itemsMongoDB{}, nil
+		logger.Errorf("Error listing database names: %s", err.Error())
+		return itemsMongoDB{}, err
+	}
+
+	if !slices.Contains(names, database) {
+		err := fmt.Errorf("%s is not available as MongoDB database, please check the name or create it", database)
+		logger.Errorf("Error validating MongoDB database: %s", err.Error())
+		return itemsMongoDB{}, err
 	}
 
 	return itemsMongoDB{
 		client:     client,
 		database:   client.Database(database),
 		collection: collection,
+		logger:     logger,
 	}, nil
 }
 

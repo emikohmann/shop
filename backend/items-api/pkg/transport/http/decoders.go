@@ -69,3 +69,15 @@ func HTTPToUpdateItemRequest(ctx *gin.Context) (items.UpdateItemRequest, error) 
 		},
 	}, nil
 }
+
+// HTTPToDeleteItemRequest turns the HTTP request into a DeleteItemRequest
+func HTTPToDeleteItemRequest(ctx *gin.Context) (items.DeleteItemRequest, error) {
+	itemIDStr := ctx.Param(paramItemID)
+	itemID, err := strconv.ParseInt(itemIDStr, 10, 64)
+	if err != nil {
+		return items.DeleteItemRequest{}, fmt.Errorf("invalid item ID: %w", err)
+	}
+	return items.DeleteItemRequest{
+		ID: itemID,
+	}, nil
+}

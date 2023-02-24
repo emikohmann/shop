@@ -11,3 +11,7 @@ type SaveItemResponse struct {
 type UpdateItemResponse struct {
 	Item Item
 }
+
+type DeleteItemResponse struct {
+	ID int64
+}

@@ -13,6 +13,7 @@ type ItemsService interface {
 	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
 	Save(ctx context.Context, item items.Item) apierrors.APIError
 	Update(ctx context.Context, item items.Item) apierrors.APIError
+	Delete(ctx context.Context, id int64) apierrors.APIError
 }
 
 // GetItemHandler sets up the GetItem request handler
@@ -90,6 +91,32 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ct
 			Item: request.Item,
 		}
 		httpResponse := UpdateItemResponseToHTTP(response)
+		ctx.JSON(http.StatusOK, httpResponse)
+	}
+}
+
+// DeleteItemHandler sets up the DeleteItem request handler
+func DeleteItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
+		request, err := HTTPToDeleteItemRequest(ctx)
+		if err != nil {
+			apiErr := apierrors.NewBadRequestError(err.Error())
+			logger.Errorf("Error generating DeleteItemRequest: %s", apiErr.Error())
+			httpResponse := APIErrorToHTTP(apiErr)
+			ctx.JSON(apiErr.Status(), httpResponse)
+			return
+		}
+		requestCtx := ctx.Request.Context()
+		if apiErr := itemsService.Delete(requestCtx, request.ID); apiErr != nil {
+			logger.Errorf("Error deleting item: %s", apiErr.Error())
+			httpResponse := APIErrorToHTTP(apiErr)
+			ctx.JSON(apiErr.Status(), httpResponse)
+			return
+		}
+		response := items.DeleteItemResponse{
+			ID: request.ID,
+		}
+		httpResponse := DeleteItemResponseToHTTP(response)
 		ctx.JSON(http.StatusOK, httpResponse)
 	}
 }

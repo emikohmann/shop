@@ -12,6 +12,7 @@ type Repository interface {
 	GetItem(ctx context.Context, id int64) (Item, apierrors.APIError)
 	SaveItem(ctx context.Context, item Item) apierrors.APIError
 	UpdateItem(ctx context.Context, item Item) apierrors.APIError
+	DeleteItem(ctx context.Context, id int64) apierrors.APIError
 }
 
 type service struct {
@@ -30,7 +31,7 @@ func NewService(repository Repository, logger *logrus.Logger) *service {
 func (service *service) Get(ctx context.Context, id int64) (Item, apierrors.APIError) {
 	item, apiErr := service.repository.GetItem(ctx, id)
 	if apiErr != nil {
-		service.logger.Errorf("Error getting item: %s", apiErr.Error())
+		service.logger.Errorf("Error getting item %d: %s", id, apiErr.Error())
 		return Item{}, apiErr
 	}
 	return item, nil
@@ -57,6 +58,15 @@ func (service *service) Save(ctx context.Context, item Item) apierrors.APIError 
 func (service *service) Update(ctx context.Context, item Item) apierrors.APIError {
 	if apiErr := service.repository.UpdateItem(ctx, item); apiErr != nil {
 		service.logger.Errorf("Error updating item: %s", apiErr.Error())
+		return apiErr
+	}
+	return nil
+}
+
+// Delete removes the item information
+func (service *service) Delete(ctx context.Context, id int64) apierrors.APIError {
+	if apiErr := service.repository.DeleteItem(ctx, id); apiErr != nil {
+		service.logger.Errorf("Error deleting item %d: %s", id, apiErr.Error())
 		return apiErr
 	}
 	return nil

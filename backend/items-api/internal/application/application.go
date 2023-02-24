@@ -23,12 +23,14 @@ type itemsRepository interface {
 	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
 	SaveItem(ctx context.Context, item items.Item) apierrors.APIError
 	UpdateItem(ctx context.Context, item items.Item) apierrors.APIError
+	DeleteItem(ctx context.Context, id int64) apierrors.APIError
 }
 
 type itemsService interface {
 	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
 	Save(ctx context.Context, item items.Item) apierrors.APIError
 	Update(ctx context.Context, item items.Item) apierrors.APIError
+	Delete(ctx context.Context, id int64) apierrors.APIError
 }
 
 type repositories struct {
@@ -43,6 +45,7 @@ type handlers struct {
 	getItemHandler    func(ctx *gin.Context)
 	saveItemHandler   func(ctx *gin.Context)
 	updateItemHandler func(ctx *gin.Context)
+	deleteItemHandler func(ctx *gin.Context)
 }
 
 // NewApplication creates a new instance of the application
@@ -149,11 +152,13 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 	getItemHandler := transportHTTP.GetItemHandler(services.itemsService, logger)
 	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService, logger)
 	updateItemHandler := transportHTTP.UpdateItemHandler(services.itemsService, logger)
+	deleteItemHandler := transportHTTP.DeleteItemHandler(services.itemsService, logger)
 	logger.Info("Handlers successfully initialized")
 	return handlers{
 		getItemHandler:    getItemHandler,
 		saveItemHandler:   saveItemHandler,
 		updateItemHandler: updateItemHandler,
+		deleteItemHandler: deleteItemHandler,
 	}, nil
 }
 
@@ -162,6 +167,7 @@ func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) err
 	router.GET(transportHTTP.PathGetItem, handlers.getItemHandler)
 	router.POST(transportHTTP.PathSaveItem, handlers.saveItemHandler)
 	router.PUT(transportHTTP.PathUpdateItem, handlers.updateItemHandler)
+	router.DELETE(transportHTTP.PathDeleteItem, handlers.deleteItemHandler)
 	logger.Info("Router successfully mapped")
 	return nil
 }

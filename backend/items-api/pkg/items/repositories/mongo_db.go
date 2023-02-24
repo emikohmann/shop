@@ -72,3 +72,15 @@ func (repo itemsMongoDB) UpdateItem(ctx context.Context, item items.Item) apierr
 	}
 	return nil
 }
+
+// DeleteItem removes an item from MongoDB
+func (repo itemsMongoDB) DeleteItem(ctx context.Context, id int64) apierrors.APIError {
+	result, err := repo.database.Collection(repo.collection).DeleteOne(ctx, bson.M{"id": id})
+	if err != nil {
+		return apierrors.NewInternalServerError(fmt.Sprintf("error deleting item %d in MongoDB: %s", id, err.Error()))
+	}
+	if result.DeletedCount == 0 {
+		return apierrors.NewNotFoundError(fmt.Sprintf("not found item %d in MongoDB", id))
+	}
+	return nil
+}

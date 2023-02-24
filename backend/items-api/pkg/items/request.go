@@ -11,3 +11,7 @@ type SaveItemRequest struct {
 type UpdateItemRequest struct {
 	Item Item
 }
+
+type DeleteItemRequest struct {
+	ID int64
+}

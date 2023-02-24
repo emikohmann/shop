@@ -22,6 +22,18 @@ type SaveItemResponseHTTP struct {
 	DateCreated time.Time `json:"date_created"`
 }
 
+type UpdateItemResponseHTTP struct {
+	ID          int64     `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Price       float64   `json:"price"`
+	DateCreated time.Time `json:"date_created"`
+}
+
+type DeleteItemResponseHTTP struct {
+	ID int64 `json:"id"`
+}
+
 type APIErrorHTTP struct {
 	Status  int    `json:"status"`
 	Message string `json:"message"`
@@ -50,13 +62,20 @@ func SaveItemResponseToHTTP(response items.SaveItemResponse) SaveItemResponseHTT
 }
 
 // UpdateItemResponseToHTTP prepares the UpdateItemResponse to be presented as HTTP
-func UpdateItemResponseToHTTP(response items.UpdateItemResponse) UpdateItemRequestHTTP {
-	return UpdateItemRequestHTTP{
+func UpdateItemResponseToHTTP(response items.UpdateItemResponse) UpdateItemResponseHTTP {
+	return UpdateItemResponseHTTP{
 		ID:          response.Item.ID,
 		Name:        response.Item.Name,
 		Description: response.Item.Description,
 		Price:       response.Item.Price,
 		DateCreated: response.Item.DateCreated,
+	}
+}
+
+// DeleteItemResponseToHTTP prepares the DeleteItemResponse to be presented as HTTP
+func DeleteItemResponseToHTTP(response items.DeleteItemResponse) DeleteItemResponseHTTP {
+	return DeleteItemResponseHTTP{
+		ID: response.ID,
 	}
 }
 

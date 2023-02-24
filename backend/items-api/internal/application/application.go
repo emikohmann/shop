@@ -93,7 +93,7 @@ func NewApplication() (*application, error) {
 
 // buildLogger creates the instance for the logger
 func buildLogger() (*logrus.Logger, error) {
-	logger := logger.NewLogger(logrus.DebugLevel)
+	logger := logger.NewLogger(logrus.InfoLevel)
 	logger.Info("Logger successfully initialized")
 	return logger, nil
 }

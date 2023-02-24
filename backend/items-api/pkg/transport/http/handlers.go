@@ -1,6 +1,7 @@
 package http
 
 import (
+	"context"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
@@ -8,7 +9,8 @@ import (
 )
 
 type ItemsService interface {
-	Get(id int64) (items.Item, apierrors.APIError)
+	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
+	Save(ctx context.Context, item items.Item) apierrors.APIError
 }
 
 // GetItemHandler sets up the GetItem request handler
@@ -21,7 +23,8 @@ func GetItemHandler(itemsService ItemsService) func(ctx *gin.Context) {
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
 		}
-		item, apiErr := itemsService.Get(request.ID)
+		requestCtx := ctx.Request.Context()
+		item, apiErr := itemsService.Get(requestCtx, request.ID)
 		if apiErr != nil {
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
@@ -32,5 +35,29 @@ func GetItemHandler(itemsService ItemsService) func(ctx *gin.Context) {
 		}
 		httpResponse := GetItemResponseToHTTP(response)
 		ctx.JSON(http.StatusOK, httpResponse)
+	}
+}
+
+// SaveItemHandler sets up the SaveItem request handler
+func SaveItemHandler(itemsService ItemsService) func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
+		request, err := HTTPToSaveItemRequest(ctx)
+		if err != nil {
+			apiErr := apierrors.NewBadRequestError(err.Error())
+			httpResponse := APIErrorToHTTP(apiErr)
+			ctx.JSON(apiErr.Status(), httpResponse)
+			return
+		}
+		requestCtx := ctx.Request.Context()
+		if apiErr := itemsService.Save(requestCtx, request.Item); apiErr != nil {
+			httpResponse := APIErrorToHTTP(apiErr)
+			ctx.JSON(apiErr.Status(), httpResponse)
+			return
+		}
+		response := items.SaveItemResponse{
+			Item: request.Item,
+		}
+		httpResponse := SaveItemResponseToHTTP(response)
+		ctx.JSON(http.StatusCreated, httpResponse)
 	}
 }

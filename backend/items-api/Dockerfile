@@ -1,11 +1,14 @@
 FROM golang:1.18
 
+WORKDIR /items-api
+
 COPY . .
 
-WORKDIR /cmd/items-api
-
 RUN go mod download
-RUN go build -o /items-api
+
+WORKDIR /items-api/cmd/items-api
+
+RUN go build -o items-api
 
 EXPOSE 8080
 

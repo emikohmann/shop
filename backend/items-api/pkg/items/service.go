@@ -1,31 +1,51 @@
 package items
 
 import (
+	"context"
+	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
-	"time"
+	"net/http"
 )
 
 type Repository interface {
-	GetItem(id int64) (Item, error)
+	GetItem(ctx context.Context, id int64) (Item, apierrors.APIError)
+	SaveItem(ctx context.Context, item Item) apierrors.APIError
 }
 
-type service struct{}
+type service struct {
+	repository Repository
+}
 
-func NewService() *service {
-	return &service{}
+func NewService(repository Repository) *service {
+	return &service{
+		repository: repository,
+	}
 }
 
 // Get returns the item information
-func (service *service) Get(id int64) (Item, apierrors.APIError) {
-	if id <= 0 {
-		return Item{}, apierrors.NewBadRequestError("id must be positive")
+func (service *service) Get(ctx context.Context, id int64) (Item, apierrors.APIError) {
+	// TODO: validations
+	item, apiErr := service.repository.GetItem(ctx, id)
+	if apiErr != nil {
+		return Item{}, apiErr
 	}
-	//TODO implement me
-	return Item{
-		ID:          id,
-		Name:        "Mock item",
-		Description: "Some item here",
-		Price:       100.00,
-		DateCreated: time.Now().UTC(),
-	}, nil
+	return item, nil
+}
+
+// Save stores the item information
+func (service *service) Save(ctx context.Context, item Item) apierrors.APIError {
+	// TODO: validations
+	// TODO: remove this, just as an example
+	_, apiErr := service.repository.GetItem(ctx, item.ID)
+	if apiErr == nil {
+		return apierrors.NewBadRequestError(fmt.Sprintf("item with id %d already exists", item.ID))
+	} else {
+		if apiErr.Status() != http.StatusNotFound {
+			return apiErr
+		}
+	}
+	if apiErr := service.repository.SaveItem(ctx, item); apiErr != nil {
+		return apiErr
+	}
+	return nil
 }

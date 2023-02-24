@@ -1,11 +1,13 @@
 package application
 
 import (
+	"context"
 	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
 	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/config"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
+	itemsRepositories "github.com/emikohmann/shop/backend/items-api/pkg/items/repositories"
 	transportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/transport/http"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -17,8 +19,18 @@ type application struct {
 	router *gin.Engine
 }
 
+type itemsRepository interface {
+	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
+	SaveItem(ctx context.Context, item items.Item) apierrors.APIError
+}
+
 type itemsService interface {
-	Get(id int64) (items.Item, apierrors.APIError)
+	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
+	Save(ctx context.Context, item items.Item) apierrors.APIError
+}
+
+type repositories struct {
+	itemsMongoDBRepository itemsRepository
 }
 
 type services struct {
@@ -26,7 +38,8 @@ type services struct {
 }
 
 type handlers struct {
-	getItemHandler func(ctx *gin.Context)
+	getItemHandler  func(ctx *gin.Context)
+	saveItemHandler func(ctx *gin.Context)
 }
 
 // NewApplication creates a new instance of the application
@@ -46,7 +59,12 @@ func NewApplication() (*application, error) {
 		return nil, err
 	}
 
-	services, err := buildServices(logger)
+	repositories, err := buildRepositories(logger, config)
+	if err != nil {
+		return nil, err
+	}
+
+	services, err := buildServices(logger, repositories)
 	if err != nil {
 		return nil, err
 	}
@@ -97,9 +115,25 @@ func buildRouter(logger *logrus.Logger) (*gin.Engine, error) {
 	return router, nil
 }
 
+// buildRepositories creates the instances for the repositories
+func buildRepositories(logger *logrus.Logger, config *config.Config) (repositories, error) {
+	itemsMongoDBRepository, err := itemsRepositories.NewItemsMongoDB(
+		config.ItemsMongoDB.Host,
+		config.ItemsMongoDB.Port,
+		config.ItemsMongoDB.Database,
+		config.ItemsMongoDB.Collection)
+	if err != nil {
+		return repositories{}, fmt.Errorf("error initializing items MongoDB repository: %w", err)
+	}
+	logger.Debug("Repositories successfully initialized")
+	return repositories{
+		itemsMongoDBRepository: itemsMongoDBRepository,
+	}, nil
+}
+
 // buildServices creates the instances for the services
-func buildServices(logger *logrus.Logger) (services, error) {
-	itemsService := items.NewService()
+func buildServices(logger *logrus.Logger, repositories repositories) (services, error) {
+	itemsService := items.NewService(repositories.itemsMongoDBRepository)
 	logger.Debug("Services successfully initialized")
 	return services{
 		itemsService: itemsService,
@@ -109,15 +143,18 @@ func buildServices(logger *logrus.Logger) (services, error) {
 // buildServices creates the instances for the handlers
 func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 	getItemHandler := transportHTTP.GetItemHandler(services.itemsService)
+	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService)
 	logger.Debug("Handlers successfully initialized")
 	return handlers{
-		getItemHandler: getItemHandler,
+		getItemHandler:  getItemHandler,
+		saveItemHandler: saveItemHandler,
 	}, nil
 }
 
 // mapRouter creates the connections between the router and the handlers
 func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) error {
 	router.GET(transportHTTP.GetItem, handlers.getItemHandler)
+	router.POST(transportHTTP.SaveItem, handlers.saveItemHandler)
 	logger.Debug("Router successfully mapped")
 	return nil
 }

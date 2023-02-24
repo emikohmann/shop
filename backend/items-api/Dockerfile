@@ -10,6 +10,8 @@ WORKDIR /items-api/cmd/items-api
 
 RUN go build -o items-api
 
+RUN chmod a+x items-api
+
 EXPOSE 8080
 
 CMD [ "/items-api" ]

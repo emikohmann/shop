@@ -49,6 +49,17 @@ func SaveItemResponseToHTTP(response items.SaveItemResponse) SaveItemResponseHTT
 	}
 }
 
+// UpdateItemResponseToHTTP prepares the UpdateItemResponse to be presented as HTTP
+func UpdateItemResponseToHTTP(response items.UpdateItemResponse) UpdateItemRequestHTTP {
+	return UpdateItemRequestHTTP{
+		ID:          response.Item.ID,
+		Name:        response.Item.Name,
+		Description: response.Item.Description,
+		Price:       response.Item.Price,
+		DateCreated: response.Item.DateCreated,
+	}
+}
+
 // APIErrorToHTTP prepares the APIError to be presented as HTTP
 func APIErrorToHTTP(apiError apierrors.APIError) APIErrorHTTP {
 	return APIErrorHTTP{

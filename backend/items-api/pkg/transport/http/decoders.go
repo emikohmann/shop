@@ -8,10 +8,6 @@ import (
 	"time"
 )
 
-const (
-	paramItemID = "itemID"
-)
-
 // HTTPToGetItemRequest turns the HTTP request into a GetItemRequest
 func HTTPToGetItemRequest(ctx *gin.Context) (items.GetItemRequest, error) {
 	itemIDStr := ctx.Param(paramItemID)
@@ -32,19 +28,44 @@ type SaveItemRequestHTTP struct {
 	DateCreated time.Time `json:"date_created"`
 }
 
-// HTTPToSaveItemRequest turns the HTTP Request into a SaveItemREquest
+// HTTPToSaveItemRequest turns the HTTP Request into a SaveItemRequest
 func HTTPToSaveItemRequest(ctx *gin.Context) (items.SaveItemRequest, error) {
-	var saveItemRequest SaveItemRequestHTTP
-	if err := ctx.ShouldBindJSON(&saveItemRequest); err != nil {
-		return items.SaveItemRequest{}, fmt.Errorf("invalid item request: %w", err)
+	var saveItemRequestHTTP SaveItemRequestHTTP
+	if err := ctx.ShouldBindJSON(&saveItemRequestHTTP); err != nil {
+		return items.SaveItemRequest{}, fmt.Errorf("invalid save item request: %w", err)
 	}
 	return items.SaveItemRequest{
 		Item: items.Item{
-			ID:          saveItemRequest.ID,
-			Name:        saveItemRequest.Name,
-			Description: saveItemRequest.Description,
-			Price:       saveItemRequest.Price,
-			DateCreated: saveItemRequest.DateCreated,
+			ID:          saveItemRequestHTTP.ID,
+			Name:        saveItemRequestHTTP.Name,
+			Description: saveItemRequestHTTP.Description,
+			Price:       saveItemRequestHTTP.Price,
+			DateCreated: saveItemRequestHTTP.DateCreated,
+		},
+	}, nil
+}
+
+type UpdateItemRequestHTTP struct {
+	ID          int64     `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Price       float64   `json:"price"`
+	DateCreated time.Time `json:"date_created"`
+}
+
+// HTTPToUpdateItemRequest turns the HTTP Request into an UpdateItemRequest
+func HTTPToUpdateItemRequest(ctx *gin.Context) (items.UpdateItemRequest, error) {
+	var updateItemRequestHTTP UpdateItemRequestHTTP
+	if err := ctx.ShouldBindJSON(&updateItemRequestHTTP); err != nil {
+		return items.UpdateItemRequest{}, fmt.Errorf("invalid update item request: %w", err)
+	}
+	return items.UpdateItemRequest{
+		Item: items.Item{
+			ID:          updateItemRequestHTTP.ID,
+			Name:        updateItemRequestHTTP.Name,
+			Description: updateItemRequestHTTP.Description,
+			Price:       updateItemRequestHTTP.Price,
+			DateCreated: updateItemRequestHTTP.DateCreated,
 		},
 	}, nil
 }

@@ -7,3 +7,7 @@ type GetItemRequest struct {
 type SaveItemRequest struct {
 	Item Item
 }
+
+type UpdateItemRequest struct {
+	Item Item
+}

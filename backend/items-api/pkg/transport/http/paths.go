@@ -2,7 +2,12 @@ package http
 
 import "fmt"
 
+const (
+	paramItemID = "itemID"
+)
+
 var (
-	GetItem  = fmt.Sprintf("/items/:%s", paramItemID)
-	SaveItem = "/items"
+	PathGetItem    = fmt.Sprintf("/items/:%s", paramItemID)
+	PathSaveItem   = "/items"
+	PathUpdateItem = fmt.Sprintf("/items/:%s", paramItemID)
 )

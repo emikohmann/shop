@@ -22,11 +22,13 @@ type application struct {
 type itemsRepository interface {
 	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
 	SaveItem(ctx context.Context, item items.Item) apierrors.APIError
+	UpdateItem(ctx context.Context, item items.Item) apierrors.APIError
 }
 
 type itemsService interface {
 	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
 	Save(ctx context.Context, item items.Item) apierrors.APIError
+	Update(ctx context.Context, item items.Item) apierrors.APIError
 }
 
 type repositories struct {
@@ -38,8 +40,9 @@ type services struct {
 }
 
 type handlers struct {
-	getItemHandler  func(ctx *gin.Context)
-	saveItemHandler func(ctx *gin.Context)
+	getItemHandler    func(ctx *gin.Context)
+	saveItemHandler   func(ctx *gin.Context)
+	updateItemHandler func(ctx *gin.Context)
 }
 
 // NewApplication creates a new instance of the application
@@ -88,7 +91,7 @@ func NewApplication() (*application, error) {
 // buildLogger creates the instance for the logger
 func buildLogger() (*logrus.Logger, error) {
 	logger := logger.NewLogger(logrus.DebugLevel)
-	logger.Debug("Logger successfully initialized")
+	logger.Info("Logger successfully initialized")
 	return logger, nil
 }
 
@@ -98,7 +101,7 @@ func buildConfig(logger *logrus.Logger) (*config.Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error reading config: %w", err)
 	}
-	logger.Debug("Config successfully initialized")
+	logger.Info("Config successfully initialized")
 	return config, nil
 }
 
@@ -111,7 +114,7 @@ func buildRouter(logger *logrus.Logger) (*gin.Engine, error) {
 	if err := router.SetTrustedProxies(nil); err != nil {
 		return nil, fmt.Errorf("error setting up HTTP trusted proxies: %w", err)
 	}
-	logger.Debug("Router successfully initialized")
+	logger.Info("Router successfully initialized")
 	return router, nil
 }
 
@@ -121,11 +124,12 @@ func buildRepositories(logger *logrus.Logger, config *config.Config) (repositori
 		config.ItemsMongoDB.Host,
 		config.ItemsMongoDB.Port,
 		config.ItemsMongoDB.Database,
-		config.ItemsMongoDB.Collection)
+		config.ItemsMongoDB.Collection,
+		logger)
 	if err != nil {
 		return repositories{}, fmt.Errorf("error initializing items MongoDB repository: %w", err)
 	}
-	logger.Debug("Repositories successfully initialized")
+	logger.Info("Repositories successfully initialized")
 	return repositories{
 		itemsMongoDBRepository: itemsMongoDBRepository,
 	}, nil
@@ -133,8 +137,8 @@ func buildRepositories(logger *logrus.Logger, config *config.Config) (repositori
 
 // buildServices creates the instances for the services
 func buildServices(logger *logrus.Logger, repositories repositories) (services, error) {
-	itemsService := items.NewService(repositories.itemsMongoDBRepository)
-	logger.Debug("Services successfully initialized")
+	itemsService := items.NewService(repositories.itemsMongoDBRepository, logger)
+	logger.Info("Services successfully initialized")
 	return services{
 		itemsService: itemsService,
 	}, nil
@@ -142,26 +146,29 @@ func buildServices(logger *logrus.Logger, repositories repositories) (services, 
 
 // buildServices creates the instances for the handlers
 func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
-	getItemHandler := transportHTTP.GetItemHandler(services.itemsService)
-	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService)
-	logger.Debug("Handlers successfully initialized")
+	getItemHandler := transportHTTP.GetItemHandler(services.itemsService, logger)
+	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService, logger)
+	updateItemHandler := transportHTTP.UpdateItemHandler(services.itemsService, logger)
+	logger.Info("Handlers successfully initialized")
 	return handlers{
-		getItemHandler:  getItemHandler,
-		saveItemHandler: saveItemHandler,
+		getItemHandler:    getItemHandler,
+		saveItemHandler:   saveItemHandler,
+		updateItemHandler: updateItemHandler,
 	}, nil
 }
 
 // mapRouter creates the connections between the router and the handlers
 func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) error {
-	router.GET(transportHTTP.GetItem, handlers.getItemHandler)
-	router.POST(transportHTTP.SaveItem, handlers.saveItemHandler)
-	logger.Debug("Router successfully mapped")
+	router.GET(transportHTTP.PathGetItem, handlers.getItemHandler)
+	router.POST(transportHTTP.PathSaveItem, handlers.saveItemHandler)
+	router.PUT(transportHTTP.PathUpdateItem, handlers.updateItemHandler)
+	logger.Info("Router successfully mapped")
 	return nil
 }
 
 // Run starts the application execution
 func (app *application) Run() error {
-	app.logger.Info("Running application")
+	app.logger.Infof("Running application on :%d", app.config.HTTP.Port)
 	if err := app.router.Run(fmt.Sprintf(":%d", app.config.HTTP.Port)); err != nil {
 		return fmt.Errorf("error running HTTP server: %w", err)
 	}

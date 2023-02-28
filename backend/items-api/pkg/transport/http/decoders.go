@@ -5,7 +5,6 @@ import (
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
 	"strconv"
-	"time"
 )
 
 // HTTPToGetItemRequest turns the HTTP request into a GetItemRequest
@@ -21,11 +20,15 @@ func HTTPToGetItemRequest(ctx *gin.Context) (items.GetItemRequest, error) {
 }
 
 type SaveItemRequestHTTP struct {
-	ID          int64     `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Price       float64   `json:"price"`
-	DateCreated time.Time `json:"date_created"`
+	ID           int64    `json:"id"`
+	Name         string   `json:"name"`
+	Description  string   `json:"description"`
+	Thumbnail    string   `json:"thumbnail"`
+	Images       []string `json:"images"`
+	IsActive     bool     `json:"is_active"`
+	Restrictions []string `json:"restrictions"`
+	Price        float64  `json:"price"`
+	Stock        int      `json:"stock"`
 }
 
 // HTTPToSaveItemRequest turns the HTTP Request into a SaveItemRequest
@@ -36,36 +39,52 @@ func HTTPToSaveItemRequest(ctx *gin.Context) (items.SaveItemRequest, error) {
 	}
 	return items.SaveItemRequest{
 		Item: items.Item{
-			ID:          saveItemRequestHTTP.ID,
-			Name:        saveItemRequestHTTP.Name,
-			Description: saveItemRequestHTTP.Description,
-			Price:       saveItemRequestHTTP.Price,
-			DateCreated: saveItemRequestHTTP.DateCreated,
+			ID:           saveItemRequestHTTP.ID,
+			Name:         saveItemRequestHTTP.Name,
+			Description:  saveItemRequestHTTP.Description,
+			Thumbnail:    saveItemRequestHTTP.Thumbnail,
+			Images:       saveItemRequestHTTP.Images,
+			IsActive:     saveItemRequestHTTP.IsActive,
+			Restrictions: saveItemRequestHTTP.Restrictions,
+			Price:        saveItemRequestHTTP.Price,
+			Stock:        saveItemRequestHTTP.Stock,
 		},
 	}, nil
 }
 
 type UpdateItemRequestHTTP struct {
-	ID          int64     `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Price       float64   `json:"price"`
-	DateCreated time.Time `json:"date_created"`
+	Name         string   `json:"name"`
+	Description  string   `json:"description"`
+	Thumbnail    string   `json:"thumbnail"`
+	Images       []string `json:"images"`
+	IsActive     bool     `json:"is_active"`
+	Restrictions []string `json:"restrictions"`
+	Price        float64  `json:"price"`
+	Stock        int      `json:"stock"`
 }
 
 // HTTPToUpdateItemRequest turns the HTTP Request into an UpdateItemRequest
 func HTTPToUpdateItemRequest(ctx *gin.Context) (items.UpdateItemRequest, error) {
+	itemIDStr := ctx.Param(paramItemID)
+	itemID, err := strconv.ParseInt(itemIDStr, 10, 64)
+	if err != nil {
+		return items.UpdateItemRequest{}, fmt.Errorf("invalid item ID: %w", err)
+	}
 	var updateItemRequestHTTP UpdateItemRequestHTTP
 	if err := ctx.ShouldBindJSON(&updateItemRequestHTTP); err != nil {
 		return items.UpdateItemRequest{}, fmt.Errorf("invalid update item request: %w", err)
 	}
 	return items.UpdateItemRequest{
 		Item: items.Item{
-			ID:          updateItemRequestHTTP.ID,
-			Name:        updateItemRequestHTTP.Name,
-			Description: updateItemRequestHTTP.Description,
-			Price:       updateItemRequestHTTP.Price,
-			DateCreated: updateItemRequestHTTP.DateCreated,
+			ID:           itemID,
+			Name:         updateItemRequestHTTP.Name,
+			Description:  updateItemRequestHTTP.Description,
+			Thumbnail:    updateItemRequestHTTP.Thumbnail,
+			Images:       updateItemRequestHTTP.Images,
+			IsActive:     updateItemRequestHTTP.IsActive,
+			Restrictions: updateItemRequestHTTP.Restrictions,
+			Price:        updateItemRequestHTTP.Price,
+			Stock:        updateItemRequestHTTP.Stock,
 		},
 	}, nil
 }

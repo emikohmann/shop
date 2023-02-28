@@ -11,8 +11,8 @@ import (
 
 type ItemsService interface {
 	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
-	Save(ctx context.Context, item items.Item) apierrors.APIError
-	Update(ctx context.Context, item items.Item) apierrors.APIError
+	Save(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	Update(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
 	Delete(ctx context.Context, id int64) apierrors.APIError
 }
 
@@ -55,14 +55,15 @@ func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx 
 			return
 		}
 		requestCtx := ctx.Request.Context()
-		if apiErr := itemsService.Save(requestCtx, request.Item); apiErr != nil {
+		item, apiErr := itemsService.Save(requestCtx, request.Item)
+		if apiErr != nil {
 			logger.Errorf("Error saving item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
 		}
 		response := items.SaveItemResponse{
-			Item: request.Item,
+			Item: item,
 		}
 		httpResponse := SaveItemResponseToHTTP(response)
 		ctx.JSON(http.StatusCreated, httpResponse)
@@ -81,14 +82,15 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ct
 			return
 		}
 		requestCtx := ctx.Request.Context()
-		if apiErr := itemsService.Update(requestCtx, request.Item); apiErr != nil {
+		item, apiErr := itemsService.Update(requestCtx, request.Item)
+		if apiErr != nil {
 			logger.Errorf("Error updating item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
 		}
 		response := items.UpdateItemResponse{
-			Item: request.Item,
+			Item: item,
 		}
 		httpResponse := UpdateItemResponseToHTTP(response)
 		ctx.JSON(http.StatusOK, httpResponse)

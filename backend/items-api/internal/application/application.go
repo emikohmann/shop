@@ -28,8 +28,8 @@ type itemsRepository interface {
 
 type itemsService interface {
 	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
-	Save(ctx context.Context, item items.Item) apierrors.APIError
-	Update(ctx context.Context, item items.Item) apierrors.APIError
+	Save(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	Update(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
 	Delete(ctx context.Context, id int64) apierrors.APIError
 }
 

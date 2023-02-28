@@ -2,8 +2,12 @@ package items
 
 import (
 	"context"
+	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	"github.com/emikohmann/shop/backend/items-api/pkg/util"
 	"github.com/sirupsen/logrus"
+	"net/http"
+	"time"
 )
 
 type Repository interface {
@@ -36,21 +40,60 @@ func (service *service) Get(ctx context.Context, id int64) (Item, apierrors.APIE
 }
 
 // Save stores the item information
-func (service *service) Save(ctx context.Context, item Item) apierrors.APIError {
+func (service *service) Save(ctx context.Context, item Item) (Item, apierrors.APIError) {
+	_, apiErr := service.repository.GetItem(ctx, item.ID)
+	if apiErr == nil {
+		return Item{}, apierrors.NewBadRequestError(fmt.Sprintf("item with id %d already exists", item.ID))
+	} else if apiErr.Status() != http.StatusNotFound {
+		return Item{}, apiErr
+	}
+	now := time.Now().UTC()
+	item.DateCreated = now
+	item.LastUpdated = now
 	if apiErr := service.repository.SaveItem(ctx, item); apiErr != nil {
 		service.logger.Errorf("Error saving item: %s", apiErr.Error())
-		return apiErr
+		return Item{}, apiErr
 	}
-	return nil
+	return item, nil
 }
 
 // Update modifies the item information
-func (service *service) Update(ctx context.Context, item Item) apierrors.APIError {
-	if apiErr := service.repository.UpdateItem(ctx, item); apiErr != nil {
-		service.logger.Errorf("Error updating item: %s", apiErr.Error())
-		return apiErr
+func (service *service) Update(ctx context.Context, item Item) (Item, apierrors.APIError) {
+	current, apiErr := service.repository.GetItem(ctx, item.ID)
+	if apiErr != nil {
+		return Item{}, apiErr
 	}
-	return nil
+	if !util.IsEmpty(item.Name) {
+		current.Name = item.Name
+	}
+	if !util.IsEmpty(item.Description) {
+		current.Description = item.Description
+	}
+	if !util.IsEmpty(item.Thumbnail) {
+		current.Thumbnail = item.Thumbnail
+	}
+	if !util.IsEmpty(item.Images) {
+		current.Images = item.Images
+	}
+	if !util.IsEmpty(item.IsActive) {
+		current.IsActive = item.IsActive
+	}
+	if !util.IsEmpty(item.Restrictions) {
+		current.Restrictions = item.Restrictions
+	}
+	if !util.IsEmpty(item.Price) {
+		current.Price = item.Price
+	}
+	if !util.IsEmpty(item.Stock) {
+		current.Stock = item.Stock
+	}
+	now := time.Now().UTC()
+	current.LastUpdated = now
+	if apiErr := service.repository.UpdateItem(ctx, current); apiErr != nil {
+		service.logger.Errorf("Error updating item: %s", apiErr.Error())
+		return Item{}, apiErr
+	}
+	return current, nil
 }
 
 // Delete removes the item information

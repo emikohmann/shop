@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+type Queue interface {
+	SendItem(ctx context.Context, id int64) apierrors.APIError
+}
+
 type Repository interface {
 	GetItem(ctx context.Context, id int64) (Item, apierrors.APIError)
 	SaveItem(ctx context.Context, item Item) apierrors.APIError
@@ -19,18 +23,20 @@ type Repository interface {
 
 type service struct {
 	repository Repository
+	queue      Queue
 	logger     *logrus.Logger
 }
 
-func NewService(repository Repository, logger *logrus.Logger) *service {
+func NewService(repository Repository, queue Queue, logger *logrus.Logger) *service {
 	return &service{
 		repository: repository,
+		queue:      queue,
 		logger:     logger,
 	}
 }
 
-// Get returns the item information
-func (service *service) Get(ctx context.Context, id int64) (Item, apierrors.APIError) {
+// GetItem returns the item information
+func (service *service) GetItem(ctx context.Context, id int64) (Item, apierrors.APIError) {
 	item, apiErr := service.repository.GetItem(ctx, id)
 	if apiErr != nil {
 		service.logger.Errorf("Error getting item %d: %s", id, apiErr.Error())
@@ -39,8 +45,8 @@ func (service *service) Get(ctx context.Context, id int64) (Item, apierrors.APIE
 	return item, nil
 }
 
-// Save stores the item information
-func (service *service) Save(ctx context.Context, item Item) (Item, apierrors.APIError) {
+// SaveItem stores the item information
+func (service *service) SaveItem(ctx context.Context, item Item) (Item, apierrors.APIError) {
 	_, apiErr := service.repository.GetItem(ctx, item.ID)
 	if apiErr == nil {
 		return Item{}, apierrors.NewBadRequestError(fmt.Sprintf("item with id %d already exists", item.ID))
@@ -54,11 +60,15 @@ func (service *service) Save(ctx context.Context, item Item) (Item, apierrors.AP
 		service.logger.Errorf("Error saving item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
+	if apiErr := service.queue.SendItem(ctx, item.ID); apiErr != nil {
+		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
+		return Item{}, apiErr
+	}
 	return item, nil
 }
 
-// Update modifies the item information
-func (service *service) Update(ctx context.Context, item Item) (Item, apierrors.APIError) {
+// UpdateItem modifies the item information
+func (service *service) UpdateItem(ctx context.Context, item Item) (Item, apierrors.APIError) {
 	current, apiErr := service.repository.GetItem(ctx, item.ID)
 	if apiErr != nil {
 		return Item{}, apiErr
@@ -93,13 +103,21 @@ func (service *service) Update(ctx context.Context, item Item) (Item, apierrors.
 		service.logger.Errorf("Error updating item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
+	if apiErr := service.queue.SendItem(ctx, item.ID); apiErr != nil {
+		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
+		return Item{}, apiErr
+	}
 	return current, nil
 }
 
-// Delete removes the item information
-func (service *service) Delete(ctx context.Context, id int64) apierrors.APIError {
+// DeleteItem removes the item information
+func (service *service) DeleteItem(ctx context.Context, id int64) apierrors.APIError {
 	if apiErr := service.repository.DeleteItem(ctx, id); apiErr != nil {
 		service.logger.Errorf("Error deleting item %d: %s", id, apiErr.Error())
+		return apiErr
+	}
+	if apiErr := service.queue.SendItem(ctx, id); apiErr != nil {
+		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return apiErr
 	}
 	return nil

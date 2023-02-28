@@ -7,6 +7,7 @@ import (
 	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/config"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
+	itemsQueues "github.com/emikohmann/shop/backend/items-api/pkg/items/queues"
 	itemsRepositories "github.com/emikohmann/shop/backend/items-api/pkg/items/repositories"
 	transportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/transport/http"
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,10 @@ type application struct {
 	router *gin.Engine
 }
 
+type itemsQueue interface {
+	SendItem(ctx context.Context, id int64) apierrors.APIError
+}
+
 type itemsRepository interface {
 	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
 	SaveItem(ctx context.Context, item items.Item) apierrors.APIError
@@ -27,10 +32,14 @@ type itemsRepository interface {
 }
 
 type itemsService interface {
-	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
-	Save(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
-	Update(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
-	Delete(ctx context.Context, id int64) apierrors.APIError
+	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
+	SaveItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	UpdateItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	DeleteItem(ctx context.Context, id int64) apierrors.APIError
+}
+
+type queues struct {
+	itemsRabbitMQQueue itemsQueue
 }
 
 type repositories struct {
@@ -65,12 +74,17 @@ func NewApplication() (*application, error) {
 		return nil, err
 	}
 
+	queues, err := buildQueues(logger, config)
+	if err != nil {
+		return nil, err
+	}
+
 	repositories, err := buildRepositories(logger, config)
 	if err != nil {
 		return nil, err
 	}
 
-	services, err := buildServices(logger, repositories)
+	services, err := buildServices(logger, repositories, queues)
 	if err != nil {
 		return nil, err
 	}
@@ -121,6 +135,25 @@ func buildRouter(logger *logrus.Logger) (*gin.Engine, error) {
 	return router, nil
 }
 
+// buildQueues creates the instances for the queues
+func buildQueues(logger *logrus.Logger, config *config.Config) (queues, error) {
+	itemsRabbitMQQueue, err := itemsQueues.NewItemsRabbitMQ(
+		config.ItemsRabbitMQ.Host,
+		config.ItemsRabbitMQ.Port,
+		config.ItemsRabbitMQ.User,
+		config.ItemsRabbitMQ.Password,
+		config.ItemsRabbitMQ.QueueName,
+		logger,
+	)
+	if err != nil {
+		return queues{}, fmt.Errorf("error initializing items RabbitMQ queue: %w", err)
+	}
+	logger.Info("Queues successfully initialized")
+	return queues{
+		itemsRabbitMQQueue: itemsRabbitMQQueue,
+	}, nil
+}
+
 // buildRepositories creates the instances for the repositories
 func buildRepositories(logger *logrus.Logger, config *config.Config) (repositories, error) {
 	itemsMongoDBRepository, err := itemsRepositories.NewItemsMongoDB(
@@ -139,8 +172,8 @@ func buildRepositories(logger *logrus.Logger, config *config.Config) (repositori
 }
 
 // buildServices creates the instances for the services
-func buildServices(logger *logrus.Logger, repositories repositories) (services, error) {
-	itemsService := items.NewService(repositories.itemsMongoDBRepository, logger)
+func buildServices(logger *logrus.Logger, repositories repositories, queues queues) (services, error) {
+	itemsService := items.NewService(repositories.itemsMongoDBRepository, queues.itemsRabbitMQQueue, logger)
 	logger.Info("Services successfully initialized")
 	return services{
 		itemsService: itemsService,

@@ -10,10 +10,10 @@ import (
 )
 
 type ItemsService interface {
-	Get(ctx context.Context, id int64) (items.Item, apierrors.APIError)
-	Save(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
-	Update(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
-	Delete(ctx context.Context, id int64) apierrors.APIError
+	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
+	SaveItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	UpdateItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	DeleteItem(ctx context.Context, id int64) apierrors.APIError
 }
 
 // GetItemHandler sets up the GetItem request handler
@@ -28,7 +28,7 @@ func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *
 			return
 		}
 		requestCtx := ctx.Request.Context()
-		item, apiErr := itemsService.Get(requestCtx, request.ID)
+		item, apiErr := itemsService.GetItem(requestCtx, request.ID)
 		if apiErr != nil {
 			logger.Errorf("Error getting item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
@@ -55,7 +55,7 @@ func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx 
 			return
 		}
 		requestCtx := ctx.Request.Context()
-		item, apiErr := itemsService.Save(requestCtx, request.Item)
+		item, apiErr := itemsService.SaveItem(requestCtx, request.Item)
 		if apiErr != nil {
 			logger.Errorf("Error saving item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
@@ -82,7 +82,7 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ct
 			return
 		}
 		requestCtx := ctx.Request.Context()
-		item, apiErr := itemsService.Update(requestCtx, request.Item)
+		item, apiErr := itemsService.UpdateItem(requestCtx, request.Item)
 		if apiErr != nil {
 			logger.Errorf("Error updating item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
@@ -109,7 +109,7 @@ func DeleteItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ct
 			return
 		}
 		requestCtx := ctx.Request.Context()
-		if apiErr := itemsService.Delete(requestCtx, request.ID); apiErr != nil {
+		if apiErr := itemsService.DeleteItem(requestCtx, request.ID); apiErr != nil {
 			logger.Errorf("Error deleting item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)

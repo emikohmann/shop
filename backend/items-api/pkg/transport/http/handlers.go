@@ -17,7 +17,7 @@ type ItemsService interface {
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
 }
 
-// MetricsHandler sets up the GetMetrics request handler
+// MetricsHandler sets up the Metrics request handler
 func MetricsHandler(logger *logrus.Logger) gin.HandlerFunc {
 	handler := promhttp.Handler()
 	return func(ctx *gin.Context) {

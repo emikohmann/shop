@@ -153,7 +153,7 @@ func buildRouter(logger *logrus.Logger) (*gin.Engine, error) {
 // buildMetricsCollectors creates the instances for the metric collectors
 func buildMetricsCollectors(logger *logrus.Logger) (metricsCollectors, error) {
 	itemsPrometheusMetrics := itemsMetrics.NewPrometheusMetrics(logger)
-	logger.Info("Metric metricsCollectors successfully initialized")
+	logger.Info("Metric collectors successfully initialized")
 	return metricsCollectors{
 		itemsPrometheusMetrics: itemsPrometheusMetrics,
 	}, nil

@@ -10,8 +10,7 @@ import (
 	itemsMetrics "github.com/emikohmann/shop/backend/items-api/pkg/items/metrics_collectors"
 	itemsQueues "github.com/emikohmann/shop/backend/items-api/pkg/items/queues"
 	itemsRepositories "github.com/emikohmann/shop/backend/items-api/pkg/items/repositories"
-	metricsTransportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/metrics/transport/http"
-	itemsTransportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/transport/http"
+	transportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/transport/http"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -199,7 +198,11 @@ func buildRepositories(logger *logrus.Logger, config *config.Config) (repositori
 
 // buildServices creates the instances for the services
 func buildServices(repositories repositories, metricsCollectors metricsCollectors, queues queues, logger *logrus.Logger) (services, error) {
-	itemsService := items.NewService(repositories.itemsMongoDBRepository, metricsCollectors.itemsPrometheusMetrics, queues.itemsRabbitMQQueue, logger)
+	itemsService := items.NewService(
+		repositories.itemsMongoDBRepository,
+		metricsCollectors.itemsPrometheusMetrics,
+		queues.itemsRabbitMQQueue,
+		logger)
 	logger.Info("Services successfully initialized")
 	return services{
 		itemsService: itemsService,
@@ -208,11 +211,11 @@ func buildServices(repositories repositories, metricsCollectors metricsCollector
 
 // buildHandlers creates the instances for the handlers
 func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
-	metricsHandler := metricsTransportHTTP.GetMetricsHandler(logger)
-	getItemHandler := itemsTransportHTTP.GetItemHandler(services.itemsService, logger)
-	saveItemHandler := itemsTransportHTTP.SaveItemHandler(services.itemsService, logger)
-	updateItemHandler := itemsTransportHTTP.UpdateItemHandler(services.itemsService, logger)
-	deleteItemHandler := itemsTransportHTTP.DeleteItemHandler(services.itemsService, logger)
+	metricsHandler := transportHTTP.MetricsHandler(logger)
+	getItemHandler := transportHTTP.GetItemHandler(services.itemsService, logger)
+	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService, logger)
+	updateItemHandler := transportHTTP.UpdateItemHandler(services.itemsService, logger)
+	deleteItemHandler := transportHTTP.DeleteItemHandler(services.itemsService, logger)
 	logger.Info("Handlers successfully initialized")
 	return handlers{
 		metricsHandler:    metricsHandler,
@@ -225,11 +228,11 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 
 // mapRouter creates the connections between the router and the handlers
 func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) error {
-	router.GET(metricsTransportHTTP.PathMetrics, handlers.metricsHandler)
-	router.GET(itemsTransportHTTP.PathGetItem, handlers.getItemHandler)
-	router.POST(itemsTransportHTTP.PathSaveItem, handlers.saveItemHandler)
-	router.PUT(itemsTransportHTTP.PathUpdateItem, handlers.updateItemHandler)
-	router.DELETE(itemsTransportHTTP.PathDeleteItem, handlers.deleteItemHandler)
+	router.GET(transportHTTP.PathMetrics, handlers.metricsHandler)
+	router.GET(transportHTTP.PathGetItem, handlers.getItemHandler)
+	router.POST(transportHTTP.PathSaveItem, handlers.saveItemHandler)
+	router.PUT(transportHTTP.PathUpdateItem, handlers.updateItemHandler)
+	router.DELETE(transportHTTP.PathDeleteItem, handlers.deleteItemHandler)
 	logger.Info("Router successfully mapped")
 	return nil
 }

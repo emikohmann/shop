@@ -7,6 +7,7 @@ const (
 )
 
 var (
+	PathMetrics    = "/metrics"
 	PathGetItem    = fmt.Sprintf("/items/:%s", paramItemID)
 	PathSaveItem   = "/items"
 	PathUpdateItem = fmt.Sprintf("/items/:%s", paramItemID)

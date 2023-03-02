@@ -5,6 +5,7 @@ import (
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )
@@ -14,6 +15,14 @@ type ItemsService interface {
 	SaveItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
 	UpdateItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
+}
+
+// MetricsHandler sets up the GetMetrics request handler
+func MetricsHandler(logger *logrus.Logger) gin.HandlerFunc {
+	handler := promhttp.Handler()
+	return func(ctx *gin.Context) {
+		handler.ServeHTTP(ctx.Writer, ctx.Request)
+	}
 }
 
 // GetItemHandler sets up the GetItem request handler

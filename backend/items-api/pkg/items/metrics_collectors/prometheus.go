@@ -22,15 +22,15 @@ func NewPrometheusMetrics(logger *logrus.Logger) prometheus {
 		}),
 		items.ActionSave: promauto.NewCounter(prom.CounterOpts{
 			Name: "items_save",
-			Help: "Counter for GET item operation",
+			Help: "Counter for SAVE item operation",
 		}),
 		items.ActionUpdate: promauto.NewCounter(prom.CounterOpts{
 			Name: "items_update",
-			Help: "Counter for GET item operation",
+			Help: "Counter for UPDATE item operation",
 		}),
 		items.ActionDelete: promauto.NewCounter(prom.CounterOpts{
 			Name: "items_delete",
-			Help: "Counter for GET item operation",
+			Help: "Counter for DELETE item operation",
 		}),
 	}
 	return prometheus{

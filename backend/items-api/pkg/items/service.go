@@ -11,7 +11,7 @@ import (
 )
 
 type Queue interface {
-	SendItem(ctx context.Context, id int64) apierrors.APIError
+	SendItem(ctx context.Context, action Action, priority Priority, id int64) apierrors.APIError
 }
 
 type Repository interface {
@@ -60,7 +60,7 @@ func (service *service) SaveItem(ctx context.Context, item Item) (Item, apierror
 		service.logger.Errorf("Error saving item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
-	if apiErr := service.queue.SendItem(ctx, item.ID); apiErr != nil {
+	if apiErr := service.queue.SendItem(ctx, ActionSave, PriorityLow, item.ID); apiErr != nil {
 		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
@@ -103,7 +103,7 @@ func (service *service) UpdateItem(ctx context.Context, item Item) (Item, apierr
 		service.logger.Errorf("Error updating item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
-	if apiErr := service.queue.SendItem(ctx, item.ID); apiErr != nil {
+	if apiErr := service.queue.SendItem(ctx, ActionUpdate, PriorityLow, item.ID); apiErr != nil {
 		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
@@ -116,7 +116,7 @@ func (service *service) DeleteItem(ctx context.Context, id int64) apierrors.APIE
 		service.logger.Errorf("Error deleting item %d: %s", id, apiErr.Error())
 		return apiErr
 	}
-	if apiErr := service.queue.SendItem(ctx, id); apiErr != nil {
+	if apiErr := service.queue.SendItem(ctx, ActionDelete, PriorityLow, id); apiErr != nil {
 		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return apiErr
 	}

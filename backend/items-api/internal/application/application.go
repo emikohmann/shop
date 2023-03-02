@@ -21,7 +21,7 @@ type application struct {
 }
 
 type itemsQueue interface {
-	SendItem(ctx context.Context, id int64) apierrors.APIError
+	SendItem(ctx context.Context, action items.Action, priority items.Priority, id int64) apierrors.APIError
 }
 
 type itemsRepository interface {
@@ -143,6 +143,7 @@ func buildQueues(logger *logrus.Logger, config *config.Config) (queues, error) {
 		config.ItemsRabbitMQ.User,
 		config.ItemsRabbitMQ.Password,
 		config.ItemsRabbitMQ.QueueName,
+		config.App.Name,
 		logger,
 	)
 	if err != nil {

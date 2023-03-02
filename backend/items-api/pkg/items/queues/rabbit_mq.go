@@ -2,11 +2,19 @@ package queues
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	"github.com/emikohmann/shop/backend/items-api/pkg/items"
+	"github.com/google/uuid"
 	"github.com/rabbitmq/amqp091-go"
 	"github.com/sirupsen/logrus"
 	"time"
+)
+
+const (
+	encodingJSON = "application/json"
+	encodingUTF8 = "UTF-8"
 )
 
 type itemsRabbitMQ struct {
@@ -14,10 +22,11 @@ type itemsRabbitMQ struct {
 	channel    *amqp091.Channel
 	queue      *amqp091.Queue
 	logger     *logrus.Logger
+	appName    string
 }
 
 // NewItemsRabbitMQ instances a new items' queues against RabbitMQ
-func NewItemsRabbitMQ(host string, port int, user string, password string, queueName string, logger *logrus.Logger) (itemsRabbitMQ, error) {
+func NewItemsRabbitMQ(host string, port int, user string, password string, queueName string, appName string, logger *logrus.Logger) (itemsRabbitMQ, error) {
 	connection, err := amqp091.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", user, password, host, port))
 	if err != nil {
 		logger.Errorf("Error dialing RabbigMQ conenction: %s", err.Error())
@@ -38,29 +47,33 @@ func NewItemsRabbitMQ(host string, port int, user string, password string, queue
 		channel:    channel,
 		queue:      &queue,
 		logger:     logger,
+		appName:    appName,
 	}, nil
 }
 
 // SendItem notifies an item new
-func (publisher itemsRabbitMQ) SendItem(ctx context.Context, id int64) apierrors.APIError {
+func (publisher itemsRabbitMQ) SendItem(ctx context.Context, action items.Action, priority items.Priority, id int64) apierrors.APIError {
+	message := map[string]interface{}{
+		"action": action.String(),
+		"id":     id,
+	}
+
+	bytes, err := json.Marshal(message)
+	if err != nil {
+		return apierrors.NewInternalServerError(fmt.Sprintf("error generating message for RabbitMQ: %s", err.Error()))
+	}
+
 	if err := publisher.channel.PublishWithContext(ctx, "", publisher.queue.Name, false, false, amqp091.Publishing{
-		Headers:         nil,
-		ContentType:     "",
-		ContentEncoding: "",
-		DeliveryMode:    0,
-		Priority:        0,
-		CorrelationId:   "",
-		ReplyTo:         "",
-		Expiration:      "",
-		MessageId:       "",
+		ContentType:     encodingJSON,
+		ContentEncoding: encodingUTF8,
+		DeliveryMode:    amqp091.Transient,
+		Priority:        priority.Value(),
+		MessageId:       uuid.New().String(),
 		Timestamp:       time.Now().UTC(),
-		Type:            "",
-		UserId:          "",
-		AppId:           "",
-		Body:            nil,
+		AppId:           publisher.appName,
+		Body:            bytes,
 	}); err != nil {
 		return apierrors.NewInternalServerError(fmt.Sprintf("error publishing item with RabbitMQ: %s", err.Error()))
 	}
-	publisher.logger.Infof("Successfully new published for item: %d", id)
 	return nil
 }

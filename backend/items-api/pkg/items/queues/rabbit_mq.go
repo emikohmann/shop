@@ -51,8 +51,8 @@ func NewItemsRabbitMQ(host string, port int, user string, password string, queue
 	}, nil
 }
 
-// SendItem notifies an item new
-func (publisher itemsRabbitMQ) SendItem(ctx context.Context, action items.Action, priority items.Priority, id int64) apierrors.APIError {
+// PublishItemNotification notifies an item new
+func (publisher itemsRabbitMQ) PublishItemNotification(ctx context.Context, action items.Action, priority items.Priority, id int64) apierrors.APIError {
 	message := map[string]interface{}{
 		"action": action.String(),
 		"id":     id,

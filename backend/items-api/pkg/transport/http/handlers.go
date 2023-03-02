@@ -17,7 +17,7 @@ type ItemsService interface {
 }
 
 // GetItemHandler sets up the GetItem request handler
-func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *gin.Context) {
+func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToGetItemRequest(ctx)
 		if err != nil {
@@ -44,7 +44,7 @@ func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *
 }
 
 // SaveItemHandler sets up the SaveItem request handler
-func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *gin.Context) {
+func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToSaveItemRequest(ctx)
 		if err != nil {
@@ -71,7 +71,7 @@ func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx 
 }
 
 // UpdateItemHandler sets up the UpdateItem request handler
-func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *gin.Context) {
+func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToUpdateItemRequest(ctx)
 		if err != nil {
@@ -98,7 +98,7 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ct
 }
 
 // DeleteItemHandler sets up the DeleteItem request handler
-func DeleteItemHandler(itemsService ItemsService, logger *logrus.Logger) func(ctx *gin.Context) {
+func DeleteItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToDeleteItemRequest(ctx)
 		if err != nil {

@@ -10,8 +10,12 @@ import (
 	"time"
 )
 
+type MetricCollector interface {
+	NotifyMetric(ctx context.Context, action Action)
+}
+
 type Queue interface {
-	SendItem(ctx context.Context, action Action, priority Priority, id int64) apierrors.APIError
+	PublishItemNotification(ctx context.Context, action Action, priority Priority, id int64) apierrors.APIError
 }
 
 type Repository interface {
@@ -22,16 +26,18 @@ type Repository interface {
 }
 
 type service struct {
-	repository Repository
-	queue      Queue
-	logger     *logrus.Logger
+	repository      Repository
+	metricCollector MetricCollector
+	queue           Queue
+	logger          *logrus.Logger
 }
 
-func NewService(repository Repository, queue Queue, logger *logrus.Logger) *service {
+func NewService(repository Repository, metricCollector MetricCollector, queue Queue, logger *logrus.Logger) *service {
 	return &service{
-		repository: repository,
-		queue:      queue,
-		logger:     logger,
+		repository:      repository,
+		metricCollector: metricCollector,
+		queue:           queue,
+		logger:          logger,
 	}
 }
 
@@ -42,6 +48,7 @@ func (service *service) GetItem(ctx context.Context, id int64) (Item, apierrors.
 		service.logger.Errorf("Error getting item %d: %s", id, apiErr.Error())
 		return Item{}, apiErr
 	}
+	service.metricCollector.NotifyMetric(ctx, ActionGet)
 	return item, nil
 }
 
@@ -60,7 +67,8 @@ func (service *service) SaveItem(ctx context.Context, item Item) (Item, apierror
 		service.logger.Errorf("Error saving item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
-	if apiErr := service.queue.SendItem(ctx, ActionSave, PriorityLow, item.ID); apiErr != nil {
+	service.metricCollector.NotifyMetric(ctx, ActionSave)
+	if apiErr := service.queue.PublishItemNotification(ctx, ActionSave, PriorityLow, item.ID); apiErr != nil {
 		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
@@ -103,7 +111,8 @@ func (service *service) UpdateItem(ctx context.Context, item Item) (Item, apierr
 		service.logger.Errorf("Error updating item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
-	if apiErr := service.queue.SendItem(ctx, ActionUpdate, PriorityLow, item.ID); apiErr != nil {
+	service.metricCollector.NotifyMetric(ctx, ActionUpdate)
+	if apiErr := service.queue.PublishItemNotification(ctx, ActionUpdate, PriorityLow, item.ID); apiErr != nil {
 		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
@@ -116,7 +125,8 @@ func (service *service) DeleteItem(ctx context.Context, id int64) apierrors.APIE
 		service.logger.Errorf("Error deleting item %d: %s", id, apiErr.Error())
 		return apiErr
 	}
-	if apiErr := service.queue.SendItem(ctx, ActionDelete, PriorityLow, id); apiErr != nil {
+	service.metricCollector.NotifyMetric(ctx, ActionDelete)
+	if apiErr := service.queue.PublishItemNotification(ctx, ActionDelete, PriorityLow, id); apiErr != nil {
 		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
 		return apiErr
 	}

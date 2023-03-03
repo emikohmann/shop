@@ -60,6 +60,7 @@ type services struct {
 }
 
 type handlers struct {
+	docsHandler       gin.HandlerFunc
 	metricsHandler    gin.HandlerFunc
 	getItemHandler    gin.HandlerFunc
 	saveItemHandler   gin.HandlerFunc
@@ -211,6 +212,7 @@ func buildServices(repositories repositories, metrics metrics, queues queues, lo
 
 // buildHandlers creates the instances for the handlers
 func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
+	docsHandler := transportHTTP.DocsHandler(logger)
 	metricsHandler := transportHTTP.MetricsHandler(logger)
 	getItemHandler := transportHTTP.GetItemHandler(services.itemsService, logger)
 	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService, logger)
@@ -218,6 +220,7 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 	deleteItemHandler := transportHTTP.DeleteItemHandler(services.itemsService, logger)
 	logger.Info("Handlers successfully initialized")
 	return handlers{
+		docsHandler:       docsHandler,
 		metricsHandler:    metricsHandler,
 		getItemHandler:    getItemHandler,
 		saveItemHandler:   saveItemHandler,
@@ -228,6 +231,7 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 
 // mapRouter creates the connections between the router and the handlers
 func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) error {
+	router.GET(transportHTTP.PathDocs, handlers.docsHandler)
 	router.GET(transportHTTP.PathMetrics, handlers.metricsHandler)
 	router.GET(transportHTTP.PathGetItem, handlers.getItemHandler)
 	router.POST(transportHTTP.PathSaveItem, handlers.saveItemHandler)

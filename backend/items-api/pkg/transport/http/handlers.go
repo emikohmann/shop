@@ -2,11 +2,14 @@ package http
 
 import (
 	"context"
+	_ "github.com/emikohmann/shop/backend/items-api/docs/openapi"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 )
 
@@ -15,6 +18,12 @@ type ItemsService interface {
 	SaveItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
 	UpdateItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
+}
+
+// DocsHandler sets up the Docs request handler
+func DocsHandler(logger *logrus.Logger) gin.HandlerFunc {
+	handler := ginSwagger.WrapHandler(swaggerFiles.Handler)
+	return handler
 }
 
 // MetricsHandler sets up the Metrics request handler

@@ -27,16 +27,16 @@ func MetricsHandler(logger *logrus.Logger) gin.HandlerFunc {
 
 // GetItemHandler sets up the GetItem request handler
 // GetItem godoc
-// @Summary Return the item information.
-// @Description Return the item information fetching information from the database.
-// @Tags Items
-// @Param itemID path int  true "ID of the item to get"
-// @Produce json
-// @Success 200 {object} GetItemResponseHTTP
-// @Failure 400 {object} APIErrorHTTP
-// @Failure 404 {object} APIErrorHTTP
-// @Failure 500 {object} APIErrorHTTP
-// @Router /items/{itemID} [get]
+//	@Summary		Return the item information.
+//	@Description	Return the item information fetching information from the database.
+//	@Tags			Items
+//	@Param			itemID	path	int	true	"ID of the item to get"
+//	@Produce		json
+//	@Success		200	{object}	GetItemResponseHTTP
+//	@Failure		400	{object}	APIErrorHTTP
+//	@Failure		404	{object}	APIErrorHTTP
+//	@Failure		500	{object}	APIErrorHTTP
+//	@Router			/items/{itemID} [get]
 func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToGetItemRequest(ctx)
@@ -65,16 +65,16 @@ func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Handle
 
 // SaveItemHandler sets up the SaveItem request handler
 // SaveItem godoc
-// @Summary Store the item information.
-// @Description Store the item information against the database.
-// @Tags Items
-// @Accept json
-// @Produce json
-// @Param request body SaveItemRequestHTTP true "Item to save"
-// @Success 201 {object} SaveItemResponseHTTP
-// @Failure 400 {object} APIErrorHTTP
-// @Failure 500 {object} APIErrorHTTP
-// @Router /items [post]
+//	@Summary		Store the item information.
+//	@Description	Store the item information against the database.
+//	@Tags			Items
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		SaveItemRequestHTTP	true	"Item to save"
+//	@Success		201		{object}	SaveItemResponseHTTP
+//	@Failure		400		{object}	APIErrorHTTP
+//	@Failure		500		{object}	APIErrorHTTP
+//	@Router			/items [post]
 func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToSaveItemRequest(ctx)
@@ -103,17 +103,17 @@ func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Handl
 
 // UpdateItemHandler sets up the UpdateItem request handler
 // UpdateItem godoc
-// @Summary Updates the item information.
-// @Description Updates the item information against the database.
-// @Tags Items
-// @Param itemID path int  true "ID of the item to get"
-// @Accept json
-// @Produce json
-// @Param request body UpdateItemRequestHTTP true "Item fields to update"
-// @Success 200 {object} UpdateItemResponseHTTP
-// @Failure 400 {object} APIErrorHTTP
-// @Failure 500 {object} APIErrorHTTP
-// @Router /items/{itemID} [put]
+//	@Summary		Updates the item information.
+//	@Description	Updates the item information against the database.
+//	@Tags			Items
+//	@Param			itemID	path	int	true	"ID of the item to get"
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		UpdateItemRequestHTTP	true	"Item fields to update"
+//	@Success		200		{object}	UpdateItemResponseHTTP
+//	@Failure		400		{object}	APIErrorHTTP
+//	@Failure		500		{object}	APIErrorHTTP
+//	@Router			/items/{itemID} [put]
 func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToUpdateItemRequest(ctx)
@@ -142,16 +142,16 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Han
 
 // DeleteItemHandler sets up the DeleteItem request handler
 // DeleteItem godoc
-// @Summary Delete the item information.
-// @Description Delete the item information against the database.
-// @Tags Items
-// @Param itemID path int  true "ID of the item to delete"
-// @Produce json
-// @Success 200 {object} DeleteItemResponseHTTP
-// @Failure 400 {object} APIErrorHTTP
-// @Failure 404 {object} APIErrorHTTP
-// @Failure 500 {object} APIErrorHTTP
-// @Router /items/{itemID} [delete]
+//	@Summary		Delete the item information.
+//	@Description	Delete the item information against the database.
+//	@Tags			Items
+//	@Param			itemID	path	int	true	"ID of the item to delete"
+//	@Produce		json
+//	@Success		200	{object}	DeleteItemResponseHTTP
+//	@Failure		400	{object}	APIErrorHTTP
+//	@Failure		404	{object}	APIErrorHTTP
+//	@Failure		500	{object}	APIErrorHTTP
+//	@Router			/items/{itemID} [delete]
 func DeleteItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToDeleteItemRequest(ctx)

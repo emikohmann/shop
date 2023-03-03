@@ -20,15 +20,15 @@ func HTTPToGetItemRequest(ctx *gin.Context) (items.GetItemRequest, error) {
 }
 
 type SaveItemRequestHTTP struct {
-	ID           int64    `json:"id"`
-	Name         string   `json:"name"`
-	Description  string   `json:"description"`
-	Thumbnail    string   `json:"thumbnail"`
-	Images       []string `json:"images"`
-	IsActive     bool     `json:"is_active"`
+	ID           int64    `json:"id" example:"1"`
+	Name         string   `json:"name" example:"Iphone 13 128GB 4GB RAM"`
+	Description  string   `json:"description" example:"The iPhone 13 display has rounded corners"`
+	Thumbnail    string   `json:"thumbnail" example:"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"`
+	Images       []string `json:"images" example:"https://www.macstation.com.ar/img/productos/2599-2.jpg"`
+	IsActive     bool     `json:"is_active" example:"true"`
 	Restrictions []string `json:"restrictions"`
-	Price        float64  `json:"price"`
-	Stock        int      `json:"stock"`
+	Price        float64  `json:"price" example:"729.99"`
+	Stock        int      `json:"stock" example:"1"`
 }
 
 // HTTPToSaveItemRequest turns the HTTP Request into a SaveItemRequest
@@ -53,14 +53,14 @@ func HTTPToSaveItemRequest(ctx *gin.Context) (items.SaveItemRequest, error) {
 }
 
 type UpdateItemRequestHTTP struct {
-	Name         string   `json:"name"`
-	Description  string   `json:"description"`
-	Thumbnail    string   `json:"thumbnail"`
-	Images       []string `json:"images"`
-	IsActive     bool     `json:"is_active"`
+	Name         string   `json:"name" example:"Iphone 13 128GB 4GB RAM"`
+	Description  string   `json:"description" example:"The iPhone 13 display has rounded corners"`
+	Thumbnail    string   `json:"thumbnail" example:"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"`
+	Images       []string `json:"images" example:"https://www.macstation.com.ar/img/productos/2599-2.jpg"`
+	IsActive     bool     `json:"is_active" example:"true"`
 	Restrictions []string `json:"restrictions"`
-	Price        float64  `json:"price"`
-	Stock        int      `json:"stock"`
+	Price        float64  `json:"price" example:"729.99"`
+	Stock        int      `json:"stock" example:"1"`
 }
 
 // HTTPToUpdateItemRequest turns the HTTP Request into an UpdateItemRequest

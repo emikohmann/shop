@@ -1,0 +1,344 @@
+basePath: /
+definitions:
+  http.APIErrorHTTP:
+    properties:
+      message:
+        example: Some information not found
+        type: string
+      status:
+        example: 404
+        type: integer
+    type: object
+  http.DeleteItemResponseHTTP:
+    properties:
+      id:
+        example: 1
+        type: integer
+    type: object
+  http.GetItemResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.SaveItemRequestHTTP:
+    properties:
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.SaveItemResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.UpdateItemRequestHTTP:
+    properties:
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.UpdateItemResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: emikohmann@gmail.com
+    name: Emiliano Kohmann
+    url: https://www.linkedin.com/in/emilianokohmann/
+  description: This is an API that handles the items information.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://www.linkedin.com/in/emilianokohmann/
+  title: Items API
+  version: "1.0"
+paths:
+  /items:
+    post:
+      consumes:
+      - application/json
+      description: Store the item information against the database.
+      parameters:
+      - description: Item to save
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.SaveItemRequestHTTP'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/http.SaveItemResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Store the item information.
+      tags:
+      - Items
+  /items/{itemID}:
+    delete:
+      description: Delete the item information against the database.
+      parameters:
+      - description: ID of the item to delete
+        in: path
+        name: itemID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.DeleteItemResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Delete the item information.
+      tags:
+      - Items
+    get:
+      description: Return the item information fetching information from the database.
+      parameters:
+      - description: ID of the item to get
+        in: path
+        name: itemID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.GetItemResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Return the item information.
+      tags:
+      - Items
+    put:
+      consumes:
+      - application/json
+      description: Updates the item information against the database.
+      parameters:
+      - description: ID of the item to get
+        in: path
+        name: itemID
+        required: true
+        type: integer
+      - description: Item fields to update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.UpdateItemRequestHTTP'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.UpdateItemResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Updates the item information.
+      tags:
+      - Items
+schemes:
+- http
+swagger: "2.0"

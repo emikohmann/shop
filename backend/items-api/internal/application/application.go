@@ -6,10 +6,10 @@ import (
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
 	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/config"
-	"github.com/emikohmann/shop/backend/items-api/pkg/items"
-	itemsMetrics "github.com/emikohmann/shop/backend/items-api/pkg/items/metrics_collectors"
-	itemsQueues "github.com/emikohmann/shop/backend/items-api/pkg/items/queues"
-	itemsRepositories "github.com/emikohmann/shop/backend/items-api/pkg/items/repositories"
+	itemService "github.com/emikohmann/shop/backend/items-api/pkg/items"
+	itemMetrics "github.com/emikohmann/shop/backend/items-api/pkg/items/metrics"
+	itemQueues "github.com/emikohmann/shop/backend/items-api/pkg/items/queues"
+	itemRepositories "github.com/emikohmann/shop/backend/items-api/pkg/items/repositories"
 	transportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/transport/http"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -22,29 +22,29 @@ type application struct {
 }
 
 type itemsRepository interface {
-	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
-	SaveItem(ctx context.Context, item items.Item) apierrors.APIError
-	UpdateItem(ctx context.Context, item items.Item) apierrors.APIError
+	GetItem(ctx context.Context, id int64) (itemService.Item, apierrors.APIError)
+	SaveItem(ctx context.Context, item itemService.Item) apierrors.APIError
+	UpdateItem(ctx context.Context, item itemService.Item) apierrors.APIError
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
 }
 
-type itemsMetricsCollector interface {
-	NotifyMetric(ctx context.Context, action items.Action)
+type itemsMetrics interface {
+	NotifyMetric(ctx context.Context, action itemService.Action)
 }
 
 type itemsQueue interface {
-	PublishItemNotification(ctx context.Context, action items.Action, priority items.Priority, id int64) apierrors.APIError
+	PublishItemNotification(ctx context.Context, action itemService.Action, priority itemService.Priority, id int64) apierrors.APIError
 }
 
 type itemsService interface {
-	GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError)
-	SaveItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
-	UpdateItem(ctx context.Context, item items.Item) (items.Item, apierrors.APIError)
+	GetItem(ctx context.Context, id int64) (itemService.Item, apierrors.APIError)
+	SaveItem(ctx context.Context, item itemService.Item) (itemService.Item, apierrors.APIError)
+	UpdateItem(ctx context.Context, item itemService.Item) (itemService.Item, apierrors.APIError)
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
 }
 
-type metricsCollectors struct {
-	itemsPrometheusMetrics itemsMetricsCollector
+type metrics struct {
+	itemsPrometheusMetrics itemsMetrics
 }
 
 type queues struct {
@@ -89,7 +89,7 @@ func NewApplication() (*application, error) {
 		return nil, err
 	}
 
-	metricsCollectors, err := buildMetricsCollectors(logger)
+	metrics, err := buildMetrics(logger)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func NewApplication() (*application, error) {
 		return nil, err
 	}
 
-	services, err := buildServices(repositories, metricsCollectors, queues, logger)
+	services, err := buildServices(repositories, metrics, queues, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -150,18 +150,18 @@ func buildRouter(logger *logrus.Logger) (*gin.Engine, error) {
 	return router, nil
 }
 
-// buildMetricsCollectors creates the instances for the metric collectors
-func buildMetricsCollectors(logger *logrus.Logger) (metricsCollectors, error) {
-	itemsPrometheusMetrics := itemsMetrics.NewPrometheusMetrics(logger)
-	logger.Info("Metric collectors successfully initialized")
-	return metricsCollectors{
+// buildMetrics creates the instances for the metric collectors
+func buildMetrics(logger *logrus.Logger) (metrics, error) {
+	itemsPrometheusMetrics := itemMetrics.NewPrometheusMetrics(logger)
+	logger.Info("Metrics successfully initialized")
+	return metrics{
 		itemsPrometheusMetrics: itemsPrometheusMetrics,
 	}, nil
 }
 
 // buildQueues creates the instances for the queues
 func buildQueues(logger *logrus.Logger, config *config.Config) (queues, error) {
-	itemsRabbitMQQueue, err := itemsQueues.NewItemsRabbitMQ(
+	itemsRabbitMQQueue, err := itemQueues.NewItemsRabbitMQ(
 		config.ItemsRabbitMQ.Host,
 		config.ItemsRabbitMQ.Port,
 		config.ItemsRabbitMQ.User,
@@ -171,7 +171,7 @@ func buildQueues(logger *logrus.Logger, config *config.Config) (queues, error) {
 		logger,
 	)
 	if err != nil {
-		return queues{}, fmt.Errorf("error initializing items RabbitMQ queue: %w", err)
+		return queues{}, fmt.Errorf("error initializing itemService RabbitMQ queue: %w", err)
 	}
 	logger.Info("Queues successfully initialized")
 	return queues{
@@ -181,14 +181,14 @@ func buildQueues(logger *logrus.Logger, config *config.Config) (queues, error) {
 
 // buildRepositories creates the instances for the repositories
 func buildRepositories(logger *logrus.Logger, config *config.Config) (repositories, error) {
-	itemsMongoDBRepository, err := itemsRepositories.NewItemsMongoDB(
+	itemsMongoDBRepository, err := itemRepositories.NewItemsMongoDB(
 		config.ItemsMongoDB.Host,
 		config.ItemsMongoDB.Port,
 		config.ItemsMongoDB.Database,
 		config.ItemsMongoDB.Collection,
 		logger)
 	if err != nil {
-		return repositories{}, fmt.Errorf("error initializing items MongoDB repository: %w", err)
+		return repositories{}, fmt.Errorf("error initializing itemService MongoDB repository: %w", err)
 	}
 	logger.Info("Repositories successfully initialized")
 	return repositories{
@@ -197,10 +197,10 @@ func buildRepositories(logger *logrus.Logger, config *config.Config) (repositori
 }
 
 // buildServices creates the instances for the services
-func buildServices(repositories repositories, metricsCollectors metricsCollectors, queues queues, logger *logrus.Logger) (services, error) {
-	itemsService := items.NewService(
+func buildServices(repositories repositories, metrics metrics, queues queues, logger *logrus.Logger) (services, error) {
+	itemsService := itemService.NewService(
 		repositories.itemsMongoDBRepository,
-		metricsCollectors.itemsPrometheusMetrics,
+		metrics.itemsPrometheusMetrics,
 		queues.itemsRabbitMQQueue,
 		logger)
 	logger.Info("Services successfully initialized")

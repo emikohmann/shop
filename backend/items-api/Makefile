@@ -1,4 +1,4 @@
-start-services:
+start:
 	@echo "Restarting services"
 	brew services stop mongodb-community
 	brew services start mongodb-community
@@ -9,18 +9,16 @@ start-services:
 	@echo "Starting servers"
 	rabbitmq-server & cd ~/prometheus-server/prometheus-2.42.0.darwin-amd64 && ./prometheus --config.file="prometheus.yml"
 
-run-application:
+run:
 	go run cmd/items-api/main.go
 
-stop-services:
-	launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
+stop:
 	brew services stop mongodb-community
 	brew services stop rabbitmq
 	brew services stop grafana
 
-test-application:
+test:
 	go test ./... -v
 
-generate-docs:
-	go install github.com/swaggo/swag/cmd/swag
+docs:
 	swag fmt && swag init -g cmd/items-api/main.go --output docs/openapi

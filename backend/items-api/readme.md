@@ -24,11 +24,18 @@ go test ./... -v
 #### Run the application with:
 
 ```bash
-go run cmd/items-api/main.go
+make start-services
+make run-application
+```
+
+#### Stop the application with:
+
+```bash
+make stop-services
 ```
 
 #### Generate docs with:
 
 ```bash
-swag fmt && swag init -g cmd/items-api/main.go --output docs/openapi 
+make generate-docs 
 ```

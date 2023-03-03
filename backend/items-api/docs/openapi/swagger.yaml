@@ -28,7 +28,7 @@ definitions:
         type: integer
       images:
         example:
-          - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
         items:
           type: string
         type: array
@@ -65,7 +65,7 @@ definitions:
         type: integer
       images:
         example:
-          - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
         items:
           type: string
         type: array
@@ -102,7 +102,7 @@ definitions:
         type: integer
       images:
         example:
-          - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
         items:
           type: string
         type: array
@@ -136,7 +136,7 @@ definitions:
         type: string
       images:
         example:
-          - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
         items:
           type: string
         type: array
@@ -173,7 +173,7 @@ definitions:
         type: integer
       images:
         example:
-          - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
         items:
           type: string
         type: array
@@ -217,17 +217,17 @@ paths:
   /items:
     post:
       consumes:
-        - application/json
+      - application/json
       description: Store the item information against the database.
       parameters:
-        - description: Item to save
-          in: body
-          name: request
-          required: true
-          schema:
-            $ref: '#/definitions/http.SaveItemRequestHTTP'
+      - description: Item to save
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.SaveItemRequestHTTP'
       produces:
-        - application/json
+      - application/json
       responses:
         "201":
           description: Created
@@ -243,18 +243,18 @@ paths:
             $ref: '#/definitions/http.APIErrorHTTP'
       summary: Store the item information.
       tags:
-        - Items
+      - Items
   /items/{itemID}:
     delete:
       description: Delete the item information against the database.
       parameters:
-        - description: ID of the item to delete
-          in: path
-          name: itemID
-          required: true
-          type: integer
+      - description: ID of the item to delete
+        in: path
+        name: itemID
+        required: true
+        type: integer
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -274,17 +274,17 @@ paths:
             $ref: '#/definitions/http.APIErrorHTTP'
       summary: Delete the item information.
       tags:
-        - Items
+      - Items
     get:
       description: Return the item information fetching information from the database.
       parameters:
-        - description: ID of the item to get
-          in: path
-          name: itemID
-          required: true
-          type: integer
+      - description: ID of the item to get
+        in: path
+        name: itemID
+        required: true
+        type: integer
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -304,25 +304,25 @@ paths:
             $ref: '#/definitions/http.APIErrorHTTP'
       summary: Return the item information.
       tags:
-        - Items
+      - Items
     put:
       consumes:
-        - application/json
+      - application/json
       description: Updates the item information against the database.
       parameters:
-        - description: ID of the item to get
-          in: path
-          name: itemID
-          required: true
-          type: integer
-        - description: Item fields to update
-          in: body
-          name: request
-          required: true
-          schema:
-            $ref: '#/definitions/http.UpdateItemRequestHTTP'
+      - description: ID of the item to get
+        in: path
+        name: itemID
+        required: true
+        type: integer
+      - description: Item fields to update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.UpdateItemRequestHTTP'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -338,7 +338,7 @@ paths:
             $ref: '#/definitions/http.APIErrorHTTP'
       summary: Updates the item information.
       tags:
-        - Items
+      - Items
 schemes:
-  - http
+- http
 swagger: "2.0"

@@ -3,7 +3,7 @@ package items
 type Priority int
 
 const (
-	PriorityLow = iota
+	PriorityLow Priority = iota
 	PriorityMedium
 	PriorityHigh
 )

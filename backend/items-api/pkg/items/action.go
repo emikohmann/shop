@@ -3,7 +3,7 @@ package items
 type Action int
 
 const (
-	ActionGet = iota
+	ActionGet Action = iota
 	ActionSave
 	ActionUpdate
 	ActionDelete

@@ -20,6 +20,10 @@ func NewPrometheusMetrics(logger *logrus.Logger) prometheus {
 			Name: "items_get",
 			Help: "Counter for GET item operation",
 		}),
+		items.ActionList: promauto.NewCounter(prom.CounterOpts{
+			Name: "items_list",
+			Help: "Counter for LIST item operation",
+		}),
 		items.ActionSave: promauto.NewCounter(prom.CounterOpts{
 			Name: "items_save",
 			Help: "Counter for SAVE item operation",

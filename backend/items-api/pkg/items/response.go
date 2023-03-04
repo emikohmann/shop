@@ -4,6 +4,11 @@ type GetItemResponse struct {
 	Item Item
 }
 
+type ListItemsResponse struct {
+	Paging Paging
+	Items  []Item
+}
+
 type SaveItemResponse struct {
 	Item Item
 }

@@ -61,6 +61,41 @@ func (repo itemsMongoDB) GetItem(ctx context.Context, id int64) (items.Item, api
 	return item, nil
 }
 
+// ListItems fetches a list of items from MongoDB
+func (repo itemsMongoDB) ListItems(ctx context.Context, limit int, offset int) (items.ItemList, apierrors.APIError) {
+	options := options.Find()
+	options.SetSort(bson.M{"dateCreated": 1})
+	options.SetLimit(int64(limit))
+	options.SetSkip(int64(offset))
+	count, err := repo.database.Collection(repo.collection).CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error counting items in MongoDB: %s", err.Error()))
+	}
+	result, err := repo.database.Collection(repo.collection).Find(ctx, bson.M{}, options)
+	if err != nil {
+		return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error listing items in MongoDB: %s", err.Error()))
+	}
+	list := make([]items.Item, 0)
+	for result.Next(ctx) {
+		var item items.Item
+		if err := result.Decode(&item); err != nil {
+			return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error parsing item from MongoDB: %s", err.Error()))
+		}
+		list = append(list, item)
+	}
+	if err := result.Err(); err != nil {
+		return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error iterating item list from MongoDB: %s", err.Error()))
+	}
+	return items.ItemList{
+		Paging: items.Paging{
+			Total:  int(count),
+			Limit:  limit,
+			Offset: offset,
+		},
+		Items: list,
+	}, nil
+}
+
 // SaveItem inserts an item into MongoDB
 func (repo itemsMongoDB) SaveItem(ctx context.Context, item items.Item) apierrors.APIError {
 	if _, err := repo.database.Collection(repo.collection).InsertOne(ctx, item); err != nil {

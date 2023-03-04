@@ -19,6 +19,24 @@ func HTTPToGetItemRequest(ctx *gin.Context) (items.GetItemRequest, error) {
 	}, nil
 }
 
+// HTTPToListItemsRequest turns the HTTP request into a ListItemsRequest
+func HTTPToListItemsRequest(ctx *gin.Context) (items.ListItemsRequest, error) {
+	limitStr := ctx.Query(queryLimit)
+	limit, err := strconv.ParseInt(limitStr, 10, 64)
+	if err != nil {
+		return items.ListItemsRequest{}, fmt.Errorf("invalid limit value: %w", err)
+	}
+	offsetStr := ctx.Query(queryOffset)
+	offset, err := strconv.ParseInt(offsetStr, 10, 64)
+	if err != nil {
+		return items.ListItemsRequest{}, fmt.Errorf("invalid offset value: %w", err)
+	}
+	return items.ListItemsRequest{
+		Limit:  int(limit),
+		Offset: int(offset),
+	}, nil
+}
+
 type SaveItemRequestHTTP struct {
 	ID           int64    `json:"id" example:"1"`
 	Name         string   `json:"name" example:"Iphone 13 128GB 4GB RAM"`

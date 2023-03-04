@@ -23,6 +23,7 @@ type application struct {
 
 type itemsRepository interface {
 	GetItem(ctx context.Context, id int64) (itemService.Item, apierrors.APIError)
+	ListItems(ctx context.Context, limit int, offset int) (itemService.ItemList, apierrors.APIError)
 	SaveItem(ctx context.Context, item itemService.Item) apierrors.APIError
 	UpdateItem(ctx context.Context, item itemService.Item) apierrors.APIError
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
@@ -38,6 +39,7 @@ type itemsQueue interface {
 
 type itemsService interface {
 	GetItem(ctx context.Context, id int64) (itemService.Item, apierrors.APIError)
+	ListItems(ctx context.Context, limit int, offset int) (itemService.ItemList, apierrors.APIError)
 	SaveItem(ctx context.Context, item itemService.Item) (itemService.Item, apierrors.APIError)
 	UpdateItem(ctx context.Context, item itemService.Item) (itemService.Item, apierrors.APIError)
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
@@ -63,6 +65,7 @@ type handlers struct {
 	docsHandler       gin.HandlerFunc
 	metricsHandler    gin.HandlerFunc
 	getItemHandler    gin.HandlerFunc
+	listItemsHandler  gin.HandlerFunc
 	saveItemHandler   gin.HandlerFunc
 	updateItemHandler gin.HandlerFunc
 	deleteItemHandler gin.HandlerFunc
@@ -215,6 +218,7 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 	docsHandler := transportHTTP.DocsHandler(logger)
 	metricsHandler := transportHTTP.MetricsHandler(logger)
 	getItemHandler := transportHTTP.GetItemHandler(services.itemsService, logger)
+	listItemsHandler := transportHTTP.ListItemsHandler(services.itemsService, logger)
 	saveItemHandler := transportHTTP.SaveItemHandler(services.itemsService, logger)
 	updateItemHandler := transportHTTP.UpdateItemHandler(services.itemsService, logger)
 	deleteItemHandler := transportHTTP.DeleteItemHandler(services.itemsService, logger)
@@ -223,6 +227,7 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 		docsHandler:       docsHandler,
 		metricsHandler:    metricsHandler,
 		getItemHandler:    getItemHandler,
+		listItemsHandler:  listItemsHandler,
 		saveItemHandler:   saveItemHandler,
 		updateItemHandler: updateItemHandler,
 		deleteItemHandler: deleteItemHandler,
@@ -234,6 +239,7 @@ func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) err
 	router.GET(transportHTTP.PathDocs, handlers.docsHandler)
 	router.GET(transportHTTP.PathMetrics, handlers.metricsHandler)
 	router.GET(transportHTTP.PathGetItem, handlers.getItemHandler)
+	router.GET(transportHTTP.PathListItems, handlers.listItemsHandler)
 	router.POST(transportHTTP.PathSaveItem, handlers.saveItemHandler)
 	router.PUT(transportHTTP.PathUpdateItem, handlers.updateItemHandler)
 	router.DELETE(transportHTTP.PathDeleteItem, handlers.deleteItemHandler)

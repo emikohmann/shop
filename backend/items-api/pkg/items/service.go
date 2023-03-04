@@ -20,6 +20,7 @@ type Queue interface {
 
 type Repository interface {
 	GetItem(ctx context.Context, id int64) (Item, apierrors.APIError)
+	ListItems(ctx context.Context, limit int, offset int) (ItemList, apierrors.APIError)
 	SaveItem(ctx context.Context, item Item) apierrors.APIError
 	UpdateItem(ctx context.Context, item Item) apierrors.APIError
 	DeleteItem(ctx context.Context, id int64) apierrors.APIError
@@ -50,6 +51,17 @@ func (service *service) GetItem(ctx context.Context, id int64) (Item, apierrors.
 	}
 	service.metrics.NotifyMetric(ctx, ActionGet)
 	return item, nil
+}
+
+// ListItems returns a list of items
+func (service *service) ListItems(ctx context.Context, limit int, offset int) (ItemList, apierrors.APIError) {
+	list, apiErr := service.repository.ListItems(ctx, limit, offset)
+	if apiErr != nil {
+		service.logger.Errorf("Error listing items with limit %d and offset %d: %s", limit, offset, apiErr.Error())
+		return ItemList{}, apiErr
+	}
+	service.metrics.NotifyMetric(ctx, ActionList)
+	return list, nil
 }
 
 // SaveItem stores the item information

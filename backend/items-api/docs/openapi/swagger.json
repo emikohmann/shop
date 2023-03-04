@@ -22,6 +22,52 @@
     "basePath": "/",
     "paths": {
         "/items": {
+            "get": {
+                "description": "Return the items information fetching information from the database.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Return a list of items.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "List limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "List offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.ListItemsResponseHTTP"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/http.APIErrorHTTP"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/http.APIErrorHTTP"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Store the item information against the database.",
                 "consumes": [
@@ -287,6 +333,93 @@
                 "thumbnail": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                }
+            }
+        },
+        "http.ItemResponseHTTP": {
+            "type": "object",
+            "properties": {
+                "date_created": {
+                    "type": "string",
+                    "example": "2023-02-23T21:46:28.366Z"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "The iPhone 13 display has rounded corners"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
+                    ]
+                },
+                "is_active": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "last_updated": {
+                    "type": "string",
+                    "example": "2023-02-23T21:46:28.366Z"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Iphone 13 128GB 4GB RAM"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 729.99
+                },
+                "restrictions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "stock": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "thumbnail": {
+                    "type": "string",
+                    "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                }
+            }
+        },
+        "http.ListItemsResponseHTTP": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/http.ItemResponseHTTP"
+                    }
+                },
+                "paging": {
+                    "$ref": "#/definitions/http.PagingResponseHTTP"
+                }
+            }
+        },
+        "http.PagingResponseHTTP": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "offset": {
+                    "type": "integer",
+                    "example": 50
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 500
                 }
             }
         },

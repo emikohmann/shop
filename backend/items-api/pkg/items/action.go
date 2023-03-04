@@ -4,6 +4,7 @@ type Action int
 
 const (
 	ActionGet Action = iota
+	ActionList
 	ActionSave
 	ActionUpdate
 	ActionDelete
@@ -14,6 +15,8 @@ func (action Action) String() string {
 	switch action {
 	case ActionGet:
 		return "GET"
+	case ActionList:
+		return "LIST"
 	case ActionSave:
 		return "SAVE"
 	case ActionUpdate:

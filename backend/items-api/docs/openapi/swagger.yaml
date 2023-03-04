@@ -55,6 +55,67 @@ definitions:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
         type: string
     type: object
+  http.ItemResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.ListItemsResponseHTTP:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/http.ItemResponseHTTP'
+        type: array
+      paging:
+        $ref: '#/definitions/http.PagingResponseHTTP'
+    type: object
+  http.PagingResponseHTTP:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      offset:
+        example: 50
+        type: integer
+      total:
+        example: 500
+        type: integer
+    type: object
   http.SaveItemRequestHTTP:
     properties:
       description:
@@ -215,6 +276,37 @@ info:
   version: "1.0"
 paths:
   /items:
+    get:
+      description: Return the items information fetching information from the database.
+      parameters:
+      - description: List limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: List offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.ListItemsResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Return a list of items.
+      tags:
+      - Items
     post:
       consumes:
       - application/json

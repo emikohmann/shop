@@ -6,10 +6,12 @@ import List from '../components/list';
 
 const Home = () => {
   return (
-    <div>
-      <Breadcrumb />
-      <List />
-    </div>
+    <>
+      <div>
+        <Breadcrumb />
+        <List />
+      </div>
+    </>
   );
 };
   

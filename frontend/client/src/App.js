@@ -37,9 +37,7 @@ function App(props) {
       </div>
       <div id="footerContainer">
         <Footer  />
-      </div>
-     
-      
+      </div> 
     </>
   );
 }

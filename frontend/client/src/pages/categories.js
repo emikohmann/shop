@@ -3,9 +3,9 @@ import React from "react";
 const Checkout = () => {
   return (
     <div>
-      <h1>
-        Checkout page
-      </h1>
+      <p>
+        Check our categories and find the best products
+      </p>
     </div>
   );
 };

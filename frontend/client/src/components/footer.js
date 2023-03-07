@@ -3,20 +3,18 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-        <footer className="page-footer blue-grey">
+        <footer className="page-footer black">
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text">Footer Content</h5>
-                <p className="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                <h5 className="white-text">Shop Footer</h5>
+                <p className="grey-text text-lighten-4">Shop footer content organized in rows and columns.</p>
               </div>
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Links</h5>
                 <ul>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                  <li><a className="grey-text text-lighten-3" href="https://github.com/emikohmann/shop">Github</a></li>
+                  <li><a className="grey-text text-lighten-3" href="http://localhost:8080/docs/index.html">Docs</a></li>
                 </ul>
               </div>
             </div>
@@ -24,7 +22,7 @@ const Footer = () => {
           <div className="footer-copyright">
             <div className="container">
             © 2023 Copyright Text
-            <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
+            <a className="grey-text text-lighten-4 right" href="/#">More Links</a>
             </div>
           </div>
         </footer>

@@ -1,0 +1,25 @@
+#brand {
+    margin-left: 10pt;
+}
+
+#searchContainer {
+    top: 10pt;
+}
+
+#searchIcon {
+    top: 10pt;
+}
+
+.card-panel {
+    padding: 0 !important;
+}
+
+.card-title {
+    font-size: 10pt !important;
+    margin: 0 !important;
+    color: gray;
+}
+
+.flow-text {
+    font-size: 20px !important;
+}

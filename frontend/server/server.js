@@ -15,7 +15,6 @@ app.get("/api/items", async function(req, res) {
     const options = {method: 'GET'};
     fetch(url, options)
         .then(res => res.json)
-        .then(json => console.log(`List items response: ${json}`))
         .catch(err => console.error(`error: ${err}`));
     try {
         let response = await fetch(url, options);
@@ -34,7 +33,6 @@ app.get("/api/items/:id", async function(req, res) {
     const options = {method: 'GET'};
     fetch(url, options)
         .then(res => res.json)
-        .then(json => console.log(`Get items ${id} response: ${json}`))
         .catch(err => console.error(`error: ${err}`));
     try {
         let response = await fetch(url, options);

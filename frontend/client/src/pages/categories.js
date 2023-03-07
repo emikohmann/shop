@@ -2,11 +2,7 @@ import React from "react";
   
 const Checkout = () => {
   return (
-    <div>
-      <p>
-        Check our categories and find the best products
-      </p>
-    </div>
+    <h5>Please, implement the endpoint /categories</h5>
   );
 };
   

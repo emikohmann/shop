@@ -1,11 +1,13 @@
 import React from 'react';
 
+import Breadcrumb from '../components/breadcrumb';
+
 import List from '../components/list';
 
 const Home = () => {
   return (
     <div>
-      <br />
+      <Breadcrumb />
       <List />
     </div>
   );

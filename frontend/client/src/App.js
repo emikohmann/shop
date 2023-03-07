@@ -21,10 +21,10 @@ function App(props) {
         <Navbar />
       </div>
       <div className="row">
-        <div className="col s3" >
+        <div className="col s2" >
           <Sidebar />
         </div>
-        <div className="col s9">
+        <div className="col s10">
           <Router>
             <Routes>
               <Route exact path='/' element={<Home />} />

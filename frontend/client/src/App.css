@@ -10,6 +10,25 @@
     top: 10pt;
 }
 
+#breadcrumbContainer {
+    margin-top: 5pt;
+}
+
+#breadcrumbContainer, .breadcrumb {
+    background-color: transparent !important;
+    box-shadow: none!important;
+}
+
+.breadcrumb {
+    color: grey !important;
+}
+
+.breadcrumb::before {
+    color: darkgrey !important;
+    background-color: transparent !important;
+    box-shadow: none!important;
+}
+
 .card-panel {
     padding: 0 !important;
 }

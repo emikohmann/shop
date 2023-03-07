@@ -30,9 +30,9 @@ const List = () => {
                     <div class="card-panel lighten-4">
                       <div className="card">
                         <div className="card-image">
-                          <img alt={item['images'][0]} src={item['thumbnail']} />
+                          <img alt={item['images'][0]} src={item['images'][0]} />
                           <a href="/#" className="btn-floating halfway-fab waves-effect waves-light blue">
-                            <i className="material-icons">add</i>
+                            <i className="material-icons">favorite_border</i>
                           </a>
                         </div>
                         <div className="card-content">

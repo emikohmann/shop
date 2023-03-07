@@ -1,45 +1,96 @@
 import React, {useEffect, useState} from "react";
-  
+
+import M from 'materialize-css';
+
+import {useParams} from "react-router-dom";
+
+import Loading from '../components/loading';
+
+import ImageGallery from 'react-image-gallery';
+
+import 'react-image-gallery/styles/css/image-gallery.css';
+
 const Item = () => {
-  const [backendData, setBackendData] = useState([{}])
+  const [itemData, setItemData] = useState([{}]);
+  const [itemImages, setItemImages] = useState([{}]);
+
+  let { id } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/items/1").then(
+    setItemData(undefined);
+    fetch(`http://localhost:5001/api/items/${id}`).then(
       response => response.json()
     ).then(
       data => {
-        console.log(data);
-        setBackendData(data)
+        setItemData(data);
+        var itemImages = [];
+        data['images'].map(img => {
+          itemImages.push({
+            original: img,
+            thumbnail: img
+          })
+        });
+        setItemImages(itemImages);
       }
-    )
+    );
   }, []);
 
   return (
     <>
-      <div>
-        <h1>
-          Item page
-        </h1>
-
+      {typeof itemData === 'undefined' ? (
+        <>
+          <br />
+          <Loading />
+        </>
+      ) : (
         <div>
-          {(typeof backendData === 'undefined') ? (
-            <p>Loading...</p>
-          ) : (
-            <table>
-              <tbody>
-                <tr><td>Thumbnail</td><td><img src={backendData['thumbnail']} /></td></tr>
-                <tr><td>ID</td><td>{backendData['id']}</td></tr>
-                <tr><td>Name</td><td>{backendData['name']}</td></tr>
-                <tr><td>Description</td><td>{backendData['description']}</td></tr>
-                <tr><td>Price</td><td>{backendData['price']}</td></tr>
-                <tr><td>Images</td><td>{backendData['images'] !== undefined && backendData['images'].map((value) => (
-                    <img src={value} />
-                  ))}</td></tr>
-              </tbody>
-            </table>
-          )}
+          <div>
+            <h1>
+              {itemData['name']}
+            </h1>
+            <div>
+              {itemData['description']}
+            </div>
+            <br />
+            <div className="left">
+              <ImageGallery 
+                items={itemImages}
+                showFullscreenButton={true}
+                useBrowserFullscreen={true}
+                showPlayButton={false}
+                showBullets={false}
+                disableThumbnailScroll={false}
+                slideDuration={100}
+                thumbnailPosition="right"
+              />
+            </div>
+          </div>
+          <table>
+            <tbody>
+              <tr>
+                <td>ID</td>
+                <td>{itemData['id']}</td>
+              </tr>
+              <tr>
+                <td>Thumbnail</td>
+                <td><img src={itemData['thumbnail']} /></td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td>{itemData['name']}</td>
+              </tr>
+              <tr>
+                <td>Description</td>
+                <td>{itemData['description']}</td>
+              </tr>
+              <tr>
+                <td>Price</td>
+                <td>{itemData['price']}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
+      )}
     </>
   );
 };

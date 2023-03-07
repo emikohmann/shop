@@ -13,6 +13,7 @@ import (
 	transportHTTP "github.com/emikohmann/shop/backend/items-api/pkg/transport/http"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 type application struct {
@@ -236,6 +237,10 @@ func buildHandlers(logger *logrus.Logger, services services) (handlers, error) {
 
 // mapRouter creates the connections between the router and the handlers
 func mapRouter(logger *logrus.Logger, router *gin.Engine, handlers handlers) error {
+	router.Use(func(c *gin.Context) {
+		time.Sleep(1 * time.Second)
+		c.Next()
+	})
 	router.GET(transportHTTP.PathDocs, handlers.docsHandler)
 	router.GET(transportHTTP.PathMetrics, handlers.metricsHandler)
 	router.GET(transportHTTP.PathGetItem, handlers.getItemHandler)

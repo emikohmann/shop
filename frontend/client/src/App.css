@@ -30,7 +30,7 @@ code {
 
 #breadcrumbContainer, .breadcrumb {
     background-color: transparent !important;
-    box-shadow: none!important;
+    box-shadow: none !important;
 }
 
 .breadcrumb {
@@ -55,4 +55,22 @@ code {
 
 .flow-text {
     font-size: 20px !important;
+}
+
+.image-gallery-thumbnails-container{
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.image-gallery-icon {
+    display: none !important;
+}
+
+.image-gallery-thumbnail{
+    border: none !important;
+}
+
+.image-gallery-thumbnail:hover{
+    border: 1px solid !important;
+    filter: blur(0.0);
 }

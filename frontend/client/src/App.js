@@ -29,7 +29,7 @@ function App(props) {
             <Routes>
               <Route exact path='/' element={<Home />} />
               <Route path='/home' element={<Home/>} />
-              <Route path='/item' element={<Item/>} />
+              <Route path='/items/:id' element={<Item/>} />
               <Route path='/categories' element={<Categories/>} />
             </Routes>
           </Router>

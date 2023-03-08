@@ -16,6 +16,9 @@ func NewRequestID() string {
 
 // GetRequestID returns the request ID present in context, if it exists
 func GetRequestID(ctx context.Context) string {
+	if ctx == nil {
+		return ""
+	}
 	value := ctx.Value(RequestIDKey)
 	if value == nil {
 		return ""

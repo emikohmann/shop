@@ -2,19 +2,19 @@ package metrics
 
 import (
 	"context"
+	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	prom "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
-	"github.com/sirupsen/logrus"
 )
 
 type prometheus struct {
 	counters map[items.Action]prom.Counter
-	logger   *logrus.Logger
+	logger   *logger.Logger
 }
 
 // NewPrometheusMetrics instances a new items' metric collector
-func NewPrometheusMetrics(logger *logrus.Logger) prometheus {
+func NewPrometheusMetrics(logger *logger.Logger) prometheus {
 	counters := map[items.Action]prom.Counter{
 		items.ActionGet: promauto.NewCounter(prom.CounterOpts{
 			Name: "items_get",

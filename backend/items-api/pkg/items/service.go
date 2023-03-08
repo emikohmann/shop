@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/util"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 )
@@ -30,10 +30,10 @@ type service struct {
 	repository Repository
 	metrics    Metrics
 	queue      Queue
-	logger     *logrus.Logger
+	logger     *logger.Logger
 }
 
-func NewService(repository Repository, metrics Metrics, queue Queue, logger *logrus.Logger) *service {
+func NewService(repository Repository, metrics Metrics, queue Queue, logger *logger.Logger) *service {
 	return &service{
 		repository: repository,
 		metrics:    metrics,
@@ -46,7 +46,7 @@ func NewService(repository Repository, metrics Metrics, queue Queue, logger *log
 func (service *service) GetItem(ctx context.Context, id int64) (Item, apierrors.APIError) {
 	item, apiErr := service.repository.GetItem(ctx, id)
 	if apiErr != nil {
-		service.logger.Errorf("Error getting item %d: %s", id, apiErr.Error())
+		service.logger.Errorf(ctx, "Error getting item %d: %s", id, apiErr.Error())
 		return Item{}, apiErr
 	}
 	service.metrics.NotifyMetric(ctx, ActionGet)
@@ -57,7 +57,7 @@ func (service *service) GetItem(ctx context.Context, id int64) (Item, apierrors.
 func (service *service) ListItems(ctx context.Context, limit int, offset int) (ItemList, apierrors.APIError) {
 	list, apiErr := service.repository.ListItems(ctx, limit, offset)
 	if apiErr != nil {
-		service.logger.Errorf("Error listing items with limit %d and offset %d: %s", limit, offset, apiErr.Error())
+		service.logger.Errorf(ctx, "Error listing items with limit %d and offset %d: %s", limit, offset, apiErr.Error())
 		return ItemList{}, apiErr
 	}
 	service.metrics.NotifyMetric(ctx, ActionList)
@@ -76,12 +76,12 @@ func (service *service) SaveItem(ctx context.Context, item Item) (Item, apierror
 	item.DateCreated = now
 	item.LastUpdated = now
 	if apiErr := service.repository.SaveItem(ctx, item); apiErr != nil {
-		service.logger.Errorf("Error saving item: %s", apiErr.Error())
+		service.logger.Errorf(ctx, "Error saving item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
 	service.metrics.NotifyMetric(ctx, ActionSave)
 	if apiErr := service.queue.PublishItemNotification(ctx, ActionSave, PriorityLow, item.ID); apiErr != nil {
-		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
+		service.logger.Errorf(ctx, "Error publishing item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
 	return item, nil
@@ -120,12 +120,12 @@ func (service *service) UpdateItem(ctx context.Context, item Item) (Item, apierr
 	now := time.Now().UTC()
 	current.LastUpdated = now
 	if apiErr := service.repository.UpdateItem(ctx, current); apiErr != nil {
-		service.logger.Errorf("Error updating item: %s", apiErr.Error())
+		service.logger.Errorf(ctx, "Error updating item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
 	service.metrics.NotifyMetric(ctx, ActionUpdate)
 	if apiErr := service.queue.PublishItemNotification(ctx, ActionUpdate, PriorityLow, item.ID); apiErr != nil {
-		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
+		service.logger.Errorf(ctx, "Error publishing item: %s", apiErr.Error())
 		return Item{}, apiErr
 	}
 	return current, nil
@@ -134,12 +134,12 @@ func (service *service) UpdateItem(ctx context.Context, item Item) (Item, apierr
 // DeleteItem removes the item information
 func (service *service) DeleteItem(ctx context.Context, id int64) apierrors.APIError {
 	if apiErr := service.repository.DeleteItem(ctx, id); apiErr != nil {
-		service.logger.Errorf("Error deleting item %d: %s", id, apiErr.Error())
+		service.logger.Errorf(ctx, "Error deleting item %d: %s", id, apiErr.Error())
 		return apiErr
 	}
 	service.metrics.NotifyMetric(ctx, ActionDelete)
 	if apiErr := service.queue.PublishItemNotification(ctx, ActionDelete, PriorityLow, id); apiErr != nil {
-		service.logger.Errorf("Error publishing item: %s", apiErr.Error())
+		service.logger.Errorf(ctx, "Error publishing item: %s", apiErr.Error())
 		return apiErr
 	}
 	return nil

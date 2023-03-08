@@ -4,10 +4,10 @@ import (
 	"context"
 	_ "github.com/emikohmann/shop/backend/items-api/docs/openapi"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
@@ -22,13 +22,13 @@ type ItemsService interface {
 }
 
 // DocsHandler sets up the Docs request handler
-func DocsHandler(logger *logrus.Logger) gin.HandlerFunc {
+func DocsHandler(logger *logger.Logger) gin.HandlerFunc {
 	handler := ginSwagger.WrapHandler(swaggerFiles.Handler)
 	return handler
 }
 
 // MetricsHandler sets up the Metrics request handler
-func MetricsHandler(logger *logrus.Logger) gin.HandlerFunc {
+func MetricsHandler(logger *logger.Logger) gin.HandlerFunc {
 	handler := promhttp.Handler()
 	return func(ctx *gin.Context) {
 		handler.ServeHTTP(ctx.Writer, ctx.Request)
@@ -47,12 +47,12 @@ func MetricsHandler(logger *logrus.Logger) gin.HandlerFunc {
 //	@Failure		404	{object}	APIErrorHTTP
 //	@Failure		500	{object}	APIErrorHTTP
 //	@Router			/items/{itemID} [get]
-func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
+func GetItemHandler(ctx context.Context, itemsService ItemsService, logger *logger.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToGetItemRequest(ctx)
 		if err != nil {
 			apiErr := apierrors.NewBadRequestError(err.Error())
-			logger.Errorf("Error generating GetItemRequest: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error generating GetItemRequest: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -60,7 +60,7 @@ func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Handle
 		requestCtx := ctx.Request.Context()
 		item, apiErr := itemsService.GetItem(requestCtx, request.ID)
 		if apiErr != nil {
-			logger.Errorf("Error getting item: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error getting item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -85,12 +85,12 @@ func GetItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Handle
 //	@Failure		400	{object}	APIErrorHTTP
 //	@Failure		500	{object}	APIErrorHTTP
 //	@Router			/items [get]
-func ListItemsHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
+func ListItemsHandler(ctx context.Context, itemsService ItemsService, logger *logger.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToListItemsRequest(ctx)
 		if err != nil {
 			apiErr := apierrors.NewBadRequestError(err.Error())
-			logger.Errorf("Error generating ListItemsRequest: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error generating ListItemsRequest: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -98,7 +98,7 @@ func ListItemsHandler(itemsService ItemsService, logger *logrus.Logger) gin.Hand
 		requestCtx := ctx.Request.Context()
 		list, apiErr := itemsService.ListItems(requestCtx, request.Limit, request.Offset)
 		if apiErr != nil {
-			logger.Errorf("Error listing items: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error listing items: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -124,12 +124,12 @@ func ListItemsHandler(itemsService ItemsService, logger *logrus.Logger) gin.Hand
 //	@Failure		400		{object}	APIErrorHTTP
 //	@Failure		500		{object}	APIErrorHTTP
 //	@Router			/items [post]
-func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
+func SaveItemHandler(ctx context.Context, itemsService ItemsService, logger *logger.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToSaveItemRequest(ctx)
 		if err != nil {
 			apiErr := apierrors.NewBadRequestError(err.Error())
-			logger.Errorf("Error generating SaveItemRequest: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error generating SaveItemRequest: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -137,7 +137,7 @@ func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Handl
 		requestCtx := ctx.Request.Context()
 		item, apiErr := itemsService.SaveItem(requestCtx, request.Item)
 		if apiErr != nil {
-			logger.Errorf("Error saving item: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error saving item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -163,12 +163,12 @@ func SaveItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Handl
 //	@Failure		400		{object}	APIErrorHTTP
 //	@Failure		500		{object}	APIErrorHTTP
 //	@Router			/items/{itemID} [put]
-func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
+func UpdateItemHandler(ctx context.Context, itemsService ItemsService, logger *logger.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToUpdateItemRequest(ctx)
 		if err != nil {
 			apiErr := apierrors.NewBadRequestError(err.Error())
-			logger.Errorf("Error generating UpdateItemRequest: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error generating UpdateItemRequest: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -176,7 +176,7 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Han
 		requestCtx := ctx.Request.Context()
 		item, apiErr := itemsService.UpdateItem(requestCtx, request.Item)
 		if apiErr != nil {
-			logger.Errorf("Error updating item: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error updating item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
@@ -201,19 +201,19 @@ func UpdateItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.Han
 //	@Failure		404	{object}	APIErrorHTTP
 //	@Failure		500	{object}	APIErrorHTTP
 //	@Router			/items/{itemID} [delete]
-func DeleteItemHandler(itemsService ItemsService, logger *logrus.Logger) gin.HandlerFunc {
+func DeleteItemHandler(ctx context.Context, itemsService ItemsService, logger *logger.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		request, err := HTTPToDeleteItemRequest(ctx)
 		if err != nil {
 			apiErr := apierrors.NewBadRequestError(err.Error())
-			logger.Errorf("Error generating DeleteItemRequest: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error generating DeleteItemRequest: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return
 		}
 		requestCtx := ctx.Request.Context()
 		if apiErr := itemsService.DeleteItem(requestCtx, request.ID); apiErr != nil {
-			logger.Errorf("Error deleting item: %s", apiErr.Error())
+			logger.Errorf(ctx, "Error deleting item: %s", apiErr.Error())
 			httpResponse := APIErrorToHTTP(apiErr)
 			ctx.JSON(apiErr.Status(), httpResponse)
 			return

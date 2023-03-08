@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/google/uuid"
 	"github.com/rabbitmq/amqp091-go"
-	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -21,25 +21,25 @@ type itemsRabbitMQ struct {
 	connection *amqp091.Connection
 	channel    *amqp091.Channel
 	queue      *amqp091.Queue
-	logger     *logrus.Logger
+	logger     *logger.Logger
 	appName    string
 }
 
 // NewItemsRabbitMQ instances a new items' queues against RabbitMQ
-func NewItemsRabbitMQ(host string, port int, user string, password string, queueName string, appName string, logger *logrus.Logger) (itemsRabbitMQ, error) {
+func NewItemsRabbitMQ(ctx context.Context, host string, port int, user string, password string, queueName string, appName string, logger *logger.Logger) (itemsRabbitMQ, error) {
 	connection, err := amqp091.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", user, password, host, port))
 	if err != nil {
-		logger.Errorf("Error dialing RabbigMQ conenction: %s", err.Error())
+		logger.Errorf(ctx, "Error dialing RabbitMQ conenction: %s", err.Error())
 		return itemsRabbitMQ{}, err
 	}
 	channel, err := connection.Channel()
 	if err != nil {
-		logger.Errorf("Error getting RabbitMQ connection channel: %s", err.Error())
+		logger.Errorf(ctx, "Error getting RabbitMQ connection channel: %s", err.Error())
 		return itemsRabbitMQ{}, err
 	}
 	queue, err := channel.QueueDeclare(queueName, false, false, false, false, nil)
 	if err != nil {
-		logger.Errorf("Error declaring RabbitMQ channel queue: %s", err.Error())
+		logger.Errorf(ctx, "Error declaring RabbitMQ channel queue: %s", err.Error())
 		return itemsRabbitMQ{}, err
 	}
 	return itemsRabbitMQ{

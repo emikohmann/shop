@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	"github.com/emikohmann/shop/backend/items-api/internal/logger"
 	"github.com/emikohmann/shop/backend/items-api/pkg/items"
-	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,27 +16,26 @@ type itemsMongoDB struct {
 	client     *mongo.Client
 	database   *mongo.Database
 	collection string
-	logger     *logrus.Logger
+	logger     *logger.Logger
 }
 
 // NewItemsMongoDB instances a new items' repository against MongoDB
-func NewItemsMongoDB(host string, port int, database string, collection string, logger *logrus.Logger) (itemsMongoDB, error) {
-	ctx := context.Background()
+func NewItemsMongoDB(ctx context.Context, host string, port int, database string, collection string, logger *logger.Logger) (itemsMongoDB, error) {
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%d", host, port)))
 	if err != nil {
-		logger.Errorf("Error connecting to MongoDB: %s", err.Error())
+		logger.Errorf(ctx, "Error connecting to MongoDB: %s", err.Error())
 		return itemsMongoDB{}, err
 	}
 
 	names, err := client.ListDatabaseNames(ctx, bson.M{})
 	if err != nil {
-		logger.Errorf("Error listing database names: %s", err.Error())
+		logger.Errorf(ctx, "Error listing database names: %s", err.Error())
 		return itemsMongoDB{}, err
 	}
 
 	if !slices.Contains(names, database) {
 		err := fmt.Errorf("%s is not available as MongoDB database, please check the name or create it", database)
-		logger.Errorf("Error validating MongoDB database: %s", err.Error())
+		logger.Errorf(ctx, "Error validating MongoDB database: %s", err.Error())
 		return itemsMongoDB{}, err
 	}
 

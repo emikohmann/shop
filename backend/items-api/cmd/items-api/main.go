@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/emikohmann/shop/backend/items-api/internal/application"
 )
@@ -21,12 +22,14 @@ import (
 //	@BasePath	/
 //	@schemes	http
 func main() {
-	app, err := application.NewApplication()
+	ctx := context.Background()
+
+	app, err := application.NewApplication(ctx)
 	if err != nil {
 		panic(fmt.Errorf("error creating application: %w", err))
 	}
 
-	if err := app.Run(); err != nil {
+	if err := app.Run(ctx); err != nil {
 		panic(fmt.Errorf("error running application: %w", err))
 	}
 }

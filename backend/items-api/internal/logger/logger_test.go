@@ -1,32 +1,35 @@
 package logger
 
 import (
+	"context"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestNewLogger(t *testing.T) {
+	ctx := context.Background()
+
 	debugLevel := NewLogger(logrus.DebugLevel)
-	debugLevel.WithField("level", "debug").Debug("Test log")
-	debugLevel.WithField("level", "debug").Info("Test log")
-	debugLevel.WithField("level", "debug").Warn("Test log")
-	debugLevel.WithField("level", "debug").Error("Test log")
+	debugLevel.Debug(ctx, "Test log")
+	debugLevel.Info(ctx, "Test log")
+	debugLevel.Warn(ctx, "Test log")
+	debugLevel.Error(ctx, "Test log")
 
 	infoLevel := NewLogger(logrus.InfoLevel)
-	infoLevel.WithField("level", "info").Debug("Test log")
-	infoLevel.WithField("level", "info").Info("Test log")
-	infoLevel.WithField("level", "info").Warn("Test log")
-	infoLevel.WithField("level", "info").Error("Test log")
+	infoLevel.Debug(ctx, "Test log")
+	infoLevel.Info(ctx, "Test log")
+	infoLevel.Warn(ctx, "Test log")
+	infoLevel.Error(ctx, "Test log")
 
 	warnLevel := NewLogger(logrus.WarnLevel)
-	warnLevel.WithField("level", "warn").Debug("Test log")
-	warnLevel.WithField("level", "warn").Info("Test log")
-	warnLevel.WithField("level", "warn").Warn("Test log")
-	warnLevel.WithField("level", "warn").Error("Test log")
+	warnLevel.Debug(ctx, "Test log")
+	warnLevel.Info(ctx, "Test log")
+	warnLevel.Warn(ctx, "Test log")
+	warnLevel.Error(ctx, "Test log")
 
 	errorLevel := NewLogger(logrus.ErrorLevel)
-	errorLevel.WithField("level", "error").Debug("Test log")
-	errorLevel.WithField("level", "error").Info("Test log")
-	errorLevel.WithField("level", "error").Warn("Test log")
-	errorLevel.WithField("level", "error").Error("Test log")
+	errorLevel.Debug(ctx, "Test log")
+	errorLevel.Info(ctx, "Test log")
+	errorLevel.Warn(ctx, "Test log")
+	errorLevel.Error(ctx, "Test log")
 }

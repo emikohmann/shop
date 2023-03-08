@@ -43,53 +43,72 @@ const Item = () => {
           <Loading />
         </>
       ) : (
-        <div>
-          <div>
-            <h1>
-              {itemData['name']}
-            </h1>
-            <div>
-              {itemData['description']}
-            </div>
+        <>
+        {typeof itemData === 'undefined' ? (
+          <>
             <br />
-            <div className="left">
+            <Loading />
+          </>
+        ) : (
+          <div className="row">
+            <div className="col s12 center grey-text text-darken-3">
+              <h3>{itemData['name']}</h3>
+              <br />
+            </div>
+            <div className="col s12 m12 l5 xl4" id="galleryContainer">
               <ImageGallery 
-                items={itemImages}
-                showFullscreenButton={true}
-                useBrowserFullscreen={true}
-                showPlayButton={false}
-                showBullets={false}
-                disableThumbnailScroll={false}
-                slideDuration={100}
-                thumbnailPosition="right"
+                  items={itemImages}
+                  showFullscreenButton={true}
+                  useBrowserFullscreen={true}
+                  showPlayButton={false}
+                  showBullets={false}
+                  disableThumbnailScroll={false}
+                  slideDuration={100}
+                  thumbnailPosition="bottom"
               />
             </div>
+            <div className="col s12 m12 l7 xl8" id="descriptionContainer">
+              <i className="small material-icons yellow-text">grade</i>
+              <i className="small material-icons yellow-text">grade</i>
+              <i className="small material-icons yellow-text">grade</i>
+              <i className="small material-icons yellow-text">grade</i>
+              <i className="small material-icons yellow-text">grade</i>
+              <h4>U$D {itemData['price']}</h4>
+              <p>{itemData['description']}</p>
+            </div>
+            <div className="col s12 m12 l7 xl8">
+              <br />
+              <h4>Ask for {itemData['name']}</h4>
+              <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="first_name" type="text" />
+                      <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="last_name" type="text" class="validate" />
+                      <label for="last_name">Last Name</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="email" type="email" />
+                      <label for="email">Email</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="textarea1" class="materialize-textarea"></textarea>
+                      <label for="textarea1">Your question</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>ID</td>
-                <td>{itemData['id']}</td>
-              </tr>
-              <tr>
-                <td>Thumbnail</td>
-                <td><img src={itemData['thumbnail']} /></td>
-              </tr>
-              <tr>
-                <td>Name</td>
-                <td>{itemData['name']}</td>
-              </tr>
-              <tr>
-                <td>Description</td>
-                <td>{itemData['description']}</td>
-              </tr>
-              <tr>
-                <td>Price</td>
-                <td>{itemData['price']}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        )}
+        </>
       )}
     </>
   );

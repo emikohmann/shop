@@ -28,7 +28,7 @@ const List = () => {
         ) : (
           <div>
             {itemList !== undefined && itemList['items'] !== undefined && itemList['items'].map(item => (
-                  <div key={item['id']} className="col l3 m6 s12">
+                  <div key={item['id']} className="col s12 m6 l3 xl2">
                     <div className="card-panel lighten-4">
                       <div className="card">
                         <div className="card-image" href={`/items/${item['id']}`}>

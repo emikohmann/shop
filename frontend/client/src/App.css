@@ -66,8 +66,12 @@ code {
     display: none !important;
 }
 
-.image-gallery-thumbnail{
+.image-gallery-thumbnail {
     border: none !important;
+}
+
+.image-gallery-thumbnails {
+    height: 100pt;
 }
 
 .image-gallery-thumbnail:hover{

@@ -11,6 +11,7 @@ const List = () => {
       response => response.json()
     ).then(
       data => {
+        // TO DO: validate data errors
         setItemList(data)
       }
     )

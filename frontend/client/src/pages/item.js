@@ -22,6 +22,7 @@ const Item = () => {
       response => response.json()
     ).then(
       data => {
+        // TO DO: validate data errors
         setItemData(data);
         var itemImages = [];
         data['images'].map(img => {
@@ -79,28 +80,28 @@ const Item = () => {
             <div className="col s12 m12 l7 xl8">
               <br />
               <h4>Ask for {itemData['name']}</h4>
-              <div class="row">
-                <form class="col s12">
-                  <div class="row">
-                    <div class="input-field col s6">
+              <div className="row">
+                <form className="col s12">
+                  <div className="row">
+                    <div className="input-field col s6">
                       <input id="first_name" type="text" />
-                      <label for="first_name">First Name</label>
+                      <label htmlFor="first_name">First Name</label>
                     </div>
-                    <div class="input-field col s6">
-                      <input id="last_name" type="text" class="validate" />
-                      <label for="last_name">Last Name</label>
+                    <div className="input-field col s6">
+                      <input id="last_name" type="text" className="validate" />
+                      <label htmlFor="last_name">Last Name</label>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="input-field col s12">
+                  <div className="row">
+                    <div className="input-field col s12">
                       <input id="email" type="email" />
-                      <label for="email">Email</label>
+                      <label htmlFor="email">Email</label>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <textarea id="textarea1" class="materialize-textarea"></textarea>
-                      <label for="textarea1">Your question</label>
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <textarea id="textarea1" className="materialize-textarea"></textarea>
+                      <label htmlFor="textarea1">Your question</label>
                     </div>
                   </div>
                 </form>

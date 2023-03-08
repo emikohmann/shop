@@ -13,9 +13,6 @@ app.get("/api/items", async function(req, res) {
     res.set('Access-Control-Allow-Origin', '*');
     const url = `${itemsBaseURL}?limit=${req.query.limit}&offset=${req.query.offset}`;
     const options = {method: 'GET'};
-    fetch(url, options)
-        .then(res => res.json)
-        .catch(err => console.error(`error: ${err}`));
     try {
         let response = await fetch(url, options);
         let status = response.status;
@@ -31,9 +28,6 @@ app.get("/api/items/:id", async function(req, res) {
     res.set('Access-Control-Allow-Origin', '*');
     const url = `${itemsBaseURL}/${req.params.id}`;
     const options = {method: 'GET'};
-    fetch(url, options)
-        .then(res => res.json)
-        .catch(err => console.error(`error: ${err}`));
     try {
         let response = await fetch(url, options);
         let status = response.status;

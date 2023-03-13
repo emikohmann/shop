@@ -24,14 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "fieldConfig": {
         "defaults": {
@@ -87,8 +87,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 7,
+        "h": 7,
+        "w": 11,
         "x": 0,
         "y": 0
       },
@@ -110,7 +110,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "builder",
           "expr": "sum(increase(items_get[$__rate_interval]))",
@@ -126,7 +126,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "fieldConfig": {
         "defaults": {
@@ -152,9 +152,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 7,
+        "h": 7,
+        "w": 4,
+        "x": 11,
         "y": 0
       },
       "id": 6,
@@ -172,12 +172,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "code",
           "expr": "items_get",
@@ -193,7 +193,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "description": "",
       "fieldConfig": {
@@ -250,10 +250,173 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 9,
-        "y": 0
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 7
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "Bns_VTa4z"
+          },
+          "editorMode": "builder",
+          "expr": "sum(increase(items_list[$__rate_interval]))",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Items - LIST",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "Bns_VTa4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 11,
+        "y": 7
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "Bns_VTa4z"
+          },
+          "editorMode": "code",
+          "expr": "items_list",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Items - LIST",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "Bns_VTa4z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 14
       },
       "id": 3,
       "options": {
@@ -273,7 +436,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "builder",
           "expr": "sum(increase(items_save[$__rate_interval]))",
@@ -289,7 +452,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "fieldConfig": {
         "defaults": {
@@ -315,10 +478,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 7,
-        "y": 4
+        "h": 7,
+        "w": 4,
+        "x": 11,
+        "y": 14
       },
       "id": 7,
       "options": {
@@ -335,12 +498,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "code",
           "expr": "items_save",
@@ -356,7 +519,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "description": "",
       "fieldConfig": {
@@ -413,10 +576,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 7,
+        "h": 7,
+        "w": 11,
         "x": 0,
-        "y": 8
+        "y": 21
       },
       "id": 4,
       "options": {
@@ -436,7 +599,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "builder",
           "expr": "sum(increase(items_update[$__rate_interval]))",
@@ -452,7 +615,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "fieldConfig": {
         "defaults": {
@@ -478,10 +641,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 7,
-        "y": 8
+        "h": 7,
+        "w": 4,
+        "x": 11,
+        "y": 21
       },
       "id": 8,
       "options": {
@@ -498,12 +661,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "code",
           "expr": "items_update",
@@ -519,7 +682,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "description": "",
       "fieldConfig": {
@@ -576,10 +739,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 9,
-        "y": 8
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 28
       },
       "id": 5,
       "options": {
@@ -599,7 +762,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "builder",
           "expr": "sum(increase(items_delete[$__rate_interval]))",
@@ -615,7 +778,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "wFuubfbVk"
+        "uid": "Bns_VTa4z"
       },
       "fieldConfig": {
         "defaults": {
@@ -641,10 +804,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 7,
-        "y": 12
+        "h": 7,
+        "w": 4,
+        "x": 11,
+        "y": 28
       },
       "id": 9,
       "options": {
@@ -661,12 +824,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "wFuubfbVk"
+            "uid": "Bns_VTa4z"
           },
           "editorMode": "code",
           "expr": "items_delete",
@@ -680,7 +843,9 @@
       "type": "stat"
     }
   ],
-  "schemaVersion": 37,
+  "refresh": false,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -694,6 +859,6 @@
   "timezone": "",
   "title": "Items API",
   "uid": "B8JU-BxVk",
-  "version": 6,
+  "version": 3,
   "weekStart": ""
 }

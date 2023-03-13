@@ -1,10 +1,10 @@
 package logger
 
 import (
-	"context"
-	"github.com/sirupsen/logrus"
-	"time"
-	"users-api/internal/tracing"
+    "context"
+    "github.com/sirupsen/logrus"
+    "time"
+    "users-api/internal/tracing"
 )
 
 type Logger struct {

@@ -3,3 +3,4 @@
 /frontend/*/package-lock.json
 *.DS_Store
 *.dump
+run.sh

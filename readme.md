@@ -20,17 +20,92 @@ The frontend is composed by 2 modules:
 - Server (built with Node)
 - Client (built with Node, Express and React)
 
-## Requirements and execution
+## Run locally
 
-In order to run the project, only Docker is needed, since all services are configured and executed with docker-compose.
-
-1. Install Docker
-2. Run:
-
+1. Install and run MongoDB
 ```sh
-chmod +x run.sh && ./run.sh
+brew install mongodb-community
+brew services start mongodb-community
 ```
 
-3. Go to shop.com
+2. Install and run RabbitMQ
+```sh
+brew install rabbitmq
+brew services start rabbitmq
+rabbitmq-server
+```
+
+3. Install and run Prometheus
+```shell
+cd ~/prometheus-server/prometheus-2.42.0.darwin-amd64
+./prometheus --config.file="prometheus.yml"
+```
+
+4. Install and run Grafana
+```shell
+brew install grafana
+brew services start grafana
+```
+
+5. Run items-api
+```shell
+cd backend/items-api
+go run cmd/items-api/main.go
+```
+
+7. Run frontend server
+```shell
+cd frontend/server
+npm run start
+```
+
+8. Run frontend client
+```shell
+cd frontend/client
+npm run start
+```
+
+9. Update /etc/hosts
+```
+grep -qxF '127.0.0.1 shop.com' /etc/hosts || echo '127.0.0.1 shop.com' >> /etc/hosts
+```
+
+10. Go to http://shop.com
+
+## Run with docker
+
+1. Install Docker
+
+2. Generate custom images
+```
+cd backend/{image-name}
+docker rmi {image-name}:latest
+docker build -t {image-name} .
+```
+
+3. Run
+```shell
+docker-compose -p shop up -d
+```
+
+4. Update /etc/hosts
+```
+grep -qxF '127.0.0.1 shop.com' /etc/hosts || echo '127.0.0.1 shop.com' >> /etc/hosts
+```
+
+5. Go to http://shop.com
+
+## Generate and expose swagger (backend services)
+
+```shell
+cd backend/{api-name}
+swag fmt && swag init -g cmd/{api-name}/main.go --output docs/openapi
+```
+
+## Generate mocks (backend services)
+
+```shell
+mockery --dir=internal/application --name={interfaceName} --output=internal/mocks/{pkgName} --filename={mockName}_mock.go --outpkg={pkgName} --exported
+```
 
 Happy coding! :)

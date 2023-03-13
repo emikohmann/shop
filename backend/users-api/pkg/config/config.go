@@ -5,7 +5,7 @@ import "github.com/caarlos0/env"
 type Config struct {
     App           APP
     HTTP          HTTP
-    UsersMongoDB  UsersMongoDB
+    UsersMySQL    UsersMySQL
     UsersRabbitMQ UsersRabbitMQ
 }
 
@@ -17,11 +17,12 @@ type HTTP struct {
     Port int `env:"HTTP_PORT" envDefault:"8081"`
 }
 
-type UsersMongoDB struct {
-    Host       string `env:"USERS_MONGO_DB_HOST" envDefault:"mongodb-dev"`
-    Port       int    `env:"USERS_MONGO_DB_PORT" envDefault:"27017"`
-    Database   string `env:"USERS_MONGO_DB_DATABASE" envDefault:"users-api"`
-    Collection string `env:"USERS_MONGO_DB_COLLECTION" envDefault:"users"`
+type UsersMySQL struct {
+    Host     string `env:"USERS_MYSQL_DB_HOST" envDefault:"mysql-dev"`
+    Port     int    `env:"USERS_MYSQL_DB_PORT" envDefault:"3306"`
+    Database string `env:"USERS_MYSQL_DB_DATABASE" envDefault:"users"`
+    User     string `env:"USERS_MYSQL_USERNAME" envDefault:"admin"`
+    Password string `env:"USERS_MYSQL_PASSWORD" envDefault:"admin"`
 }
 
 type UsersRabbitMQ struct {
@@ -39,7 +40,7 @@ func Read() (*Config, error) {
         &config,
         &config.App,
         &config.HTTP,
-        &config.UsersMongoDB,
+        &config.UsersMySQL,
         &config.UsersRabbitMQ,
     } {
         if err := env.Parse(target); err != nil {

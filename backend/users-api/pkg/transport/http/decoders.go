@@ -1,10 +1,10 @@
 package http
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"strconv"
-	"users-api/pkg/users"
+    "fmt"
+    "github.com/gin-gonic/gin"
+    "strconv"
+    "users-api/pkg/users"
 )
 
 // HTTPToGetUserRequest turns the HTTP request into a GetUserRequest
@@ -38,15 +38,12 @@ func HTTPToListUsersRequest(ctx *gin.Context) (users.ListUsersRequest, error) {
 }
 
 type SaveUserRequestHTTP struct {
-    ID           int64    `json:"id" example:"1"`
-    Name         string   `json:"name" example:"Iphone 13 128GB 4GB RAM"`
-    Description  string   `json:"description" example:"The iPhone 13 display has rounded corners"`
-    Thumbnail    string   `json:"thumbnail" example:"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"`
-    Images       []string `json:"images" example:"https://www.macstation.com.ar/img/productos/2599-2.jpg"`
-    IsActive     bool     `json:"is_active" example:"true"`
-    Restrictions []string `json:"restrictions"`
-    Price        float64  `json:"price" example:"729.99"`
-    Stock        int      `json:"stock" example:"1"`
+    ID             int64  `json:"id" example:"1"`
+    Email          string `json:"email" example:"emikohmann@gmail.com"`
+    Username       string `json:"username" example:"ekohmann"`
+    Password       string `json:"password" example:"abc123"`
+    ProfilePicture string `json:"profile_picture" example:"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"`
+    IsActive       bool   `json:"is_active" example:"true"`
 }
 
 // HTTPToSaveUserRequest turns the HTTP Request into a SaveUserRequest
@@ -57,28 +54,23 @@ func HTTPToSaveUserRequest(ctx *gin.Context) (users.SaveUserRequest, error) {
     }
     return users.SaveUserRequest{
         User: users.User{
-            ID:           saveUserRequestHTTP.ID,
-            Name:         saveUserRequestHTTP.Name,
-            Description:  saveUserRequestHTTP.Description,
-            Thumbnail:    saveUserRequestHTTP.Thumbnail,
-            Images:       saveUserRequestHTTP.Images,
-            IsActive:     saveUserRequestHTTP.IsActive,
-            Restrictions: saveUserRequestHTTP.Restrictions,
-            Price:        saveUserRequestHTTP.Price,
-            Stock:        saveUserRequestHTTP.Stock,
+            ID:             saveUserRequestHTTP.ID,
+            Email:          saveUserRequestHTTP.Email,
+            Username:       saveUserRequestHTTP.Username,
+            Password:       saveUserRequestHTTP.Password,
+            ProfilePicture: saveUserRequestHTTP.ProfilePicture,
+            IsActive:       saveUserRequestHTTP.IsActive,
         },
     }, nil
 }
 
 type UpdateUserRequestHTTP struct {
-    Name         string   `json:"name" example:"Iphone 13 128GB 4GB RAM"`
-    Description  string   `json:"description" example:"The iPhone 13 display has rounded corners"`
-    Thumbnail    string   `json:"thumbnail" example:"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"`
-    Images       []string `json:"images" example:"https://www.macstation.com.ar/img/productos/2599-2.jpg"`
-    IsActive     bool     `json:"is_active" example:"true"`
-    Restrictions []string `json:"restrictions"`
-    Price        float64  `json:"price" example:"729.99"`
-    Stock        int      `json:"stock" example:"1"`
+    ID             int64  `json:"id" example:"1"`
+    Email          string `json:"email" example:"emikohmann@gmail.com"`
+    Username       string `json:"username" example:"ekohmann"`
+    Password       string `json:"password" example:"abc123"`
+    ProfilePicture string `json:"profile_picture" example:"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"`
+    IsActive       bool   `json:"is_active" example:"true"`
 }
 
 // HTTPToUpdateUserRequest turns the HTTP Request into an UpdateUserRequest
@@ -94,15 +86,12 @@ func HTTPToUpdateUserRequest(ctx *gin.Context) (users.UpdateUserRequest, error) 
     }
     return users.UpdateUserRequest{
         User: users.User{
-            ID:           userID,
-            Name:         updateUserRequestHTTP.Name,
-            Description:  updateUserRequestHTTP.Description,
-            Thumbnail:    updateUserRequestHTTP.Thumbnail,
-            Images:       updateUserRequestHTTP.Images,
-            IsActive:     updateUserRequestHTTP.IsActive,
-            Restrictions: updateUserRequestHTTP.Restrictions,
-            Price:        updateUserRequestHTTP.Price,
-            Stock:        updateUserRequestHTTP.Stock,
+            ID:             userID,
+            Email:          updateUserRequestHTTP.Email,
+            Username:       updateUserRequestHTTP.Username,
+            Password:       updateUserRequestHTTP.Password,
+            ProfilePicture: updateUserRequestHTTP.ProfilePicture,
+            IsActive:       updateUserRequestHTTP.IsActive,
         },
     }, nil
 }

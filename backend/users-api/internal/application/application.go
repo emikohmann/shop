@@ -54,7 +54,7 @@ type queues struct {
 }
 
 type repositories struct {
-    usersMongoDBRepository usersRepository
+    usersMySQLRepository usersRepository
 }
 
 type services struct {
@@ -176,7 +176,7 @@ func buildQueues(ctx context.Context, logger *logger.Logger, config *config.Conf
         logger,
     )
     if err != nil {
-        return queues{}, fmt.Errorf("error initializing userService RabbitMQ queue: %w", err)
+        return queues{}, fmt.Errorf("error initializing users RabbitMQ queue: %w", err)
     }
     logger.Info(ctx, "Queues successfully initialized")
     return queues{
@@ -186,26 +186,27 @@ func buildQueues(ctx context.Context, logger *logger.Logger, config *config.Conf
 
 // buildRepositories creates the instances for the repositories
 func buildRepositories(ctx context.Context, logger *logger.Logger, config *config.Config) (repositories, error) {
-    usersMongoDBRepository, err := userRepositories.NewUsersMongoDB(
+    usersMySQLRepository, err := userRepositories.NewUsersMySQL(
         ctx,
-        config.UsersMongoDB.Host,
-        config.UsersMongoDB.Port,
-        config.UsersMongoDB.Database,
-        config.UsersMongoDB.Collection,
+        config.UsersMySQL.Host,
+        config.UsersMySQL.Port,
+        config.UsersMySQL.Database,
+        config.UsersMySQL.User,
+        config.UsersMySQL.Password,
         logger)
     if err != nil {
-        return repositories{}, fmt.Errorf("error initializing userService MongoDB repository: %w", err)
+        return repositories{}, fmt.Errorf("error initializing users MySQL repository: %w", err)
     }
     logger.Info(ctx, "Repositories successfully initialized")
     return repositories{
-        usersMongoDBRepository: usersMongoDBRepository,
+        usersMySQLRepository: usersMySQLRepository,
     }, nil
 }
 
 // buildServices creates the instances for the services
 func buildServices(ctx context.Context, repositories repositories, metrics metrics, queues queues, logger *logger.Logger) (services, error) {
     usersService := userService.NewService(
-        repositories.usersMongoDBRepository,
+        repositories.usersMySQLRepository,
         metrics.usersPrometheusMetrics,
         queues.usersRabbitMQQueue,
         logger)

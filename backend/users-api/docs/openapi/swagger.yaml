@@ -20,39 +20,26 @@ definitions:
       date_created:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      description:
-        example: The iPhone 13 display has rounded corners
+      email:
+        example: emikohmann@gmail.com
         type: string
       id:
         example: 1
         type: integer
-      images:
-        example:
-        - https://www.macstation.com.ar/img/productos/2599-2.jpg
-        items:
-          type: string
-        type: array
       is_active:
         example: true
         type: boolean
       last_updated:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      name:
-        example: Iphone 13 128GB 4GB RAM
+      password:
+        example: abc123
         type: string
-      price:
-        example: 729.99
-        type: number
-      restrictions:
-        items:
-          type: string
-        type: array
-      stock:
-        example: 1
-        type: integer
-      thumbnail:
+      profile_picture:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+      username:
+        example: ekohmann
         type: string
     type: object
   http.ListUsersResponseHTTP:
@@ -78,36 +65,23 @@ definitions:
     type: object
   http.SaveUserRequestHTTP:
     properties:
-      description:
-        example: The iPhone 13 display has rounded corners
+      email:
+        example: emikohmann@gmail.com
         type: string
       id:
         example: 1
         type: integer
-      images:
-        example:
-        - https://www.macstation.com.ar/img/productos/2599-2.jpg
-        items:
-          type: string
-        type: array
       is_active:
         example: true
         type: boolean
-      name:
-        example: Iphone 13 128GB 4GB RAM
+      password:
+        example: abc123
         type: string
-      price:
-        example: 729.99
-        type: number
-      restrictions:
-        items:
-          type: string
-        type: array
-      stock:
-        example: 1
-        type: integer
-      thumbnail:
+      profile_picture:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+      username:
+        example: ekohmann
         type: string
     type: object
   http.SaveUserResponseHTTP:
@@ -115,70 +89,47 @@ definitions:
       date_created:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      description:
-        example: The iPhone 13 display has rounded corners
+      email:
+        example: emikohmann@gmail.com
         type: string
       id:
         example: 1
         type: integer
-      images:
-        example:
-        - https://www.macstation.com.ar/img/productos/2599-2.jpg
-        items:
-          type: string
-        type: array
       is_active:
         example: true
         type: boolean
       last_updated:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      name:
-        example: Iphone 13 128GB 4GB RAM
+      password:
+        example: abc123
         type: string
-      price:
-        example: 729.99
-        type: number
-      restrictions:
-        items:
-          type: string
-        type: array
-      stock:
-        example: 1
-        type: integer
-      thumbnail:
+      profile_picture:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+      username:
+        example: ekohmann
         type: string
     type: object
   http.UpdateUserRequestHTTP:
     properties:
-      description:
-        example: The iPhone 13 display has rounded corners
+      email:
+        example: emikohmann@gmail.com
         type: string
-      images:
-        example:
-        - https://www.macstation.com.ar/img/productos/2599-2.jpg
-        items:
-          type: string
-        type: array
+      id:
+        example: 1
+        type: integer
       is_active:
         example: true
         type: boolean
-      name:
-        example: Iphone 13 128GB 4GB RAM
+      password:
+        example: abc123
         type: string
-      price:
-        example: 729.99
-        type: number
-      restrictions:
-        items:
-          type: string
-        type: array
-      stock:
-        example: 1
-        type: integer
-      thumbnail:
+      profile_picture:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+      username:
+        example: ekohmann
         type: string
     type: object
   http.UpdateUserResponseHTTP:
@@ -186,39 +137,26 @@ definitions:
       date_created:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      description:
-        example: The iPhone 13 display has rounded corners
+      email:
+        example: emikohmann@gmail.com
         type: string
       id:
         example: 1
         type: integer
-      images:
-        example:
-        - https://www.macstation.com.ar/img/productos/2599-2.jpg
-        items:
-          type: string
-        type: array
       is_active:
         example: true
         type: boolean
       last_updated:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      name:
-        example: Iphone 13 128GB 4GB RAM
+      password:
+        example: abc123
         type: string
-      price:
-        example: 729.99
-        type: number
-      restrictions:
-        items:
-          type: string
-        type: array
-      stock:
-        example: 1
-        type: integer
-      thumbnail:
+      profile_picture:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+      username:
+        example: ekohmann
         type: string
     type: object
   http.UserResponseHTTP:
@@ -226,39 +164,26 @@ definitions:
       date_created:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      description:
-        example: The iPhone 13 display has rounded corners
+      email:
+        example: emikohmann@gmail.com
         type: string
       id:
         example: 1
         type: integer
-      images:
-        example:
-        - https://www.macstation.com.ar/img/productos/2599-2.jpg
-        items:
-          type: string
-        type: array
       is_active:
         example: true
         type: boolean
       last_updated:
         example: "2023-02-23T21:46:28.366Z"
         type: string
-      name:
-        example: Iphone 13 128GB 4GB RAM
+      password:
+        example: abc123
         type: string
-      price:
-        example: 729.99
-        type: number
-      restrictions:
-        items:
-          type: string
-        type: array
-      stock:
-        example: 1
-        type: integer
-      thumbnail:
+      profile_picture:
         example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+      username:
+        example: ekohmann
         type: string
     type: object
 host: localhost:8081

@@ -287,22 +287,13 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "description": {
+                "email": {
                     "type": "string",
-                    "example": "The iPhone 13 display has rounded corners"
+                    "example": "emikohmann@gmail.com"
                 },
                 "id": {
                     "type": "integer",
                     "example": 1
-                },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
-                    ]
                 },
                 "is_active": {
                     "type": "boolean",
@@ -312,27 +303,17 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "Iphone 13 128GB 4GB RAM"
+                    "example": "abc123"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 729.99
-                },
-                "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "stock": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "thumbnail": {
+                "profile_picture": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "ekohmann"
                 }
             }
         },
@@ -370,48 +351,29 @@
         "http.SaveUserRequestHTTP": {
             "type": "object",
             "properties": {
-                "description": {
+                "email": {
                     "type": "string",
-                    "example": "The iPhone 13 display has rounded corners"
+                    "example": "emikohmann@gmail.com"
                 },
                 "id": {
                     "type": "integer",
                     "example": 1
                 },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
-                    ]
-                },
                 "is_active": {
                     "type": "boolean",
                     "example": true
                 },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "Iphone 13 128GB 4GB RAM"
+                    "example": "abc123"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 729.99
-                },
-                "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "stock": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "thumbnail": {
+                "profile_picture": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "ekohmann"
                 }
             }
         },
@@ -422,22 +384,13 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "description": {
+                "email": {
                     "type": "string",
-                    "example": "The iPhone 13 display has rounded corners"
+                    "example": "emikohmann@gmail.com"
                 },
                 "id": {
                     "type": "integer",
                     "example": 1
-                },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
-                    ]
                 },
                 "is_active": {
                     "type": "boolean",
@@ -447,71 +400,46 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "Iphone 13 128GB 4GB RAM"
+                    "example": "abc123"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 729.99
-                },
-                "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "stock": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "thumbnail": {
+                "profile_picture": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "ekohmann"
                 }
             }
         },
         "http.UpdateUserRequestHTTP": {
             "type": "object",
             "properties": {
-                "description": {
+                "email": {
                     "type": "string",
-                    "example": "The iPhone 13 display has rounded corners"
+                    "example": "emikohmann@gmail.com"
                 },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
-                    ]
+                "id": {
+                    "type": "integer",
+                    "example": 1
                 },
                 "is_active": {
                     "type": "boolean",
                     "example": true
                 },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "Iphone 13 128GB 4GB RAM"
+                    "example": "abc123"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 729.99
-                },
-                "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "stock": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "thumbnail": {
+                "profile_picture": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "ekohmann"
                 }
             }
         },
@@ -522,22 +450,13 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "description": {
+                "email": {
                     "type": "string",
-                    "example": "The iPhone 13 display has rounded corners"
+                    "example": "emikohmann@gmail.com"
                 },
                 "id": {
                     "type": "integer",
                     "example": 1
-                },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
-                    ]
                 },
                 "is_active": {
                     "type": "boolean",
@@ -547,27 +466,17 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "Iphone 13 128GB 4GB RAM"
+                    "example": "abc123"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 729.99
-                },
-                "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "stock": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "thumbnail": {
+                "profile_picture": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "ekohmann"
                 }
             }
         },
@@ -578,22 +487,13 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "description": {
+                "email": {
                     "type": "string",
-                    "example": "The iPhone 13 display has rounded corners"
+                    "example": "emikohmann@gmail.com"
                 },
                 "id": {
                     "type": "integer",
                     "example": 1
-                },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "https://www.macstation.com.ar/img/productos/2599-2.jpg"
-                    ]
                 },
                 "is_active": {
                     "type": "boolean",
@@ -603,27 +503,17 @@
                     "type": "string",
                     "example": "2023-02-23T21:46:28.366Z"
                 },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "Iphone 13 128GB 4GB RAM"
+                    "example": "abc123"
                 },
-                "price": {
-                    "type": "number",
-                    "example": 729.99
-                },
-                "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "stock": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "thumbnail": {
+                "profile_picture": {
                     "type": "string",
                     "example": "https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "ekohmann"
                 }
             }
         }

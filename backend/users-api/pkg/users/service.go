@@ -93,29 +93,20 @@ func (service *service) UpdateUser(ctx context.Context, user User) (User, apierr
     if apiErr != nil {
         return User{}, apiErr
     }
-    if !util.IsEmpty(user.Name) {
-        current.Name = user.Name
+    if !util.IsEmpty(user.Email) {
+        current.Email = user.Email
     }
-    if !util.IsEmpty(user.Description) {
-        current.Description = user.Description
+    if !util.IsEmpty(user.Username) {
+        current.Username = user.Username
     }
-    if !util.IsEmpty(user.Thumbnail) {
-        current.Thumbnail = user.Thumbnail
+    if !util.IsEmpty(user.Password) {
+        current.Password = user.Password
     }
-    if !util.IsEmpty(user.Images) {
-        current.Images = user.Images
+    if !util.IsEmpty(user.ProfilePicture) {
+        current.ProfilePicture = user.ProfilePicture
     }
     if !util.IsEmpty(user.IsActive) {
         current.IsActive = user.IsActive
-    }
-    if !util.IsEmpty(user.Restrictions) {
-        current.Restrictions = user.Restrictions
-    }
-    if !util.IsEmpty(user.Price) {
-        current.Price = user.Price
-    }
-    if !util.IsEmpty(user.Stock) {
-        current.Stock = user.Stock
     }
     now := time.Now().UTC()
     current.LastUpdated = now

@@ -21,8 +21,8 @@ type UsersMySQL struct {
     Host     string `env:"USERS_MYSQL_DB_HOST" envDefault:"mysql-dev"`
     Port     int    `env:"USERS_MYSQL_DB_PORT" envDefault:"3306"`
     Database string `env:"USERS_MYSQL_DB_DATABASE" envDefault:"users"`
-    User     string `env:"USERS_MYSQL_USERNAME" envDefault:"admin"`
-    Password string `env:"USERS_MYSQL_PASSWORD" envDefault:"admin"`
+    User     string `env:"USERS_MYSQL_USERNAME" envDefault:"root"`
+    Password string `env:"USERS_MYSQL_PASSWORD" envDefault:""`
 }
 
 type UsersRabbitMQ struct {

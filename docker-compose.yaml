@@ -8,6 +8,14 @@ services:
     ports:
       - 27017:27017
 
+  mysql-dev:
+    container_name: mysql-dev
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
   rabbitmq-dev:
     container_name: rabbitmq-dev
     image: rabbitmq:management
@@ -32,6 +40,12 @@ services:
     image: items-api:latest
     ports:
       - 8080:8080
+
+  users-dev:
+    container_name: users-dev
+    image: users-api:latest
+    ports:
+      - 8081:8081
 
   fe-server-dev:
     container_name: fe-server-dev

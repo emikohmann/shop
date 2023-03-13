@@ -8,7 +8,7 @@ ENV GO111MODULE=on
 
 RUN go mod download
 
-WORKDIR /app/cmd/items-api
+WORKDIR /app/cmd/users-api
 
 RUN go build -o /users-api
 

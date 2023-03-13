@@ -2,8 +2,8 @@ package http
 
 import (
 	"fmt"
-	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
+	"items-api/pkg/items"
 	"strconv"
 )
 

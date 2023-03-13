@@ -3,13 +3,13 @@ package repositories
 import (
 	"context"
 	"fmt"
-	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
-	"github.com/emikohmann/shop/backend/items-api/internal/logger"
-	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/exp/slices"
+	"items-api/internal/apierrors"
+	"items-api/internal/logger"
+	"items-api/pkg/items"
 )
 
 type itemsMongoDB struct {

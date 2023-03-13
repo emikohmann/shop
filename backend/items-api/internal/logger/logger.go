@@ -2,8 +2,8 @@ package logger
 
 import (
 	"context"
-	"github.com/emikohmann/shop/backend/items-api/internal/tracing"
 	"github.com/sirupsen/logrus"
+	"items-api/internal/tracing"
 	"time"
 )
 

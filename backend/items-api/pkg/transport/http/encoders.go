@@ -1,8 +1,8 @@
 package http
 
 import (
-	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
-	"github.com/emikohmann/shop/backend/items-api/pkg/items"
+	"items-api/internal/apierrors"
+	"items-api/pkg/items"
 	"time"
 )
 

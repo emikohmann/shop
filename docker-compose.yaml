@@ -1,0 +1,46 @@
+version: "3.7"
+
+# network not required with docker-compose
+services:
+  mongodb-dev:
+    container_name: mongodb-dev
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  rabbitmq-dev:
+    container_name: rabbitmq-dev
+    image: rabbitmq:management
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  prometheus-dev:
+    container_name: prometheus-dev
+    image: prometheus:latest
+    ports:
+      - 9090:9090
+
+  grafana-dev:
+    container_name: grafana-dev
+    image: grafana/grafana-enterprise:latest
+    ports:
+      - 3000:3000
+
+  items-dev:
+    container_name: items-dev
+    image: items-api:latest
+    ports:
+      - 8080:8080
+
+  fe-server-dev:
+    container_name: fe-server-dev
+    image: fe-server:latest
+    ports:
+      - 5001:5001
+
+  fe-client-dev:
+    container_name: fe-client-dev
+    image: fe-client:latest
+    ports:
+      - 80:80

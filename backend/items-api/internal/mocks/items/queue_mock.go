@@ -3,11 +3,11 @@
 package items
 
 import (
-	apierrors "github.com/emikohmann/shop/backend/items-api/internal/apierrors"
+	apierrors "items-api/internal/apierrors"
 
 	context "context"
 
-	items "github.com/emikohmann/shop/backend/items-api/pkg/items"
+	items "items-api/pkg/items"
 
 	mock "github.com/stretchr/testify/mock"
 )

@@ -5,7 +5,7 @@ package items
 import (
 	context "context"
 
-	items "github.com/emikohmann/shop/backend/items-api/pkg/items"
+	items "items-api/pkg/items"
 	mock "github.com/stretchr/testify/mock"
 )
 

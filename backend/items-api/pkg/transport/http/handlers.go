@@ -2,14 +2,14 @@ package http
 
 import (
 	"context"
-	_ "github.com/emikohmann/shop/backend/items-api/docs/openapi"
-	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
-	"github.com/emikohmann/shop/backend/items-api/internal/logger"
-	"github.com/emikohmann/shop/backend/items-api/pkg/items"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "items-api/docs/openapi"
+	"items-api/internal/apierrors"
+	"items-api/internal/logger"
+	"items-api/pkg/items"
 	"net/http"
 )
 

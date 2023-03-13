@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/emikohmann/shop/backend/items-api/internal/application"
+	"items-api/internal/application"
 )
 
 //	@title			Items API

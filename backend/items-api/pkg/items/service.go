@@ -3,9 +3,9 @@ package items
 import (
 	"context"
 	"fmt"
-	"github.com/emikohmann/shop/backend/items-api/internal/apierrors"
-	"github.com/emikohmann/shop/backend/items-api/internal/logger"
-	"github.com/emikohmann/shop/backend/items-api/pkg/util"
+	"items-api/internal/apierrors"
+	"items-api/internal/logger"
+	"items-api/pkg/util"
 	"net/http"
 	"time"
 )

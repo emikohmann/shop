@@ -28,7 +28,9 @@ In order to run the project, only Docker is needed, since all services are confi
 2. Run:
 
 ```sh
-source run.sh
+chmod +x run.sh && ./run.sh
 ```
+
+3. Go to shop.com
 
 Happy coding! :)

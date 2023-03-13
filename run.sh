@@ -1,3 +1,4 @@
+grep -qxF '127.0.0.1 shop.com' /etc/hosts || echo '127.0.0.1 shop.com' >> /etc/hosts
 export DOCKER_BUILDKIT=0
 export COMPOSE_DOCKER_CLI_BUILD=0
 echo 'Building custom prometheus image'

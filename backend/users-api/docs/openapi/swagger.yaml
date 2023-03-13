@@ -1,0 +1,436 @@
+basePath: /
+definitions:
+  http.APIErrorHTTP:
+    properties:
+      message:
+        example: Some information not found
+        type: string
+      status:
+        example: 404
+        type: integer
+    type: object
+  http.DeleteUserResponseHTTP:
+    properties:
+      id:
+        example: 1
+        type: integer
+    type: object
+  http.GetUserResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.ListUsersResponseHTTP:
+    properties:
+      paging:
+        $ref: '#/definitions/http.PagingResponseHTTP'
+      users:
+        items:
+          $ref: '#/definitions/http.UserResponseHTTP'
+        type: array
+    type: object
+  http.PagingResponseHTTP:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      offset:
+        example: 50
+        type: integer
+      total:
+        example: 500
+        type: integer
+    type: object
+  http.SaveUserRequestHTTP:
+    properties:
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.SaveUserResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.UpdateUserRequestHTTP:
+    properties:
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.UpdateUserResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+  http.UserResponseHTTP:
+    properties:
+      date_created:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      description:
+        example: The iPhone 13 display has rounded corners
+        type: string
+      id:
+        example: 1
+        type: integer
+      images:
+        example:
+        - https://www.macstation.com.ar/img/productos/2599-2.jpg
+        items:
+          type: string
+        type: array
+      is_active:
+        example: true
+        type: boolean
+      last_updated:
+        example: "2023-02-23T21:46:28.366Z"
+        type: string
+      name:
+        example: Iphone 13 128GB 4GB RAM
+        type: string
+      price:
+        example: 729.99
+        type: number
+      restrictions:
+        items:
+          type: string
+        type: array
+      stock:
+        example: 1
+        type: integer
+      thumbnail:
+        example: https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact:
+    email: emikohmann@gmail.com
+    name: Emiliano Kohmann
+    url: https://www.linkedin.com/in/emilianokohmann/
+  description: This is an API that handles the users information.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://www.linkedin.com/in/emilianokohmann/
+  title: Users API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: Return the users information fetching information from the database.
+      parameters:
+      - description: List limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: List offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.ListUsersResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Return a list of users.
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Store the user information against the database.
+      parameters:
+      - description: User to save
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.SaveUserRequestHTTP'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/http.SaveUserResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Store the user information.
+      tags:
+      - Users
+  /users/{userID}:
+    delete:
+      description: Delete the user information against the database.
+      parameters:
+      - description: ID of the user to delete
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.DeleteUserResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Delete the user information.
+      tags:
+      - Users
+    get:
+      description: Return the user information fetching information from the database.
+      parameters:
+      - description: ID of the user to get
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.GetUserResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Return the user information.
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Updates the user information against the database.
+      parameters:
+      - description: ID of the user to get
+        in: path
+        name: userID
+        required: true
+        type: integer
+      - description: User fields to update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.UpdateUserRequestHTTP'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.UpdateUserResponseHTTP'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Updates the user information.
+      tags:
+      - Users
+schemes:
+- http
+swagger: "2.0"

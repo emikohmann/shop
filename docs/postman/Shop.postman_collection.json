@@ -1,0 +1,976 @@
+{
+	"info": {
+		"_postman_id": "7f317128-b03a-4117-a6fb-eaadf37cb041",
+		"name": "Shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20206801"
+	},
+	"item": [
+		{
+			"name": "Items API",
+			"item": [
+				{
+					"name": "Docs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{items_base_url}}/docs/index.html",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"docs",
+								"index.html"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Docs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{items_base_url}}/docs/index.html",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"docs",
+										"index.html"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "2d04b28c-4cbd-4092-8339-0acd4519346f"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:44:53 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "\n<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <title>Swagger UI</title>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"./swagger-ui.css\" >\n        <link rel=\"icon\" type=\"image/png\" href=\"./favicon-32x32.png\" sizes=\"32x32\" />\n        <link rel=\"icon\" type=\"image/png\" href=\"./favicon-16x16.png\" sizes=\"16x16\" />\n        <style>\n    html\n    {\n        box-sizing: border-box;\n        overflow: -moz-scrollbars-vertical;\n        overflow-y: scroll;\n    }\n    *,\n    *:before,\n    *:after\n    {\n        box-sizing: inherit;\n    }\n\n    body {\n      margin:0;\n      background: #fafafa;\n    }\n  </style>\n    </head>\n    <body>\n        <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"position:absolute;width:0;height:0\">\n            <defs>\n                <symbol viewBox=\"0 0 20 20\" id=\"unlocked\">\n                    <path d=\"M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z\"></path>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"locked\">\n                    <path d=\"M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"close\">\n                    <path d=\"M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"large-arrow\">\n                    <path d=\"M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"large-arrow-down\">\n                    <path d=\"M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 24 24\" id=\"jump-to\">\n                    <path d=\"M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 24 24\" id=\"expand\">\n                    <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n                </symbol>\n            </defs>\n        </svg>\n        <div id=\"swagger-ui\"></div>\n        <script src=\"./swagger-ui-bundle.js\"> </script>\n        <script src=\"./swagger-ui-standalone-preset.js\"> </script>\n        <script>\nwindow.onload = function() {\n  \n  const ui = SwaggerUIBundle({\n    url: \"doc.json\",\n    dom_id: '#swagger-ui',\n    validatorUrl: null,\n    oauth2RedirectUrl: `${window.location.protocol}//${window.location.host}${window.location.pathname.split('/').slice(0, window.location.pathname.split('/').length - 1).join('/')}/oauth2-redirect.html`,\n    persistAuthorization:  false ,\n    presets: [\n      SwaggerUIBundle.presets.apis,\n      SwaggerUIStandalonePreset\n    ],\n    plugins: [\n      SwaggerUIBundle.plugins.DownloadUrl\n    ],\n\tlayout: \"StandaloneLayout\",\n    docExpansion: \"list\",\n\tdeepLinking:  true ,\n\tdefaultModelsExpandDepth:  1 \n  })\n\n  const defaultClientId = \"\";\n  if (defaultClientId) {\n    ui.initOAuth({\n      clientId: defaultClientId\n    })\n  }\n\n  window.ui = ui\n}\n</script>\n    </body>\n</html>"
+						}
+					]
+				},
+				{
+					"name": "Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{items_base_url}}/metrics",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"metrics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Metrics",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{items_base_url}}/metrics",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"metrics"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; version=0.0.4; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "3a7d3fb4-4cd2-49dc-862f-142ec3957977"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:45:00 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1513"
+								}
+							],
+							"cookie": [],
+							"body": "# HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.\n# TYPE go_gc_duration_seconds summary\ngo_gc_duration_seconds{quantile=\"0\"} 5.5881e-05\ngo_gc_duration_seconds{quantile=\"0.25\"} 0.000204255\ngo_gc_duration_seconds{quantile=\"0.5\"} 0.000414259\ngo_gc_duration_seconds{quantile=\"0.75\"} 0.000422173\ngo_gc_duration_seconds{quantile=\"1\"} 0.001300818\ngo_gc_duration_seconds_sum 0.002810556\ngo_gc_duration_seconds_count 6\n# HELP go_goroutines Number of goroutines that currently exist.\n# TYPE go_goroutines gauge\ngo_goroutines 16\n# HELP go_info Information about the Go environment.\n# TYPE go_info gauge\ngo_info{version=\"go1.18.10\"} 1\n# HELP go_memstats_alloc_bytes Number of bytes allocated and still in use.\n# TYPE go_memstats_alloc_bytes gauge\ngo_memstats_alloc_bytes 1.949436e+07\n# HELP go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.\n# TYPE go_memstats_alloc_bytes_total counter\ngo_memstats_alloc_bytes_total 2.8787848e+07\n# HELP go_memstats_buck_hash_sys_bytes Number of bytes used by the profiling bucket hash table.\n# TYPE go_memstats_buck_hash_sys_bytes gauge\ngo_memstats_buck_hash_sys_bytes 5112\n# HELP go_memstats_frees_total Total number of frees.\n# TYPE go_memstats_frees_total counter\ngo_memstats_frees_total 50914\n# HELP go_memstats_gc_sys_bytes Number of bytes used for garbage collection system metadata.\n# TYPE go_memstats_gc_sys_bytes gauge\ngo_memstats_gc_sys_bytes 5.16828e+06\n# HELP go_memstats_heap_alloc_bytes Number of heap bytes allocated and still in use.\n# TYPE go_memstats_heap_alloc_bytes gauge\ngo_memstats_heap_alloc_bytes 1.949436e+07\n# HELP go_memstats_heap_idle_bytes Number of heap bytes waiting to be used.\n# TYPE go_memstats_heap_idle_bytes gauge\ngo_memstats_heap_idle_bytes 3.72736e+06\n# HELP go_memstats_heap_inuse_bytes Number of heap bytes that are in use.\n# TYPE go_memstats_heap_inuse_bytes gauge\ngo_memstats_heap_inuse_bytes 2.0586496e+07\n# HELP go_memstats_heap_objects Number of allocated objects.\n# TYPE go_memstats_heap_objects gauge\ngo_memstats_heap_objects 36218\n# HELP go_memstats_heap_released_bytes Number of heap bytes released to OS.\n# TYPE go_memstats_heap_released_bytes gauge\ngo_memstats_heap_released_bytes 2.932736e+06\n# HELP go_memstats_heap_sys_bytes Number of heap bytes obtained from system.\n# TYPE go_memstats_heap_sys_bytes gauge\ngo_memstats_heap_sys_bytes 2.4313856e+07\n# HELP go_memstats_last_gc_time_seconds Number of seconds since 1970 of last garbage collection.\n# TYPE go_memstats_last_gc_time_seconds gauge\ngo_memstats_last_gc_time_seconds 1.67868620009985e+09\n# HELP go_memstats_lookups_total Total number of pointer lookups.\n# TYPE go_memstats_lookups_total counter\ngo_memstats_lookups_total 0\n# HELP go_memstats_mallocs_total Total number of mallocs.\n# TYPE go_memstats_mallocs_total counter\ngo_memstats_mallocs_total 87132\n# HELP go_memstats_mcache_inuse_bytes Number of bytes in use by mcache structures.\n# TYPE go_memstats_mcache_inuse_bytes gauge\ngo_memstats_mcache_inuse_bytes 7200\n# HELP go_memstats_mcache_sys_bytes Number of bytes used for mcache structures obtained from system.\n# TYPE go_memstats_mcache_sys_bytes gauge\ngo_memstats_mcache_sys_bytes 15600\n# HELP go_memstats_mspan_inuse_bytes Number of bytes in use by mspan structures.\n# TYPE go_memstats_mspan_inuse_bytes gauge\ngo_memstats_mspan_inuse_bytes 141984\n# HELP go_memstats_mspan_sys_bytes Number of bytes used for mspan structures obtained from system.\n# TYPE go_memstats_mspan_sys_bytes gauge\ngo_memstats_mspan_sys_bytes 146448\n# HELP go_memstats_next_gc_bytes Number of heap bytes when next garbage collection will take place.\n# TYPE go_memstats_next_gc_bytes gauge\ngo_memstats_next_gc_bytes 2.8948336e+07\n# HELP go_memstats_other_sys_bytes Number of bytes used for other system allocations.\n# TYPE go_memstats_other_sys_bytes gauge\ngo_memstats_other_sys_bytes 1.17184e+06\n# HELP go_memstats_stack_inuse_bytes Number of bytes in use by the stack allocator.\n# TYPE go_memstats_stack_inuse_bytes gauge\ngo_memstats_stack_inuse_bytes 851968\n# HELP go_memstats_stack_sys_bytes Number of bytes obtained from system for stack allocator.\n# TYPE go_memstats_stack_sys_bytes gauge\ngo_memstats_stack_sys_bytes 851968\n# HELP go_memstats_sys_bytes Number of bytes obtained from system.\n# TYPE go_memstats_sys_bytes gauge\ngo_memstats_sys_bytes 3.1673104e+07\n# HELP go_threads Number of OS threads created.\n# TYPE go_threads gauge\ngo_threads 10\n# HELP items_delete Counter for DELETE item operation\n# TYPE items_delete counter\nitems_delete 5\n# HELP items_get Counter for GET item operation\n# TYPE items_get counter\nitems_get 13\n# HELP items_list Counter for LIST item operation\n# TYPE items_list counter\nitems_list 6\n# HELP items_save Counter for SAVE item operation\n# TYPE items_save counter\nitems_save 5\n# HELP items_update Counter for UPDATE item operation\n# TYPE items_update counter\nitems_update 2\n# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.\n# TYPE process_cpu_seconds_total counter\nprocess_cpu_seconds_total 0.92\n# HELP process_max_fds Maximum number of open file descriptors.\n# TYPE process_max_fds gauge\nprocess_max_fds 1.048576e+06\n# HELP process_open_fds Number of open file descriptors.\n# TYPE process_open_fds gauge\nprocess_open_fds 15\n# HELP process_resident_memory_bytes Resident memory size in bytes.\n# TYPE process_resident_memory_bytes gauge\nprocess_resident_memory_bytes 4.8140288e+07\n# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.\n# TYPE process_start_time_seconds gauge\nprocess_start_time_seconds 1.67868586745e+09\n# HELP process_virtual_memory_bytes Virtual memory size in bytes.\n# TYPE process_virtual_memory_bytes gauge\nprocess_virtual_memory_bytes 1.354686464e+09\n# HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.\n# TYPE process_virtual_memory_max_bytes gauge\nprocess_virtual_memory_max_bytes 1.8446744073709552e+19\n# HELP promhttp_metric_handler_requests_in_flight Current number of scrapes being served.\n# TYPE promhttp_metric_handler_requests_in_flight gauge\npromhttp_metric_handler_requests_in_flight 1\n# HELP promhttp_metric_handler_requests_total Total number of scrapes by HTTP status code.\n# TYPE promhttp_metric_handler_requests_total counter\npromhttp_metric_handler_requests_total{code=\"200\"} 30\npromhttp_metric_handler_requests_total{code=\"500\"} 0\npromhttp_metric_handler_requests_total{code=\"503\"} 0\n"
+						}
+					]
+				},
+				{
+					"name": "Get item by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{items_base_url}}/items/{{item_id}}",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"items",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get item by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{items_base_url}}/items/{{item_id}}",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"items",
+										"{{item_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "fb402c39-ea12-40ec-ba10-1d4c51e21782"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:45:13 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Apple 10.2″ iPad\",\n    \"description\": \"iThe Apple 10.2″ iPad features the Retina display with a 2160 x 1620 resolution for crisp details and vivid colors, making it an ideal companion for watching movies, creating content, and much more. The Retina Display also has True Tone technology, which adjusts the display to the color temperature of the room so it’s more comfortable for viewing in any light. Apple upgraded the front camera to a 12MP Ultra-Wide camera. In addition to a huge boost in image quality and a wider 122° field of view, the iPad also features Center Stage. Center Stage automatically pans the camera to keep them in view. This is especially useful when other people join in because the camera detects them and smoothly zooms out to include them. Center Stage shines during video calls and it makes them feel more natural. It works in FaceTime, but also in other third-party video-calling apps. The A13 Bionic chip is more powerful than its predecessor, the A12 Bionic chip, and supports Neural Engine machine learning. Moreover, its Smart Connector offers Smart Keyboard support for comfortable typing, while its display is compatible with the 1st gen Apple Pencil, so users can write and draw. It’s equipped with Wi-Fi 5 (802.11ac), Bluetooth 4.2, a Lightning connector, and a 3.5mm audio jack. This iPad is rated for up to 10 hours of use to keep you going throughout the day.\",\n    \"thumbnail\": \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334-100x100.webp\",\n    \"images\": [\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610783.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610784.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610785.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610786.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610787.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610788.jpg\"\n    ],\n    \"is_active\": true,\n    \"restrictions\": [],\n    \"price\": 570,\n    \"stock\": 10,\n    \"date_created\": \"2023-03-13T05:45:09.263Z\",\n    \"last_updated\": \"2023-03-13T05:45:09.263Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{items_base_url}}/items?limit=10&offset=0",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"items"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List items",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{items_base_url}}/items?limit=10&offset=0",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"items"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "216e71fa-8b38-4a53-833c-23441bd85952"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:45:20 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"paging\": {\n        \"total\": 1,\n        \"limit\": 10,\n        \"offset\": 0\n    },\n    \"items\": [\n        {\n            \"id\": 1,\n            \"name\": \"Apple 10.2″ iPad\",\n            \"description\": \"iThe Apple 10.2″ iPad features the Retina display with a 2160 x 1620 resolution for crisp details and vivid colors, making it an ideal companion for watching movies, creating content, and much more. The Retina Display also has True Tone technology, which adjusts the display to the color temperature of the room so it’s more comfortable for viewing in any light. Apple upgraded the front camera to a 12MP Ultra-Wide camera. In addition to a huge boost in image quality and a wider 122° field of view, the iPad also features Center Stage. Center Stage automatically pans the camera to keep them in view. This is especially useful when other people join in because the camera detects them and smoothly zooms out to include them. Center Stage shines during video calls and it makes them feel more natural. It works in FaceTime, but also in other third-party video-calling apps. The A13 Bionic chip is more powerful than its predecessor, the A12 Bionic chip, and supports Neural Engine machine learning. Moreover, its Smart Connector offers Smart Keyboard support for comfortable typing, while its display is compatible with the 1st gen Apple Pencil, so users can write and draw. It’s equipped with Wi-Fi 5 (802.11ac), Bluetooth 4.2, a Lightning connector, and a 3.5mm audio jack. This iPad is rated for up to 10 hours of use to keep you going throughout the day.\",\n            \"thumbnail\": \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334-100x100.webp\",\n            \"images\": [\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334.webp\",\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610783.webp\",\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610784.webp\",\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610785.jpg\",\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610786.jpg\",\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610787.jpg\",\n                \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610788.jpg\"\n            ],\n            \"is_active\": true,\n            \"restrictions\": [],\n            \"price\": 570,\n            \"stock\": 10,\n            \"date_created\": \"2023-03-13T05:45:09.263Z\",\n            \"last_updated\": \"2023-03-13T05:45:09.263Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Save item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"item_id\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"Apple 10.2″ iPad\",\n    \"thumbnail\": \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334-100x100.webp\",\n    \"description\": \"iThe Apple 10.2″ iPad features the Retina display with a 2160 x 1620 resolution for crisp details and vivid colors, making it an ideal companion for watching movies, creating content, and much more. The Retina Display also has True Tone technology, which adjusts the display to the color temperature of the room so it’s more comfortable for viewing in any light. Apple upgraded the front camera to a 12MP Ultra-Wide camera. In addition to a huge boost in image quality and a wider 122° field of view, the iPad also features Center Stage. Center Stage automatically pans the camera to keep them in view. This is especially useful when other people join in because the camera detects them and smoothly zooms out to include them. Center Stage shines during video calls and it makes them feel more natural. It works in FaceTime, but also in other third-party video-calling apps. The A13 Bionic chip is more powerful than its predecessor, the A12 Bionic chip, and supports Neural Engine machine learning. Moreover, its Smart Connector offers Smart Keyboard support for comfortable typing, while its display is compatible with the 1st gen Apple Pencil, so users can write and draw. It’s equipped with Wi-Fi 5 (802.11ac), Bluetooth 4.2, a Lightning connector, and a 3.5mm audio jack. This iPad is rated for up to 10 hours of use to keep you going throughout the day.\",\n    \"images\": [\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610783.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610784.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610785.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610786.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610787.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610788.jpg\"\n    ],\n    \"is_active\": true,\n    \"restrictions\": [],\n    \"price\": 570.00,\n    \"stock\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{items_base_url}}/items",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Save item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Apple 10.2″ iPad\",\n    \"thumbnail\": \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334-100x100.webp\",\n    \"description\": \"iThe Apple 10.2″ iPad features the Retina display with a 2160 x 1620 resolution for crisp details and vivid colors, making it an ideal companion for watching movies, creating content, and much more. The Retina Display also has True Tone technology, which adjusts the display to the color temperature of the room so it’s more comfortable for viewing in any light. Apple upgraded the front camera to a 12MP Ultra-Wide camera. In addition to a huge boost in image quality and a wider 122° field of view, the iPad also features Center Stage. Center Stage automatically pans the camera to keep them in view. This is especially useful when other people join in because the camera detects them and smoothly zooms out to include them. Center Stage shines during video calls and it makes them feel more natural. It works in FaceTime, but also in other third-party video-calling apps. The A13 Bionic chip is more powerful than its predecessor, the A12 Bionic chip, and supports Neural Engine machine learning. Moreover, its Smart Connector offers Smart Keyboard support for comfortable typing, while its display is compatible with the 1st gen Apple Pencil, so users can write and draw. It’s equipped with Wi-Fi 5 (802.11ac), Bluetooth 4.2, a Lightning connector, and a 3.5mm audio jack. This iPad is rated for up to 10 hours of use to keep you going throughout the day.\",\n    \"images\": [\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610783.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610784.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610785.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610786.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610787.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610788.jpg\"\n    ],\n    \"is_active\": true,\n    \"restrictions\": [],\n    \"price\": 570.00,\n    \"stock\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{items_base_url}}/items",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1a2beef9-4e9c-4fd2-9a6a-f80ab48ad318"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:45:09 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Apple 10.2″ iPad\",\n    \"description\": \"iThe Apple 10.2″ iPad features the Retina display with a 2160 x 1620 resolution for crisp details and vivid colors, making it an ideal companion for watching movies, creating content, and much more. The Retina Display also has True Tone technology, which adjusts the display to the color temperature of the room so it’s more comfortable for viewing in any light. Apple upgraded the front camera to a 12MP Ultra-Wide camera. In addition to a huge boost in image quality and a wider 122° field of view, the iPad also features Center Stage. Center Stage automatically pans the camera to keep them in view. This is especially useful when other people join in because the camera detects them and smoothly zooms out to include them. Center Stage shines during video calls and it makes them feel more natural. It works in FaceTime, but also in other third-party video-calling apps. The A13 Bionic chip is more powerful than its predecessor, the A12 Bionic chip, and supports Neural Engine machine learning. Moreover, its Smart Connector offers Smart Keyboard support for comfortable typing, while its display is compatible with the 1st gen Apple Pencil, so users can write and draw. It’s equipped with Wi-Fi 5 (802.11ac), Bluetooth 4.2, a Lightning connector, and a 3.5mm audio jack. This iPad is rated for up to 10 hours of use to keep you going throughout the day.\",\n    \"thumbnail\": \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334-100x100.webp\",\n    \"images\": [\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610783.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610784.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610785.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610786.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610787.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610788.jpg\"\n    ],\n    \"is_active\": true,\n    \"restrictions\": [],\n    \"price\": 570,\n    \"stock\": 10,\n    \"date_created\": \"2023-03-13T05:45:09.263067012Z\",\n    \"last_updated\": \"2023-03-13T05:45:09.263067012Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"thumbnail\": \"https://i.guim.co.uk/img/media/cf51c04cbf97c099cfa9f85b326c2859c961f044/0_0_1257_754/master/1257.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=971fd37348bc625d836e92609d5cbe0e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{items_base_url}}/items/{{item_id}}",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"items",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update item",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"thumbnail\": \"https://i.guim.co.uk/img/media/cf51c04cbf97c099cfa9f85b326c2859c961f044/0_0_1257_754/master/1257.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=971fd37348bc625d836e92609d5cbe0e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{items_base_url}}/items/{{item_id}}",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"items",
+										"{{item_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e1a5bfb7-955f-4a44-9349-23aab226ad20"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:45:26 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Apple 10.2″ iPad\",\n    \"description\": \"iThe Apple 10.2″ iPad features the Retina display with a 2160 x 1620 resolution for crisp details and vivid colors, making it an ideal companion for watching movies, creating content, and much more. The Retina Display also has True Tone technology, which adjusts the display to the color temperature of the room so it’s more comfortable for viewing in any light. Apple upgraded the front camera to a 12MP Ultra-Wide camera. In addition to a huge boost in image quality and a wider 122° field of view, the iPad also features Center Stage. Center Stage automatically pans the camera to keep them in view. This is especially useful when other people join in because the camera detects them and smoothly zooms out to include them. Center Stage shines during video calls and it makes them feel more natural. It works in FaceTime, but also in other third-party video-calling apps. The A13 Bionic chip is more powerful than its predecessor, the A12 Bionic chip, and supports Neural Engine machine learning. Moreover, its Smart Connector offers Smart Keyboard support for comfortable typing, while its display is compatible with the 1st gen Apple Pencil, so users can write and draw. It’s equipped with Wi-Fi 5 (802.11ac), Bluetooth 4.2, a Lightning connector, and a 3.5mm audio jack. This iPad is rated for up to 10 hours of use to keep you going throughout the day.\",\n    \"thumbnail\": \"https://i.guim.co.uk/img/media/cf51c04cbf97c099cfa9f85b326c2859c961f044/0_0_1257_754/master/1257.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=971fd37348bc625d836e92609d5cbe0e\",\n    \"images\": [\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642775_1664334.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610783.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610784.webp\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610785.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610786.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610787.jpg\",\n        \"https://itechstore.com.ar/wp-content/uploads/2022/05/1631642590_IMG_1610788.jpg\"\n    ],\n    \"is_active\": true,\n    \"restrictions\": [],\n    \"price\": 570,\n    \"stock\": 10,\n    \"date_created\": \"2023-03-13T05:45:09.263Z\",\n    \"last_updated\": \"2023-03-13T05:45:26.132418398Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete item by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{items_base_url}}/items/{{item_id}}",
+							"host": [
+								"{{items_base_url}}"
+							],
+							"path": [
+								"items",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete item by ID",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{items_base_url}}/items/{{item_id}}",
+									"host": [
+										"{{items_base_url}}"
+									],
+									"path": [
+										"items",
+										"{{item_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "0872bba6-871e-42b4-b9c9-b487ee836974"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 05:45:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users API",
+			"item": [
+				{
+					"name": "Docs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{users_base_url}}/docs/index.html",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"docs",
+								"index.html"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Docs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{users_base_url}}/docs/index.html",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"docs",
+										"index.html"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8c88d4d1-f370-4aeb-a2dc-66ebbad16996"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:23 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "\n<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <title>Swagger UI</title>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"./swagger-ui.css\" >\n        <link rel=\"icon\" type=\"image/png\" href=\"./favicon-32x32.png\" sizes=\"32x32\" />\n        <link rel=\"icon\" type=\"image/png\" href=\"./favicon-16x16.png\" sizes=\"16x16\" />\n        <style>\n    html\n    {\n        box-sizing: border-box;\n        overflow: -moz-scrollbars-vertical;\n        overflow-y: scroll;\n    }\n    *,\n    *:before,\n    *:after\n    {\n        box-sizing: inherit;\n    }\n\n    body {\n      margin:0;\n      background: #fafafa;\n    }\n  </style>\n    </head>\n    <body>\n        <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"position:absolute;width:0;height:0\">\n            <defs>\n                <symbol viewBox=\"0 0 20 20\" id=\"unlocked\">\n                    <path d=\"M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z\"></path>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"locked\">\n                    <path d=\"M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"close\">\n                    <path d=\"M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"large-arrow\">\n                    <path d=\"M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 20 20\" id=\"large-arrow-down\">\n                    <path d=\"M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 24 24\" id=\"jump-to\">\n                    <path d=\"M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z\"/>\n                </symbol>\n                <symbol viewBox=\"0 0 24 24\" id=\"expand\">\n                    <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n                </symbol>\n            </defs>\n        </svg>\n        <div id=\"swagger-ui\"></div>\n        <script src=\"./swagger-ui-bundle.js\"> </script>\n        <script src=\"./swagger-ui-standalone-preset.js\"> </script>\n        <script>\nwindow.onload = function() {\n  \n  const ui = SwaggerUIBundle({\n    url: \"doc.json\",\n    dom_id: '#swagger-ui',\n    validatorUrl: null,\n    oauth2RedirectUrl: `${window.location.protocol}//${window.location.host}${window.location.pathname.split('/').slice(0, window.location.pathname.split('/').length - 1).join('/')}/oauth2-redirect.html`,\n    persistAuthorization:  false ,\n    presets: [\n      SwaggerUIBundle.presets.apis,\n      SwaggerUIStandalonePreset\n    ],\n    plugins: [\n      SwaggerUIBundle.plugins.DownloadUrl\n    ],\n\tlayout: \"StandaloneLayout\",\n    docExpansion: \"list\",\n\tdeepLinking:  true ,\n\tdefaultModelsExpandDepth:  1 \n  })\n\n  const defaultClientId = \"\";\n  if (defaultClientId) {\n    ui.initOAuth({\n      clientId: defaultClientId\n    })\n  }\n\n  window.ui = ui\n}\n</script>\n    </body>\n</html>"
+						}
+					]
+				},
+				{
+					"name": "Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{users_base_url}}/metrics",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"metrics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Metrics",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{users_base_url}}/metrics",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"metrics"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; version=0.0.4; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "5ab88c45-5d6f-4fac-996a-69c3a8e1152c"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:27 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1506"
+								}
+							],
+							"cookie": [],
+							"body": "# HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.\n# TYPE go_gc_duration_seconds summary\ngo_gc_duration_seconds{quantile=\"0\"} 3.9569e-05\ngo_gc_duration_seconds{quantile=\"0.25\"} 9.1413e-05\ngo_gc_duration_seconds{quantile=\"0.5\"} 0.000245885\ngo_gc_duration_seconds{quantile=\"0.75\"} 0.000613848\ngo_gc_duration_seconds{quantile=\"1\"} 0.001403868\ngo_gc_duration_seconds_sum 0.002394583\ngo_gc_duration_seconds_count 5\n# HELP go_goroutines Number of goroutines that currently exist.\n# TYPE go_goroutines gauge\ngo_goroutines 11\n# HELP go_info Information about the Go environment.\n# TYPE go_info gauge\ngo_info{version=\"go1.18.10\"} 1\n# HELP go_memstats_alloc_bytes Number of bytes allocated and still in use.\n# TYPE go_memstats_alloc_bytes gauge\ngo_memstats_alloc_bytes 1.176448e+07\n# HELP go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.\n# TYPE go_memstats_alloc_bytes_total counter\ngo_memstats_alloc_bytes_total 1.3905408e+07\n# HELP go_memstats_buck_hash_sys_bytes Number of bytes used by the profiling bucket hash table.\n# TYPE go_memstats_buck_hash_sys_bytes gauge\ngo_memstats_buck_hash_sys_bytes 4918\n# HELP go_memstats_frees_total Total number of frees.\n# TYPE go_memstats_frees_total counter\ngo_memstats_frees_total 20353\n# HELP go_memstats_gc_sys_bytes Number of bytes used for garbage collection system metadata.\n# TYPE go_memstats_gc_sys_bytes gauge\ngo_memstats_gc_sys_bytes 4.894816e+06\n# HELP go_memstats_heap_alloc_bytes Number of heap bytes allocated and still in use.\n# TYPE go_memstats_heap_alloc_bytes gauge\ngo_memstats_heap_alloc_bytes 1.176448e+07\n# HELP go_memstats_heap_idle_bytes Number of heap bytes waiting to be used.\n# TYPE go_memstats_heap_idle_bytes gauge\ngo_memstats_heap_idle_bytes 2.727936e+06\n# HELP go_memstats_heap_inuse_bytes Number of heap bytes that are in use.\n# TYPE go_memstats_heap_inuse_bytes gauge\ngo_memstats_heap_inuse_bytes 1.3459456e+07\n# HELP go_memstats_heap_objects Number of allocated objects.\n# TYPE go_memstats_heap_objects gauge\ngo_memstats_heap_objects 17417\n# HELP go_memstats_heap_released_bytes Number of heap bytes released to OS.\n# TYPE go_memstats_heap_released_bytes gauge\ngo_memstats_heap_released_bytes 1.499136e+06\n# HELP go_memstats_heap_sys_bytes Number of heap bytes obtained from system.\n# TYPE go_memstats_heap_sys_bytes gauge\ngo_memstats_heap_sys_bytes 1.6187392e+07\n# HELP go_memstats_last_gc_time_seconds Number of seconds since 1970 of last garbage collection.\n# TYPE go_memstats_last_gc_time_seconds gauge\ngo_memstats_last_gc_time_seconds 1.678737046042967e+09\n# HELP go_memstats_lookups_total Total number of pointer lookups.\n# TYPE go_memstats_lookups_total counter\ngo_memstats_lookups_total 0\n# HELP go_memstats_mallocs_total Total number of mallocs.\n# TYPE go_memstats_mallocs_total counter\ngo_memstats_mallocs_total 37770\n# HELP go_memstats_mcache_inuse_bytes Number of bytes in use by mcache structures.\n# TYPE go_memstats_mcache_inuse_bytes gauge\ngo_memstats_mcache_inuse_bytes 7200\n# HELP go_memstats_mcache_sys_bytes Number of bytes used for mcache structures obtained from system.\n# TYPE go_memstats_mcache_sys_bytes gauge\ngo_memstats_mcache_sys_bytes 15600\n# HELP go_memstats_mspan_inuse_bytes Number of bytes in use by mspan structures.\n# TYPE go_memstats_mspan_inuse_bytes gauge\ngo_memstats_mspan_inuse_bytes 103536\n# HELP go_memstats_mspan_sys_bytes Number of bytes used for mspan structures obtained from system.\n# TYPE go_memstats_mspan_sys_bytes gauge\ngo_memstats_mspan_sys_bytes 113904\n# HELP go_memstats_next_gc_bytes Number of heap bytes when next garbage collection will take place.\n# TYPE go_memstats_next_gc_bytes gauge\ngo_memstats_next_gc_bytes 2.284488e+07\n# HELP go_memstats_other_sys_bytes Number of bytes used for other system allocations.\n# TYPE go_memstats_other_sys_bytes gauge\ngo_memstats_other_sys_bytes 1.215898e+06\n# HELP go_memstats_stack_inuse_bytes Number of bytes in use by the stack allocator.\n# TYPE go_memstats_stack_inuse_bytes gauge\ngo_memstats_stack_inuse_bytes 589824\n# HELP go_memstats_stack_sys_bytes Number of bytes obtained from system for stack allocator.\n# TYPE go_memstats_stack_sys_bytes gauge\ngo_memstats_stack_sys_bytes 589824\n# HELP go_memstats_sys_bytes Number of bytes obtained from system.\n# TYPE go_memstats_sys_bytes gauge\ngo_memstats_sys_bytes 2.3022352e+07\n# HELP go_threads Number of OS threads created.\n# TYPE go_threads gauge\ngo_threads 10\n# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.\n# TYPE process_cpu_seconds_total counter\nprocess_cpu_seconds_total 0.3\n# HELP process_max_fds Maximum number of open file descriptors.\n# TYPE process_max_fds gauge\nprocess_max_fds 1.048576e+06\n# HELP process_open_fds Number of open file descriptors.\n# TYPE process_open_fds gauge\nprocess_open_fds 12\n# HELP process_resident_memory_bytes Resident memory size in bytes.\n# TYPE process_resident_memory_bytes gauge\nprocess_resident_memory_bytes 3.6982784e+07\n# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.\n# TYPE process_start_time_seconds gauge\nprocess_start_time_seconds 1.67873680387e+09\n# HELP process_virtual_memory_bytes Virtual memory size in bytes.\n# TYPE process_virtual_memory_bytes gauge\nprocess_virtual_memory_bytes 1.3499392e+09\n# HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.\n# TYPE process_virtual_memory_max_bytes gauge\nprocess_virtual_memory_max_bytes 1.8446744073709552e+19\n# HELP promhttp_metric_handler_requests_in_flight Current number of scrapes being served.\n# TYPE promhttp_metric_handler_requests_in_flight gauge\npromhttp_metric_handler_requests_in_flight 1\n# HELP promhttp_metric_handler_requests_total Total number of scrapes by HTTP status code.\n# TYPE promhttp_metric_handler_requests_total counter\npromhttp_metric_handler_requests_total{code=\"200\"} 1\npromhttp_metric_handler_requests_total{code=\"500\"} 0\npromhttp_metric_handler_requests_total{code=\"503\"} 0\n# HELP users_delete Counter for DELETE user operation\n# TYPE users_delete counter\nusers_delete 0\n# HELP users_get Counter for GET user operation\n# TYPE users_get counter\nusers_get 4\n# HELP users_list Counter for LIST user operation\n# TYPE users_list counter\nusers_list 0\n# HELP users_save Counter for SAVE user operation\n# TYPE users_save counter\nusers_save 0\n# HELP users_update Counter for UPDATE user operation\n# TYPE users_update counter\nusers_update 0\n"
+						}
+					]
+				},
+				{
+					"name": "Get user by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{users_base_url}}/users/{{user_id}}",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get user by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{users_base_url}}/users/{{user_id}}",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "ad5f8c20-8eb1-4115-b979-2eecccf844e5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "259"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"email\": \"emikohmann@gmail.com\",\n    \"username\": \"ekohmann\",\n    \"password\": \"abc123\",\n    \"profile_picture\": \"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51\",\n    \"is_active\": true,\n    \"date_created\": \"2023-03-13T19:42:36Z\",\n    \"last_updated\": \"2023-03-13T19:42:36Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{users_base_url}}/users?limit=10&offset=0",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{users_base_url}}/users?limit=10&offset=0",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1739ca72-1c42-4ae5-aa6a-acff1bd6cb0a"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:34 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 501,\n    \"message\": \"not implemented yet\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Save user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_id\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"email\": \"emikohmann@gmail.com\",\n    \"is_active\": true,\n    \"password\": \"abc123\",\n    \"profile_picture\": \"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51\",\n    \"username\": \"ekohmann\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users_base_url}}/users",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Save user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"email\": \"emikohmann@gmail.com\",\n    \"is_active\": true,\n    \"password\": \"abc123\",\n    \"profile_picture\": \"https://contactcenter.macstation.com.ar/web/image?unique=ed3cc51\",\n    \"username\": \"ekohmann\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users_base_url}}/users",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "2e130da3-19e1-4808-ad2c-81635fefe04a"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:39 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "56"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 400,\n    \"message\": \"user with id 1 already exists\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"thumbnail\": \"https://i.guim.co.uk/img/media/cf51c04cbf97c099cfa9f85b326c2859c961f044/0_0_1257_754/master/1257.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=971fd37348bc625d836e92609d5cbe0e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users_base_url}}/users/{{user_id}}",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"thumbnail\": \"https://i.guim.co.uk/img/media/cf51c04cbf97c099cfa9f85b326c2859c961f044/0_0_1257_754/master/1257.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=971fd37348bc625d836e92609d5cbe0e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users_base_url}}/users/{{user_id}}",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "0dc5fcc4-5eb8-483a-b2e7-bb68eedb5d4f"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "94"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 400,\n    \"message\": \"invalid user ID: strconv.ParseInt: parsing \\\"null\\\": invalid syntax\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete user by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{users_base_url}}/users/{{user_id}}",
+							"host": [
+								"{{users_base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete user by ID",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{users_base_url}}/users/{{user_id}}",
+									"host": [
+										"{{users_base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "9eb5284d-0dff-428c-9994-896f97fa5f3a"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Mar 2023 19:51:46 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "94"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 400,\n    \"message\": \"invalid user ID: strconv.ParseInt: parsing \\\"null\\\": invalid syntax\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

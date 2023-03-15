@@ -2,6 +2,10 @@
 
 This project implements the backend and the frontend of an e-commerce using microservices.
 
+<img width="1792" alt="Screenshot 2023-03-15 at 03 53 57" src="https://user-images.githubusercontent.com/7863795/225230399-110410c2-900a-4e10-b45c-61f994654e14.png">
+
+<img width="1176" alt="Screenshot 2023-03-15 at 03 54 25" src="https://user-images.githubusercontent.com/7863795/225230410-558f9c13-d7a6-4cda-84aa-aa6c96d8e962.png">
+
 The backend is composed of a set of APIs:
 - Item API (built with Golang)
 - Users API (built with Golang)

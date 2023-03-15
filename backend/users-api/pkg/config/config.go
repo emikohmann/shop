@@ -23,6 +23,7 @@ type UsersMySQL struct {
     Database string `env:"USERS_MYSQL_DB_DATABASE" envDefault:"users"`
     User     string `env:"USERS_MYSQL_USERNAME" envDefault:"root"`
     Password string `env:"USERS_MYSQL_PASSWORD" envDefault:""`
+    Table    string `env:"USERS_MYSQL_TABLE" envDefault:"users"`
 }
 
 type UsersRabbitMQ struct {

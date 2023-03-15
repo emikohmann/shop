@@ -193,6 +193,7 @@ func buildRepositories(ctx context.Context, logger *logger.Logger, config *confi
         config.UsersMySQL.Database,
         config.UsersMySQL.User,
         config.UsersMySQL.Password,
+        config.UsersMySQL.Table,
         logger)
     if err != nil {
         return repositories{}, fmt.Errorf("error initializing users MySQL repository: %w", err)

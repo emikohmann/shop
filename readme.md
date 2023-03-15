@@ -2,20 +2,32 @@
 
 This project implements frontend and backend of an e-commerce based on microservices.
 
+----
+
 <img width="1792" alt="Screenshot 2023-03-15 at 03 53 57" src="https://user-images.githubusercontent.com/7863795/225230399-110410c2-900a-4e10-b45c-61f994654e14.png">
+
+----
 
 <img width="1176" alt="Screenshot 2023-03-15 at 03 54 25" src="https://user-images.githubusercontent.com/7863795/225230410-558f9c13-d7a6-4cda-84aa-aa6c96d8e962.png">
 
-The backend is composed of a set of APIs:
+## Components
+
+The backend is composed by:
 - Item API (Golang + MongoDB + RabbitMQ + Prometheus)
 - Users API (Golang + MySQL + RabbitMQ + Prometheus)
 - Stores API (Golang + MySQL + RabbitMQ + Prometheus)
 - Orders API (Golang + MongoDB + RabbitMQ + Prometheus)
 - Discounts API (Golang + MongoDB + RabbitMQ + Prometheus)
 
-The frontend is composed by 2 modules:
+The frontend is composed by:
 - Server (NodeJS)
 - Client (NodeJS + Express + React)
+
+## System Diagram (current)
+
+![System Draft-System diagram drawio](https://user-images.githubusercontent.com/7863795/225231612-77d3532b-ae09-4b2c-b35d-a0df714b2fc7.png)
+
+----
 
 ## Run locally
 

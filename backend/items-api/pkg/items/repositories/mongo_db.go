@@ -10,6 +10,7 @@ import (
 	"items-api/internal/apierrors"
 	"items-api/internal/logger"
 	"items-api/pkg/items"
+	"time"
 )
 
 type itemsMongoDB struct {
@@ -17,6 +18,52 @@ type itemsMongoDB struct {
 	database   *mongo.Database
 	collection string
 	logger     *logger.Logger
+}
+
+type mongoDBItem struct {
+	ID           int64     `bson:"id"`
+	Name         string    `bson:"name"`
+	Description  string    `bson:"description"`
+	Thumbnail    string    `bson:"thumbnail"`
+	Images       []string  `bson:"images"`
+	IsActive     bool      `bson:"is_active"`
+	Restrictions []string  `bson:"restrictions"`
+	Price        float64   `bson:"price"`
+	Stock        int       `bson:"stock"`
+	DateCreated  time.Time `bson:"date_created"`
+	LastUpdated  time.Time `bson:"last_updated"`
+}
+
+func (item mongoDBItem) toItem() items.Item {
+	return items.Item{
+		ID:           item.ID,
+		Name:         item.Name,
+		Description:  item.Description,
+		Thumbnail:    item.Thumbnail,
+		Images:       item.Images,
+		IsActive:     item.IsActive,
+		Restrictions: item.Restrictions,
+		Price:        item.Price,
+		Stock:        item.Stock,
+		DateCreated:  item.DateCreated,
+		LastUpdated:  item.LastUpdated,
+	}
+}
+
+func itemToMongoDBItem(item items.Item) mongoDBItem {
+	return mongoDBItem{
+		ID:           item.ID,
+		Name:         item.Name,
+		Description:  item.Description,
+		Thumbnail:    item.Thumbnail,
+		Images:       item.Images,
+		IsActive:     item.IsActive,
+		Restrictions: item.Restrictions,
+		Price:        item.Price,
+		Stock:        item.Stock,
+		DateCreated:  item.DateCreated,
+		LastUpdated:  item.LastUpdated,
+	}
 }
 
 // NewItemsMongoDB instances a new items' repository against MongoDB
@@ -51,19 +98,19 @@ func NewItemsMongoDB(ctx context.Context, host string, port int, database string
 func (repo itemsMongoDB) GetItem(ctx context.Context, id int64) (items.Item, apierrors.APIError) {
 	result := repo.database.Collection(repo.collection).FindOne(ctx, bson.M{"id": id})
 	if result.Err() == mongo.ErrNoDocuments {
-		return items.Item{}, apierrors.NewNotFoundError(fmt.Sprintf("not found item %d in MongoDB", id))
+		return items.Item{}, apierrors.NewNotFoundError(fmt.Sprintf("not found mongoDBItem %d in MongoDB", id))
 	}
-	var item items.Item
-	if err := result.Decode(&item); err != nil {
-		return items.Item{}, apierrors.NewInternalServerError(fmt.Sprintf("error parsing item %d from MongoDB: %s", id, err.Error()))
+	var mongoDBItem mongoDBItem
+	if err := result.Decode(&mongoDBItem); err != nil {
+		return items.Item{}, apierrors.NewInternalServerError(fmt.Sprintf("error parsing mongoDBItem %d from MongoDB: %s", id, err.Error()))
 	}
-	return item, nil
+	return mongoDBItem.toItem(), nil
 }
 
 // ListItems fetches a list of items from MongoDB
 func (repo itemsMongoDB) ListItems(ctx context.Context, limit int, offset int) (items.ItemList, apierrors.APIError) {
 	options := options.Find()
-	options.SetSort(bson.M{"dateCreated": 1})
+	options.SetSort(bson.M{"date_created": 1})
 	options.SetLimit(int64(limit))
 	options.SetSkip(int64(offset))
 	count, err := repo.database.Collection(repo.collection).CountDocuments(ctx, bson.M{})
@@ -74,13 +121,13 @@ func (repo itemsMongoDB) ListItems(ctx context.Context, limit int, offset int) (
 	if err != nil {
 		return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error listing items in MongoDB: %s", err.Error()))
 	}
-	list := make([]items.Item, 0)
+	itemList := make([]items.Item, 0)
 	for result.Next(ctx) {
-		var item items.Item
-		if err := result.Decode(&item); err != nil {
-			return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error parsing item from MongoDB: %s", err.Error()))
+		var mongoDBItem mongoDBItem
+		if err := result.Decode(&mongoDBItem); err != nil {
+			return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error parsing mongoDBItem from MongoDB: %s", err.Error()))
 		}
-		list = append(list, item)
+		itemList = append(itemList, mongoDBItem.toItem())
 	}
 	if err := result.Err(); err != nil {
 		return items.ItemList{}, apierrors.NewInternalServerError(fmt.Sprintf("error iterating item list from MongoDB: %s", err.Error()))
@@ -91,13 +138,13 @@ func (repo itemsMongoDB) ListItems(ctx context.Context, limit int, offset int) (
 			Limit:  limit,
 			Offset: offset,
 		},
-		Items: list,
+		Items: itemList,
 	}, nil
 }
 
 // SaveItem inserts an item into MongoDB
 func (repo itemsMongoDB) SaveItem(ctx context.Context, item items.Item) apierrors.APIError {
-	if _, err := repo.database.Collection(repo.collection).InsertOne(ctx, item); err != nil {
+	if _, err := repo.database.Collection(repo.collection).InsertOne(ctx, itemToMongoDBItem(item)); err != nil {
 		return apierrors.NewInternalServerError(fmt.Sprintf("error saving item in MongoDB: %s", err.Error()))
 	}
 	return nil
@@ -105,7 +152,7 @@ func (repo itemsMongoDB) SaveItem(ctx context.Context, item items.Item) apierror
 
 // UpdateItem modifies an item into MongoDB
 func (repo itemsMongoDB) UpdateItem(ctx context.Context, item items.Item) apierrors.APIError {
-	result, err := repo.database.Collection(repo.collection).UpdateOne(ctx, bson.M{"id": item.ID}, bson.D{{"$set", item}})
+	result, err := repo.database.Collection(repo.collection).UpdateOne(ctx, bson.M{"id": item.ID}, bson.D{{"$set", itemToMongoDBItem(item)}})
 	if err != nil {
 		return apierrors.NewInternalServerError(fmt.Sprintf("error updating item in MongoDB: %s", err.Error()))
 	}

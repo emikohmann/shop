@@ -5,6 +5,7 @@ import (
     "encoding/json"
     "fmt"
     "github.com/google/uuid"
+    "github.com/rabbitmq/amqp091-go"
     "time"
     "users-api/internal/apierrors"
     "users-api/internal/logger"

@@ -72,6 +72,9 @@ func (service *service) SaveItem(ctx context.Context, item Item) (Item, apierror
 	} else if apiErr.Status() != http.StatusNotFound {
 		return Item{}, apiErr
 	}
+	if item.Punctuation < 0 || item.Punctuation > 5 {
+		return Item{}, apierrors.NewBadRequestError(fmt.Sprintf("invalid punctuation %d for item id %d", item.Punctuation, item.ID))
+	}
 	now := time.Now().UTC()
 	item.DateCreated = now
 	item.LastUpdated = now

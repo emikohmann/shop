@@ -320,6 +320,10 @@
                     "type": "number",
                     "example": 729.99
                 },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
+                },
                 "restrictions": {
                     "type": "array",
                     "items": {
@@ -375,6 +379,10 @@
                 "price": {
                     "type": "number",
                     "example": 729.99
+                },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
                 },
                 "restrictions": {
                     "type": "array",
@@ -455,6 +463,10 @@
                     "type": "number",
                     "example": 729.99
                 },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
+                },
                 "restrictions": {
                     "type": "array",
                     "items": {
@@ -511,6 +523,10 @@
                     "type": "number",
                     "example": 729.99
                 },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
+                },
                 "restrictions": {
                     "type": "array",
                     "items": {
@@ -554,6 +570,10 @@
                 "price": {
                     "type": "number",
                     "example": 729.99
+                },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
                 },
                 "restrictions": {
                     "type": "array",
@@ -610,6 +630,10 @@
                 "price": {
                     "type": "number",
                     "example": 729.99
+                },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
                 },
                 "restrictions": {
                     "type": "array",

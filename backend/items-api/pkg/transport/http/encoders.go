@@ -16,6 +16,7 @@ type GetItemResponseHTTP struct {
 	Restrictions []string  `json:"restrictions"`
 	Price        float64   `json:"price" example:"729.99"`
 	Stock        int       `json:"stock" example:"1"`
+	Punctuation  int       `json:"punctuation" example:"5"`
 	DateCreated  time.Time `json:"date_created" example:"2023-02-23T21:46:28.366Z"`
 	LastUpdated  time.Time `json:"last_updated" example:"2023-02-23T21:46:28.366Z"`
 }
@@ -41,6 +42,7 @@ type ItemResponseHTTP struct {
 	Restrictions []string  `json:"restrictions"`
 	Price        float64   `json:"price" example:"729.99"`
 	Stock        int       `json:"stock" example:"1"`
+	Punctuation  int       `json:"punctuation" example:"5"`
 	DateCreated  time.Time `json:"date_created" example:"2023-02-23T21:46:28.366Z"`
 	LastUpdated  time.Time `json:"last_updated" example:"2023-02-23T21:46:28.366Z"`
 }
@@ -55,6 +57,7 @@ type SaveItemResponseHTTP struct {
 	Restrictions []string  `json:"restrictions"`
 	Price        float64   `json:"price" example:"729.99"`
 	Stock        int       `json:"stock" example:"1"`
+	Punctuation  int       `json:"punctuation" example:"5"`
 	DateCreated  time.Time `json:"date_created" example:"2023-02-23T21:46:28.366Z"`
 	LastUpdated  time.Time `json:"last_updated" example:"2023-02-23T21:46:28.366Z"`
 }
@@ -69,6 +72,7 @@ type UpdateItemResponseHTTP struct {
 	Restrictions []string  `json:"restrictions"`
 	Price        float64   `json:"price" example:"729.99"`
 	Stock        int       `json:"stock" example:"1"`
+	Punctuation  int       `json:"punctuation" example:"5"`
 	DateCreated  time.Time `json:"date_created" example:"2023-02-23T21:46:28.366Z"`
 	LastUpdated  time.Time `json:"last_updated" example:"2023-02-23T21:46:28.366Z"`
 }
@@ -94,6 +98,7 @@ func GetItemResponseToHTTP(response items.GetItemResponse) GetItemResponseHTTP {
 		Restrictions: response.Item.Restrictions,
 		Price:        response.Item.Price,
 		Stock:        response.Item.Stock,
+		Punctuation:  response.Item.Punctuation,
 		DateCreated:  response.Item.DateCreated,
 		LastUpdated:  response.Item.LastUpdated,
 	}
@@ -113,6 +118,7 @@ func ListItemsResponseToHTTP(response items.ListItemsResponse) ListItemsResponse
 			Restrictions: item.Restrictions,
 			Price:        item.Price,
 			Stock:        item.Stock,
+			Punctuation:  item.Punctuation,
 			DateCreated:  item.DateCreated,
 			LastUpdated:  item.LastUpdated,
 		})
@@ -139,6 +145,7 @@ func SaveItemResponseToHTTP(response items.SaveItemResponse) SaveItemResponseHTT
 		Restrictions: response.Item.Restrictions,
 		Price:        response.Item.Price,
 		Stock:        response.Item.Stock,
+		Punctuation:  response.Item.Punctuation,
 		DateCreated:  response.Item.DateCreated,
 		LastUpdated:  response.Item.LastUpdated,
 	}
@@ -156,6 +163,7 @@ func UpdateItemResponseToHTTP(response items.UpdateItemResponse) UpdateItemRespo
 		Restrictions: response.Item.Restrictions,
 		Price:        response.Item.Price,
 		Stock:        response.Item.Stock,
+		Punctuation:  response.Item.Punctuation,
 		DateCreated:  response.Item.DateCreated,
 		LastUpdated:  response.Item.LastUpdated,
 	}

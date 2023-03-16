@@ -323,6 +323,10 @@ const docTemplate = `{
                     "type": "number",
                     "example": 729.99
                 },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
+                },
                 "restrictions": {
                     "type": "array",
                     "items": {
@@ -378,6 +382,10 @@ const docTemplate = `{
                 "price": {
                     "type": "number",
                     "example": 729.99
+                },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
                 },
                 "restrictions": {
                     "type": "array",
@@ -458,6 +466,10 @@ const docTemplate = `{
                     "type": "number",
                     "example": 729.99
                 },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
+                },
                 "restrictions": {
                     "type": "array",
                     "items": {
@@ -514,6 +526,10 @@ const docTemplate = `{
                     "type": "number",
                     "example": 729.99
                 },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
+                },
                 "restrictions": {
                     "type": "array",
                     "items": {
@@ -557,6 +573,10 @@ const docTemplate = `{
                 "price": {
                     "type": "number",
                     "example": 729.99
+                },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
                 },
                 "restrictions": {
                     "type": "array",
@@ -613,6 +633,10 @@ const docTemplate = `{
                 "price": {
                     "type": "number",
                     "example": 729.99
+                },
+                "punctuation": {
+                    "type": "integer",
+                    "example": 5
                 },
                 "restrictions": {
                     "type": "array",

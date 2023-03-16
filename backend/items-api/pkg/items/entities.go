@@ -23,6 +23,7 @@ type Item struct {
 	Restrictions []string
 	Price        float64
 	Stock        int
+	Punctuation  int
 	DateCreated  time.Time
 	LastUpdated  time.Time
 }

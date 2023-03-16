@@ -47,6 +47,7 @@ type SaveItemRequestHTTP struct {
 	Restrictions []string `json:"restrictions"`
 	Price        float64  `json:"price" example:"729.99"`
 	Stock        int      `json:"stock" example:"1"`
+	Punctuation  int      `json:"punctuation" example:"5"`
 }
 
 // HTTPToSaveItemRequest turns the HTTP Request into a SaveItemRequest
@@ -66,6 +67,7 @@ func HTTPToSaveItemRequest(ctx *gin.Context) (items.SaveItemRequest, error) {
 			Restrictions: saveItemRequestHTTP.Restrictions,
 			Price:        saveItemRequestHTTP.Price,
 			Stock:        saveItemRequestHTTP.Stock,
+			Punctuation:  saveItemRequestHTTP.Punctuation,
 		},
 	}, nil
 }
@@ -79,6 +81,7 @@ type UpdateItemRequestHTTP struct {
 	Restrictions []string `json:"restrictions"`
 	Price        float64  `json:"price" example:"729.99"`
 	Stock        int      `json:"stock" example:"1"`
+	Punctuation  int      `json:"punctuation" example:"5"`
 }
 
 // HTTPToUpdateItemRequest turns the HTTP Request into an UpdateItemRequest
@@ -103,6 +106,7 @@ func HTTPToUpdateItemRequest(ctx *gin.Context) (items.UpdateItemRequest, error) 
 			Restrictions: updateItemRequestHTTP.Restrictions,
 			Price:        updateItemRequestHTTP.Price,
 			Stock:        updateItemRequestHTTP.Stock,
+			Punctuation:  updateItemRequestHTTP.Punctuation,
 		},
 	}, nil
 }

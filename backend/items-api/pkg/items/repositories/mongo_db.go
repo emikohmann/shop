@@ -30,6 +30,7 @@ type mongoDBItem struct {
 	Restrictions []string  `bson:"restrictions"`
 	Price        float64   `bson:"price"`
 	Stock        int       `bson:"stock"`
+	Punctuation  int       `bson:"punctuation"`
 	DateCreated  time.Time `bson:"date_created"`
 	LastUpdated  time.Time `bson:"last_updated"`
 }
@@ -45,6 +46,7 @@ func (item mongoDBItem) toItem() items.Item {
 		Restrictions: item.Restrictions,
 		Price:        item.Price,
 		Stock:        item.Stock,
+		Punctuation:  item.Punctuation,
 		DateCreated:  item.DateCreated,
 		LastUpdated:  item.LastUpdated,
 	}
@@ -61,6 +63,7 @@ func itemToMongoDBItem(item items.Item) mongoDBItem {
 		Restrictions: item.Restrictions,
 		Price:        item.Price,
 		Stock:        item.Stock,
+		Punctuation:  item.Punctuation,
 		DateCreated:  item.DateCreated,
 		LastUpdated:  item.LastUpdated,
 	}

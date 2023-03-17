@@ -16,7 +16,9 @@ class Sidebar extends Component {
                     </li>
                     
                     <br />
-                    <li><a href="/home" className="subheader">Home</a></li>
+                    <li><a href="/" className="subheader">Home</a></li>
+                    <br />
+                    <li><a href="/login" className="subheader">Login</a></li>
                     <br />
                     <li><a href="/categories" className="waves-effect">Categories</a></li>
                 </ul>

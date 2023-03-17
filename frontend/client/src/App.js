@@ -2,14 +2,12 @@ import React from 'react';
 
 import './App.css';
 
-import Navbar from './components/navbar';
-import Sidebar from './components/sidebar';
-import Footer from './components/footer';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-import Home from './pages/home';
-import Item from './pages/item';
-import Categories from './pages/categories';
+import Navbar from './components/navbar';
+import Login from './pages/login';
+import Portal from './pages/portal';
+import Footer from './components/footer';
 
 function App(props) {
   return (
@@ -20,23 +18,15 @@ function App(props) {
       <div>
         <Navbar />
       </div>
-      <div className="row">
-        <div className="col s12 m3 l2 xl2" >
-          <Sidebar />
-        </div>
-        <div className="col s12 m7 l10 xl10">
-          <Router>
-            <Routes>
-              <Route exact path='/' element={<Home />} />
-              <Route path='/home' element={<Home/>} />
-              <Route path='/items/:id' element={<Item/>} />
-              <Route path='/categories' element={<Categories/>} />
-            </Routes>
-          </Router>
-        </div>
-      </div>
+        <Router>
+          <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/portal/*" element={<Portal />} />
+              <Route path="/*" element={<Portal />} />
+          </Routes>
+        </Router>
       <div id="footerContainer">
-        <Footer  />
+          <Footer  />
       </div> 
     </>
   );

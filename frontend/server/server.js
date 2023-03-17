@@ -7,7 +7,7 @@ const router = express.Router();
 const fetch = (...args) => 
     import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-const itemsBaseURL = "http://items-dev:8080/items";
+const itemsBaseURL = "http://localhost:8080/items";
 
 app.get("/api/items", async function(req, res) {
     res.set('Access-Control-Allow-Origin', '*');

@@ -7,7 +7,7 @@ const List = () => {
 
   useEffect(() => {
     setItemList(undefined);
-    fetch("http://localhost:5001/api/items?limit=10&offset=0").then(
+    fetch("http://localhost:5001/api/items?limit=100&offset=0").then(
       response => response.json()
     ).then(
       data => {
@@ -33,7 +33,7 @@ const List = () => {
                     <div className="card-panel lighten-4">
                       <div className="card">
                         <div className="card-image" href={`/items/${item['id']}`}>
-                        <a href={`/portal/items/${item['id']}`}><img alt={item['images'][0]} src={item['images'][0]} /></a>
+                        <a href={`/portal/items/${item['id']}`}><img alt={item['thumbnail']} src={item['thumbnail']} /></a>
                           <a href="/#" className="btn-floating halfway-fab waves-effect waves-light blue">
                             <i className="material-icons">favorite_border</i>
                           </a>

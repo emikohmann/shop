@@ -1,0 +1,44 @@
+body {
+  background-color: black;
+}
+
+.icon {
+  width: 16pt;
+}
+
+h4 {
+  color: white;
+  background-color: darkblue;
+  margin: 0;
+  padding: 5pt;
+}
+
+table {
+  width: 100%;
+}
+
+table, td {
+  border: 1px solid black;
+}
+
+td.actions {
+  text-align: center;
+}
+
+td.links {
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+}
+
+.outer {
+  background-color: black;
+  color: #00ff00;
+  padding: 5pt;
+}

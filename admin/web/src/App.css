@@ -1,8 +1,12 @@
+* {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
 body {
   background-color: black;
 }
 
-.icon {
+.adminIcon {
   width: 16pt;
 }
 
@@ -27,6 +31,14 @@ td.actions {
 
 td.links {
   text-align: center;
+}
+
+td.serviceIcon {
+  text-align: center;
+}
+
+td.serviceIcon img {
+  width: 14pt;
 }
 
 button {

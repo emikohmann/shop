@@ -1,5 +1,6 @@
 package http
 
 var (
-	PathDocs = "/docs/*any"
+	PathDocs         = "/docs/*any"
+	PathListServices = "/services"
 )

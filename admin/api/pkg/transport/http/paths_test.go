@@ -7,4 +7,5 @@ import (
 
 func TestPaths(t *testing.T) {
 	assert.Equal(t, "/docs/*any", PathDocs)
+	assert.Equal(t, "/services", PathListServices)
 }

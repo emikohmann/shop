@@ -1,6 +1,7 @@
 package application
 
 import (
+	"api/internal/apierrors"
 	"api/internal/logger"
 	"api/pkg/admin"
 	"api/pkg/config"
@@ -18,6 +19,7 @@ type application struct {
 }
 
 type adminService interface {
+	ListServices(ctx context.Context) ([]admin.Service, apierrors.APIError)
 }
 
 type services struct {
@@ -25,7 +27,8 @@ type services struct {
 }
 
 type handlers struct {
-	docsHandler gin.HandlerFunc
+	docsHandler         gin.HandlerFunc
+	listServicesHandler gin.HandlerFunc
 }
 
 // NewApplication creates a new instance of the application
@@ -108,9 +111,11 @@ func buildServices(ctx context.Context, logger *logger.Logger) (services, error)
 // buildHandlers creates the instances for the handlers
 func buildHandlers(ctx context.Context, logger *logger.Logger, services services) (handlers, error) {
 	docsHandler := http.DocsHandler(logger)
+	listServicesHandler := http.ListServicesHandler(ctx, services.adminService, logger)
 	logger.Info(ctx, "Handlers successfully initialized")
 	return handlers{
-		docsHandler: docsHandler,
+		docsHandler:         docsHandler,
+		listServicesHandler: listServicesHandler,
 	}, nil
 }
 
@@ -118,6 +123,7 @@ func buildHandlers(ctx context.Context, logger *logger.Logger, services services
 func mapRouter(ctx context.Context, logger *logger.Logger, router *gin.Engine, handlers handlers) error {
 	middleware := http.Middleware(logger)
 	router.GET(http.PathDocs, middleware, handlers.docsHandler)
+	router.GET(http.PathListServices, middleware, handlers.listServicesHandler)
 	logger.Info(ctx, "Router successfully mapped")
 	return nil
 }

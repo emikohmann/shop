@@ -1,4 +1,30 @@
 basePath: /
+definitions:
+  http.APIErrorHTTP:
+    properties:
+      message:
+        example: Some information not found
+        type: string
+      status:
+        example: 404
+        type: integer
+    type: object
+  http.ListServicesResponseHTTP:
+    properties:
+      services:
+        items:
+          $ref: '#/definitions/http.ServiceResponseHTTP'
+        type: array
+    type: object
+  http.ServiceResponseHTTP:
+    properties:
+      name:
+        type: string
+      status:
+        type: string
+      version:
+        type: string
+    type: object
 host: localhost:9999
 info:
   contact:
@@ -12,7 +38,24 @@ info:
   termsOfService: https://www.linkedin.com/in/emilianokohmann/
   title: Admin API
   version: "1.0"
-paths: {}
+paths:
+  /services:
+    get:
+      description: Return the services information fetching information from the configuration.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.ListServicesResponseHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Return the list of current services.
+      tags:
+      - Admin
 schemes:
 - http
 swagger: "2.0"

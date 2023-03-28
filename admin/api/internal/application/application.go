@@ -5,9 +5,12 @@ import (
 	"api/internal/logger"
 	"api/pkg/admin"
 	"api/pkg/config"
+	"api/pkg/docker"
+	"api/pkg/static"
 	"api/pkg/transport/http"
 	"context"
 	"fmt"
+	"github.com/docker/docker/api/types"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -18,8 +21,26 @@ type application struct {
 	router *gin.Engine
 }
 
+type staticConfig interface {
+	Reload() error
+	Data() static.Data
+}
+
+type dockerClient interface {
+	ListImages(ctx context.Context) ([]types.ImageSummary, error)
+	ListContainers(ctx context.Context) ([]types.Container, error)
+}
+
 type adminService interface {
 	ListServices(ctx context.Context) ([]admin.Service, apierrors.APIError)
+}
+
+type statics struct {
+	staticConfig staticConfig
+}
+
+type clients struct {
+	dockerClient dockerClient
 }
 
 type services struct {
@@ -48,7 +69,17 @@ func NewApplication(ctx context.Context) (*application, error) {
 		return nil, err
 	}
 
-	services, err := buildServices(ctx, logger)
+	statics, err := buildStatics(ctx, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	clients, err := buildClients(ctx, config, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	services, err := buildServices(ctx, logger, statics.staticConfig, clients.dockerClient)
 	if err != nil {
 		return nil, err
 	}
@@ -99,9 +130,33 @@ func buildRouter(ctx context.Context, logger *logger.Logger) (*gin.Engine, error
 	return router, nil
 }
 
+// buildStatic creates the static config for the service
+func buildStatics(ctx context.Context, logger *logger.Logger) (statics, error) {
+	staticConfig, err := static.NewStatic(logger)
+	if err != nil {
+		return statics{}, fmt.Errorf("error creating static config: %w", err)
+	}
+	logger.Info(ctx, "Statics successfully initialized")
+	return statics{
+		staticConfig: staticConfig,
+	}, nil
+}
+
+// buildClients creates the client connections for the service
+func buildClients(ctx context.Context, config *config.Config, logger *logger.Logger) (clients, error) {
+	dockerClient, err := docker.NewDocker(ctx, config.Docker.APIVersion, logger)
+	if err != nil {
+		return clients{}, fmt.Errorf("error creating dockerClient client: %w", err)
+	}
+	logger.Info(ctx, "Clients successfully initialized")
+	return clients{
+		dockerClient: dockerClient,
+	}, nil
+}
+
 // buildServices creates the instances for the services
-func buildServices(ctx context.Context, logger *logger.Logger) (services, error) {
-	adminService := admin.NewService(logger)
+func buildServices(ctx context.Context, logger *logger.Logger, static staticConfig, docker dockerClient) (services, error) {
+	adminService := admin.NewService(ctx, logger, static, docker)
 	logger.Info(ctx, "Services successfully initialized")
 	return services{
 		adminService: adminService,

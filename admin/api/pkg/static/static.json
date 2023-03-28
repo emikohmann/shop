@@ -1,0 +1,29 @@
+{
+    "services": [
+        {
+            "name": "Items API",
+            "image_id": "items-api",
+            "container_id": "items-dev"
+        },
+        {
+            "name": "Users API",
+            "image_id": "users-api",
+            "container_id": "users-dev"
+        },
+        {
+            "name": "Stores API",
+            "image_id": "stores-api",
+            "container_id": "stores-dev"
+        },
+        {
+            "name": "Orders API",
+            "image_id": "orders-api",
+            "container_id": "orders-dev"
+        },
+        {
+            "name": "Discounts API",
+            "image_id": "discounts-api",
+            "container_id": "discounts-dev"
+        }
+    ]
+}

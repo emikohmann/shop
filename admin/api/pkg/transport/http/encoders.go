@@ -17,6 +17,7 @@ type ListServicesResponseHTTP struct {
 type ServiceResponseHTTP struct {
 	Name    string `json:"name"`
 	Status  string `json:"status"`
+	Health  string `json:"health"`
 	Version string `json:"version"`
 }
 
@@ -34,7 +35,8 @@ func ListServicesResponseToHTTP(response admin.ListServicesResponse) ListService
 	for _, service := range response.Services {
 		servicesHTTP = append(servicesHTTP, ServiceResponseHTTP{
 			Name:    service.Name,
-			Status:  service.Status,
+			Status:  service.Status.String(),
+			Health:  service.Health.String(),
 			Version: service.Version,
 		})
 	}

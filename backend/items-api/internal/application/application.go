@@ -62,6 +62,7 @@ type services struct {
 }
 
 type handlers struct {
+	pingHandler       gin.HandlerFunc
 	docsHandler       gin.HandlerFunc
 	metricsHandler    gin.HandlerFunc
 	getItemHandler    gin.HandlerFunc
@@ -217,6 +218,7 @@ func buildServices(ctx context.Context, repositories repositories, metrics metri
 
 // buildHandlers creates the instances for the handlers
 func buildHandlers(ctx context.Context, logger *logger.Logger, services services) (handlers, error) {
+	pingHandler := transportHTTP.PingHandler(logger)
 	docsHandler := transportHTTP.DocsHandler(logger)
 	metricsHandler := transportHTTP.MetricsHandler(logger)
 	getItemHandler := transportHTTP.GetItemHandler(ctx, services.itemsService, logger)
@@ -226,6 +228,7 @@ func buildHandlers(ctx context.Context, logger *logger.Logger, services services
 	deleteItemHandler := transportHTTP.DeleteItemHandler(ctx, services.itemsService, logger)
 	logger.Info(ctx, "Handlers successfully initialized")
 	return handlers{
+		pingHandler:       pingHandler,
 		docsHandler:       docsHandler,
 		metricsHandler:    metricsHandler,
 		getItemHandler:    getItemHandler,
@@ -239,6 +242,7 @@ func buildHandlers(ctx context.Context, logger *logger.Logger, services services
 // mapRouter creates the connections between the router and the handlers
 func mapRouter(ctx context.Context, logger *logger.Logger, router *gin.Engine, handlers handlers) error {
 	middleware := transportHTTP.Middleware(logger)
+	router.GET(transportHTTP.PathPing, middleware, handlers.pingHandler)
 	router.GET(transportHTTP.PathDocs, middleware, handlers.docsHandler)
 	router.GET(transportHTTP.PathMetrics, middleware, handlers.metricsHandler)
 	router.GET(transportHTTP.PathGetItem, middleware, handlers.getItemHandler)

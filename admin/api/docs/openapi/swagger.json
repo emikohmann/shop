@@ -23,7 +23,7 @@
     "paths": {
         "/services": {
             "get": {
-                "description": "Return the services information fetching information from the configuration.",
+                "description": "Return the services information fetching information from the configuration and Docker.",
                 "produces": [
                     "application/json"
                 ],
@@ -46,9 +46,54 @@
                     }
                 }
             }
+        },
+        "/services/{serviceID}": {
+            "get": {
+                "description": "Return the service information fetching information from the configuration and Docker.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Return the service information.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the service to get",
+                        "name": "serviceID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.GetServiceResponseHTTP"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/http.APIErrorHTTP"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/http.APIErrorHTTP"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "admin.DockerAdditionalInfo": {
+            "type": "object",
+            "additionalProperties": true
+        },
         "http.APIErrorHTTP": {
             "type": "object",
             "properties": {
@@ -59,6 +104,46 @@
                 "status": {
                     "type": "integer",
                     "example": 404
+                }
+            }
+        },
+        "http.GetServiceResponseHTTP": {
+            "type": "object",
+            "properties": {
+                "additional_info": {
+                    "$ref": "#/definitions/admin.DockerAdditionalInfo"
+                },
+                "creation_date": {
+                    "type": "string",
+                    "example": "2023-03-29T03:36:19Z"
+                },
+                "health": {
+                    "type": "string",
+                    "example": "HEALTHY"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Items API"
+                },
+                "network": {
+                    "type": "string",
+                    "example": "shop_default"
+                },
+                "port": {
+                    "type": "integer",
+                    "example": 8080
+                },
+                "status": {
+                    "type": "string",
+                    "example": "RUNNING"
+                },
+                "status_detail": {
+                    "type": "string",
+                    "example": "Up 2 hours"
+                },
+                "version": {
+                    "type": "string",
+                    "example": "0.0.1"
                 }
             }
         },
@@ -76,14 +161,37 @@
         "http.ServiceResponseHTTP": {
             "type": "object",
             "properties": {
+                "creation_date": {
+                    "type": "string",
+                    "example": "2023-03-29T03:36:19Z"
+                },
+                "health": {
+                    "type": "string",
+                    "example": "HEALTHY"
+                },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Items API"
+                },
+                "network": {
+                    "type": "string",
+                    "example": "shop_default"
+                },
+                "port": {
+                    "type": "integer",
+                    "example": 8080
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "RUNNING"
+                },
+                "status_detail": {
+                    "type": "string",
+                    "example": "Up 2 hours"
                 },
                 "version": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "0.0.1"
                 }
             }
         }

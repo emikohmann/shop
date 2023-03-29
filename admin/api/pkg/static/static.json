@@ -2,28 +2,33 @@
     "services": [
         {
             "name": "Items API",
-            "image_id": "items-api",
-            "container_id": "items-dev"
+            "image": {
+                "id": "items-api"
+            },
+            "container": {
+                "id": "items-dev",
+                "port": 8080
+            }
         },
         {
             "name": "Users API",
-            "image_id": "users-api",
-            "container_id": "users-dev"
+            "image": {
+                "id": "users-api"
+            },
+            "container": {
+                "id": "users-dev",
+                "port": 8081
+            }
         },
         {
             "name": "Stores API",
-            "image_id": "stores-api",
-            "container_id": "stores-dev"
-        },
-        {
-            "name": "Orders API",
-            "image_id": "orders-api",
-            "container_id": "orders-dev"
-        },
-        {
-            "name": "Discounts API",
-            "image_id": "discounts-api",
-            "container_id": "discounts-dev"
+            "image": {
+                "id": "stores-api"
+            },
+            "container": {
+                "id": "stores-dev",
+                "port": 8082
+            }
         }
     ]
 }

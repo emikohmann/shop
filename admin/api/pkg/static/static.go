@@ -23,9 +23,18 @@ type Data struct {
 }
 
 type Service struct {
-	Name        string `json:"name"`
-	ImageID     string `json:"image_id"`
-	ContainerID string `json:"container_id"`
+	Name      string    `json:"name"`
+	Image     Image     `json:"image"`
+	Container Container `json:"container"`
+}
+
+type Image struct {
+	ID string `json:"id"`
+}
+
+type Container struct {
+	ID   string `json:"id"`
+	Port int    `json:"port"`
 }
 
 func NewStatic(logger *logger.Logger) (*Static, error) {

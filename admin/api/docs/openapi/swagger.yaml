@@ -1,5 +1,8 @@
 basePath: /
 definitions:
+  admin.DockerAdditionalInfo:
+    additionalProperties: true
+    type: object
   http.APIErrorHTTP:
     properties:
       message:
@@ -8,6 +11,35 @@ definitions:
       status:
         example: 404
         type: integer
+    type: object
+  http.GetServiceResponseHTTP:
+    properties:
+      additional_info:
+        $ref: '#/definitions/admin.DockerAdditionalInfo'
+      creation_date:
+        example: "2023-03-29T03:36:19Z"
+        type: string
+      health:
+        example: HEALTHY
+        type: string
+      name:
+        example: Items API
+        type: string
+      network:
+        example: shop_default
+        type: string
+      port:
+        example: 8080
+        type: integer
+      status:
+        example: RUNNING
+        type: string
+      status_detail:
+        example: Up 2 hours
+        type: string
+      version:
+        example: 0.0.1
+        type: string
     type: object
   http.ListServicesResponseHTTP:
     properties:
@@ -18,11 +50,29 @@ definitions:
     type: object
   http.ServiceResponseHTTP:
     properties:
-      name:
+      creation_date:
+        example: "2023-03-29T03:36:19Z"
         type: string
+      health:
+        example: HEALTHY
+        type: string
+      name:
+        example: Items API
+        type: string
+      network:
+        example: shop_default
+        type: string
+      port:
+        example: 8080
+        type: integer
       status:
+        example: RUNNING
+        type: string
+      status_detail:
+        example: Up 2 hours
         type: string
       version:
+        example: 0.0.1
         type: string
     type: object
 host: localhost:9999
@@ -41,7 +91,8 @@ info:
 paths:
   /services:
     get:
-      description: Return the services information fetching information from the configuration.
+      description: Return the services information fetching information from the configuration
+        and Docker.
       produces:
       - application/json
       responses:
@@ -54,6 +105,34 @@ paths:
           schema:
             $ref: '#/definitions/http.APIErrorHTTP'
       summary: Return the list of current services.
+      tags:
+      - Admin
+  /services/{serviceID}:
+    get:
+      description: Return the service information fetching information from the configuration
+        and Docker.
+      parameters:
+      - description: ID of the service to get
+        in: path
+        name: serviceID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.GetServiceResponseHTTP'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.APIErrorHTTP'
+      summary: Return the service information.
       tags:
       - Admin
 schemes:

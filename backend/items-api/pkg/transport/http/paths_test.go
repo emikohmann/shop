@@ -16,6 +16,7 @@ func TestQueries(t *testing.T) {
 }
 
 func TestPaths(t *testing.T) {
+	assert.Equal(t, "/ping", PathPing)
 	assert.Equal(t, "/docs/*any", PathDocs)
 	assert.Equal(t, "/metrics", PathMetrics)
 	assert.Equal(t, fmt.Sprintf("/items/:%s", paramItemID), PathGetItem)

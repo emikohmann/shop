@@ -33,6 +33,7 @@ type dockerClient interface {
 
 type adminService interface {
 	ListServices(ctx context.Context) ([]admin.Service, apierrors.APIError)
+	GetService(ctx context.Context, id string) (admin.Service, admin.DockerAdditionalInfo, apierrors.APIError)
 }
 
 type statics struct {
@@ -50,6 +51,7 @@ type services struct {
 type handlers struct {
 	docsHandler         gin.HandlerFunc
 	listServicesHandler gin.HandlerFunc
+	getServiceHandler   gin.HandlerFunc
 }
 
 // NewApplication creates a new instance of the application
@@ -167,10 +169,12 @@ func buildServices(ctx context.Context, logger *logger.Logger, static staticConf
 func buildHandlers(ctx context.Context, logger *logger.Logger, services services) (handlers, error) {
 	docsHandler := http.DocsHandler(logger)
 	listServicesHandler := http.ListServicesHandler(ctx, services.adminService, logger)
+	getServiceHandler := http.GetServiceHandler(ctx, services.adminService, logger)
 	logger.Info(ctx, "Handlers successfully initialized")
 	return handlers{
 		docsHandler:         docsHandler,
 		listServicesHandler: listServicesHandler,
+		getServiceHandler:   getServiceHandler,
 	}, nil
 }
 
@@ -179,6 +183,7 @@ func mapRouter(ctx context.Context, logger *logger.Logger, router *gin.Engine, h
 	middleware := http.Middleware(logger)
 	router.GET(http.PathDocs, middleware, handlers.docsHandler)
 	router.GET(http.PathListServices, middleware, handlers.listServicesHandler)
+	router.GET(http.PathGetService, middleware, handlers.getServiceHandler)
 	logger.Info(ctx, "Router successfully mapped")
 	return nil
 }

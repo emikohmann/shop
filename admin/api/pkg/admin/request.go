@@ -1,4 +1,5 @@
 package admin
 
-type ListServicesRequest struct {
+type GetServiceRequest struct {
+	ID string
 }

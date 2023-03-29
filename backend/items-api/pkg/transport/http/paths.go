@@ -12,6 +12,7 @@ const (
 )
 
 var (
+	PathPing       = "/ping"
 	PathDocs       = "/docs/*any"
 	PathMetrics    = "/metrics"
 	PathGetItem    = fmt.Sprintf("/items/:%s", paramItemID)

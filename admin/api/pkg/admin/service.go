@@ -120,6 +120,7 @@ func (service *service) getTargetContainer(ctx context.Context, static static.Se
 
 func (service *service) buildEmptyService(static static.Service) Service {
 	return Service{
+		ID:           static.Image.ID,
 		Name:         static.Name,
 		Status:       services.StatusNotRunning,
 		StatusDetail: "",
@@ -137,11 +138,12 @@ func (service *service) buildFromContainer(ctx context.Context, static static.Se
 	if err != nil {
 		return Service{}, fmt.Errorf("error parsing image %s in found container: %w", container.Image, err)
 	}
-	health, err := service.checkHealth(static)
+	health, err := service.checkHealth(ctx, static)
 	if err != nil {
 		return Service{}, fmt.Errorf("error checking health for %s: %w", static.Name, err)
 	}
 	return Service{
+		ID:           static.Image.ID,
 		Name:         static.Name,
 		Status:       service.containerStateToServiceStatus(container.State),
 		StatusDetail: container.Status,
@@ -173,12 +175,13 @@ func (service *service) containerStateToServiceStatus(state string) services.Sta
 }
 
 // checkHealth returns the service health status based on /ping response
-func (service *service) checkHealth(static static.Service) (services.Health, error) {
+func (service *service) checkHealth(ctx context.Context, static static.Service) (services.Health, error) {
 	// simple http get, in the future replace with custom HTTP client
 	url := fmt.Sprintf("http://localhost:%d/ping", static.Container.Port)
 	response, err := http.Get(url)
 	if err != nil {
-		return services.Unhealthy, fmt.Errorf("error requesting %s: %w", url, err)
+		service.logger.Warn(ctx, fmt.Sprintf("error requesting %s: %s", url, err.Error()))
+		return services.Unhealthy, nil
 	}
 	if response.StatusCode != http.StatusOK {
 		return services.Unhealthy, nil

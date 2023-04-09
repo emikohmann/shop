@@ -6,6 +6,7 @@ import (
 )
 
 type Service struct {
+	ID           string
 	Name         string
 	Status       services.Status
 	StatusDetail string

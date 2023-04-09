@@ -17,6 +17,7 @@ type ListServicesResponseHTTP struct {
 }
 
 type ServiceResponseHTTP struct {
+	ID           string `json:"id,omitempty" example:"items-api"`
 	Name         string `json:"name,omitempty" example:"Items API"`
 	Status       string `json:"status,omitempty" example:"RUNNING"`
 	StatusDetail string `json:"status_detail,omitempty" example:"Up 2 hours"`
@@ -28,6 +29,7 @@ type ServiceResponseHTTP struct {
 }
 
 type GetServiceResponseHTTP struct {
+	ID             string                     `json:"id,omitempty" example:"items-api"`
 	Name           string                     `json:"name,omitempty" example:"Items API"`
 	Status         string                     `json:"status,omitempty" example:"RUNNING"`
 	StatusDetail   string                     `json:"status_detail,omitempty" example:"Up 2 hours"`
@@ -56,6 +58,7 @@ func ListServicesResponseToHTTP(response admin.ListServicesResponse) ListService
 	servicesHTTP := make([]ServiceResponseHTTP, 0)
 	for _, service := range response.Services {
 		servicesHTTP = append(servicesHTTP, ServiceResponseHTTP{
+			ID:           service.ID,
 			Name:         service.Name,
 			Status:       service.Status.String(),
 			StatusDetail: service.StatusDetail,
@@ -74,6 +77,7 @@ func ListServicesResponseToHTTP(response admin.ListServicesResponse) ListService
 // GetServiceResponseToHTTP prepares the GetServiceResponse to be presented as HTTP
 func GetServiceResponseToHTTP(response admin.GetServiceResponse) GetServiceResponseHTTP {
 	return GetServiceResponseHTTP{
+		ID:             response.Service.ID,
 		Name:           response.Service.Name,
 		Status:         response.Service.Status.String(),
 		StatusDetail:   response.Service.StatusDetail,

@@ -1,3 +1,5 @@
+# Ignored files
+
 *.DS_Store
 *.dump
 run.sh
